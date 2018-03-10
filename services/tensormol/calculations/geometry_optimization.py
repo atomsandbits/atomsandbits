@@ -2,20 +2,14 @@ from TensorMol import GeomOptimizer, MSet, Mol, PARAMS
 
 
 def main(manager, molecule):
+    """main."""
     def EnAndForce(x_, DoForce=True):
+        """Calculate energy and force."""
         mtmp = Mol(molecule.atoms, x_)
-        (Etotal,
-         Ebp,
-         Ebp_atom,
-         Ecc,
-         Evdw,
-         mol_dipole,
-         atom_charge,
-         gradient) = manager.EvalBPDirectEEUpdateSingle(mtmp,
-                                                        PARAMS["AN1_r_Rc"],
-                                                        PARAMS["AN1_a_Rc"],
-                                                        PARAMS["EECutoffOff"],
-                                                        True)
+        (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
+         gradient) = manager.EvalBPDirectEEUpdateSingle(
+             mtmp, PARAMS["AN1_r_Rc"], PARAMS["AN1_a_Rc"],
+             PARAMS["EECutoffOff"], True)
         energy = Etotal[0]
         force = gradient[0]
         if DoForce:

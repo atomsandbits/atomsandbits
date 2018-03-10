@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link as _Link } from 'react-router-dom';
 import Chip from 'material-ui/Chip';
+import { CircularProgress } from 'material-ui/Progress';
 import _SpeckRenderer from '/client/imports/components/SpeckRenderer';
 import { colors, fonts, breakpoints } from '/client/imports/theme';
 
@@ -77,6 +78,12 @@ export const CardPropertyRow = styled.div`
   flex-wrap: wrap;
   padding: 20px 0;
   width: 100%;
+`;
+export const LoadIndicator = styled(CircularProgress)`
+  && {
+    color: ${colors.secondary};
+    padding: 5px;
+  }
 `;
 export const CardProperty = styled.div`
   font-family: ${fonts.monospace};

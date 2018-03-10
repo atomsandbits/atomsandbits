@@ -16,25 +16,55 @@ import {
   CardPropertyRow,
   CardTitle,
   Column,
+  LoadIndicator,
 } from '../../styles';
+
+const GeometryOptimizationRowLoading = ({ label }) => (
+  <CardPropertyRow key={`${label}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty>
+      <LoadIndicator size={20} thickness={5} />
+    </CardProperty>
+  </CardPropertyRow>
+);
+
+const GeometryOptimizationRowPure = ({ geometries, energies, label }) => (
+  <CardPropertyRow key={`${label}-${energies}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty small>
+      <GeometryOptimizationRenderer
+        key="temp-key"
+        geometries={geometries}
+        energies={energies}
+      />
+    </CardProperty>
+  </CardPropertyRow>
+);
+
+const GeometryOptimizationRow = compose(
+  branch(
+    ({ running }) => running,
+    renderComponent(GeometryOptimizationRowLoading)
+  )
+)(GeometryOptimizationRowPure);
 
 const GeometryOptimizationCardPure = ({ geometryOptimizations }) => (
   <Expandable
     summary={[
       <CardTitle key="main-card-title">GeometryOptimization</CardTitle>,
-      <CardPropertyLabel key="main-card-label">
-        {geometryOptimizations[0].label}
-      </CardPropertyLabel>,
-      <CardProperty key="main-card-property">
-        {geometryOptimizations[0].energy}
-      </CardProperty>,
+      <GeometryOptimizationRow
+        key="main-card-optimization"
+        {...geometryOptimizations[0]}
+      />,
     ]}
-    details={geometryOptimizations.slice(0, 1).map(({ label, energy }) => (
-      <CardPropertyRow key={`${label}-${energy}`}>
-        <CardPropertyLabel>{label}</CardPropertyLabel>
-        <CardProperty>{energy}</CardProperty>
-      </CardPropertyRow>
-    ))}
+    details={geometryOptimizations
+      .slice(0, 1)
+      .map(geometryOptimization => (
+        <GeometryOptimizationRow
+          key={`${geometryOptimization.label}-row`}
+          {...geometryOptimization}
+        />
+      ))}
   />
 );
 
@@ -43,10 +73,9 @@ const SingleGeometryOptimizationCard = ({ geometryOptimizations }) => (
     expandable={false}
     summary={[
       <CardTitle key="main-card-title">GeometryOptimization</CardTitle>,
-      <GeometryOptimizationRenderer
-        key="temp-key"
-        geometries={geometryOptimizations[0].geometries}
-        energies={geometryOptimizations[0].energies}
+      <GeometryOptimizationRow
+        key="main-card-optimization"
+        {...geometryOptimizations[0]}
       />,
     ]}
     details=""

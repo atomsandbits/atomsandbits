@@ -6,8 +6,14 @@ MONGO_OPLOG_URL=mongodb://oplogger:password@localhost:27017/local?authSource=adm
 TENSORMOL_PATH=~/Packages/TensorMol
 PYTHONPATH=${PYTHONPATH}:~/Packages/pyscf
 
+# set custom environment variables
+if [ -f ./variables.env ]; then
+    source variables.env
+fi
+
 # run services
 concurrently \
+--prefix "[{time}] [{name}]" \
 --names "mongo,database,tensormol,webapp,about" \
 --prefix-colors "black,green,blue,cyan,yellow" \
 "mongod --replSet rs0 --dbpath data/db --quiet" \

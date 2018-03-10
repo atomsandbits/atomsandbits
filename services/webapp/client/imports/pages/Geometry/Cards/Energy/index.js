@@ -8,25 +8,40 @@ import {
   CardPropertyLabel,
   CardPropertyRow,
   CardTitle,
+  LoadIndicator,
 } from '../../styles';
+
+const EnergyRowLoading = ({ label }) => (
+  <CardPropertyRow key={`${label}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty>
+      <LoadIndicator size={20} thickness={5} />
+    </CardProperty>
+  </CardPropertyRow>
+);
+
+const EnergyRowPure = ({ energy, label }) => (
+  <CardPropertyRow key={`${label}-${energy}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty>{energy}</CardProperty>
+  </CardPropertyRow>
+);
+
+const EnergyRow = compose(
+  branch(({ running }) => running, renderComponent(EnergyRowLoading))
+)(EnergyRowPure);
 
 const EnergyCardPure = ({ energies }) => (
   <Expandable
     summary={[
       <CardTitle key="main-card-title">Energy</CardTitle>,
-      <CardPropertyLabel key="main-card-label">
-        {energies[0].label}
-      </CardPropertyLabel>,
-      <CardProperty key="main-card-property">
-        {energies[0].energy}
-      </CardProperty>,
+      <EnergyRow key="main-card-row" {...energies[0]} />,
     ]}
-    details={energies.slice(0, 1).map(({ label, energy }) => (
-      <CardPropertyRow key={`${label}-${energy}`}>
-        <CardPropertyLabel>{label}</CardPropertyLabel>
-        <CardProperty>{energy}</CardProperty>
-      </CardPropertyRow>
-    ))}
+    details={energies
+      .slice(1)
+      .map(energyDocument => (
+        <EnergyRow key={`${energyDocument.label}-row`} {...energyDocument} />
+      ))}
   />
 );
 
@@ -35,12 +50,7 @@ const SingleEnergyCardPure = ({ energies }) => (
     expandable={false}
     summary={[
       <CardTitle key="main-card-title">Energy</CardTitle>,
-      <CardPropertyLabel key="main-card-label">
-        {energies[0].label}
-      </CardPropertyLabel>,
-      <CardProperty key="main-card-property">
-        {energies[0].energy}
-      </CardProperty>,
+      <EnergyRow key="main-card-row" {...energies[0]} />,
     ]}
     details=""
   />

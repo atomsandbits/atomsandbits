@@ -24,7 +24,7 @@ chromedriver.start(['--url-base=wd/hub', `--port=${PORT}`, '--verbose']);
 
   const browser = webdriverio.remote(opts).init();
 
-  await browser.url('http://wwwtyro.github.io/speck/');
+  await browser.url('http://webglreport.com/?v=2');
 
   const title = await browser.getTitle();
   console.log(`Title: ${title}`);
