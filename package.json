@@ -1,0 +1,23 @@
+{
+  "name": "cloudszi",
+  "version": "0.0.1",
+  "description": "Everything.",
+  "scripts": {
+    "postinstall": "./scripts/setup.sh",
+    "reset": "./scripts/reset.sh",
+    "start": "./scripts/start.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cloudszi/cloudszi.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/cloudszi/cloudszi/issues"
+  },
+  "homepage": "https://github.com/cloudszi/cloudszi#readme",
+  "dependencies": {
+    "concurrently": "^3.5.1"
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "noDump": false,
+    "continueOnError": false,
+    "verbosity": 1,
+
+    "logging": {
+    	"type": "stream"
+    },
+
+    "namespaces": {
+    	"cloudszi.geometries": {
+            "includeFields": ["empiricalFormula", "users"]
+        },
+        "cloudszi.calculations": {
+            "includeFields": ["parameters", "users"]
+        }
+    },
+    
+    "docManagers": [{
+        "docManager": "elastic2_doc_manager"
+    }]
+}

@@ -1,0 +1,4 @@
+# .prettierrc
+singleQuote: true
+trailingComma: true
+# arrowParens: "always"
