@@ -17,6 +17,7 @@ import {
   getParameterOptions,
   validateParameters,
 } from '/both/imports/tools/parameters';
+import AppLayout from '/client/imports/components/AppLayout';
 import MoleculeRenderer from '/client/imports/components/MoleculeRenderer';
 import LatticeVectorsInput from './LatticeVectorsInput';
 import KPointsInput from './KPointsInput';
@@ -152,242 +153,248 @@ class NewCalculationPure extends React.Component {
     const { classes, theme } = this.props;
     const possibleParameters = getPossibleParameters(this.state.parameters);
     return (
-      <div className={classes.container}>
-        <Grid container={true} spacing={0} justify="center">
-          <MoleculeRenderer setXyz={this.setXyz} xyz={this.state.xyz} />{' '}
-          {possibleParameters.indexOf('calculationType') !== -1 ? (
-            <Grid item={true} xs={6} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.calculationType}
-                unsetValue={this.unsetParameter('calculationType')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'calculationType'
-                )}
-                setValue={this.setParameter('calculationType')}
-                label="Calculation"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('periodicCalculationType') !== -1 ? (
-            <Grid item={true} xs={6} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.periodicCalculationType}
-                unsetValue={this.unsetParameter('periodicCalculationType')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'periodicCalculationType'
-                )}
-                setValue={this.setParameter('periodicCalculationType')}
-                label="Type"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('calculationMethod') !== -1 ? (
-            <Grid item={true} xs={6} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.calculationMethod}
-                unsetValue={this.unsetParameter('calculationMethod')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'calculationMethod'
-                )}
-                setValue={this.setParameter('calculationMethod')}
-                label="Method"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('network') !== -1 ? (
-            <Grid item={true} xs={6} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.network}
-                unsetValue={this.unsetParameter('network')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'network'
-                )}
-                setValue={this.setParameter('network')}
-                label="Network"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('functional') !== -1 ? (
-            <Grid item={true} xs={6} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.functional}
-                unsetValue={this.unsetParameter('functional')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'functional'
-                )}
-                setValue={this.setParameter('functional')}
-                label="Functional"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('basisSet') !== -1 ? (
-            <Grid item={true} xs={6} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.basisSet}
-                unsetValue={this.unsetParameter('basisSet')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'basisSet'
-                )}
-                setValue={this.setParameter('basisSet')}
-                label="Basis Set"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('densityFit') !== -1 ? (
-            <Grid item={true} xs={12} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.densityFit}
-                unsetValue={this.unsetParameter('densityFit')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'densityFit'
-                )}
-                setValue={this.setParameter('densityFit')}
-                label="Density Fitting"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('auxBasisSet') !== -1 ? (
-            <Grid item={true} xs={6} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.auxBasisSet}
-                unsetValue={this.unsetParameter('auxBasisSet')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'auxBasisSet'
-                )}
-                setValue={this.setParameter('auxBasisSet')}
-                label="Aux Basis Set"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('pseudoPotential') !== -1 ? (
-            <Grid item={true} xs={6} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.pseudoPotential}
-                unsetValue={this.unsetParameter('pseudoPotential')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'pseudoPotential'
-                )}
-                setValue={this.setParameter('pseudoPotential')}
-                label="Pseduo Potential"
-              />
-            </Grid>
-          ) : null}
-          {possibleParameters.indexOf('charge') !== -1 ? (
-            <Grid
-              item={true}
-              xs={12}
-              sm={4}
-              style={{
-                padding: '23px 16px 0',
-              }}
-            >
-              <TextField
-                id="chargeInput"
-                label="Charge"
-                type="number"
-                onChange={this.handleInput('charge')}
-                value={this.state.parameters.charge}
-                className={classes.chargeInput}
-                inputProps={{
-                  step: 1,
+      <AppLayout
+        mobileOnlyToolbar
+        title="New Calculation"
+        appContent={
+          <div className={classes.container}>
+            <Grid container={true} spacing={0} justify="center">
+              <MoleculeRenderer setXyz={this.setXyz} xyz={this.state.xyz} />{' '}
+              {possibleParameters.indexOf('calculationType') !== -1 ? (
+                <Grid item={true} xs={6} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.calculationType}
+                    unsetValue={this.unsetParameter('calculationType')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'calculationType'
+                    )}
+                    setValue={this.setParameter('calculationType')}
+                    label="Calculation"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('periodicCalculationType') !== -1 ? (
+                <Grid item={true} xs={6} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.periodicCalculationType}
+                    unsetValue={this.unsetParameter('periodicCalculationType')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'periodicCalculationType'
+                    )}
+                    setValue={this.setParameter('periodicCalculationType')}
+                    label="Type"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('calculationMethod') !== -1 ? (
+                <Grid item={true} xs={6} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.calculationMethod}
+                    unsetValue={this.unsetParameter('calculationMethod')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'calculationMethod'
+                    )}
+                    setValue={this.setParameter('calculationMethod')}
+                    label="Method"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('network') !== -1 ? (
+                <Grid item={true} xs={6} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.network}
+                    unsetValue={this.unsetParameter('network')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'network'
+                    )}
+                    setValue={this.setParameter('network')}
+                    label="Network"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('functional') !== -1 ? (
+                <Grid item={true} xs={6} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.functional}
+                    unsetValue={this.unsetParameter('functional')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'functional'
+                    )}
+                    setValue={this.setParameter('functional')}
+                    label="Functional"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('basisSet') !== -1 ? (
+                <Grid item={true} xs={6} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.basisSet}
+                    unsetValue={this.unsetParameter('basisSet')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'basisSet'
+                    )}
+                    setValue={this.setParameter('basisSet')}
+                    label="Basis Set"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('densityFit') !== -1 ? (
+                <Grid item={true} xs={12} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.densityFit}
+                    unsetValue={this.unsetParameter('densityFit')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'densityFit'
+                    )}
+                    setValue={this.setParameter('densityFit')}
+                    label="Density Fitting"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('auxBasisSet') !== -1 ? (
+                <Grid item={true} xs={6} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.auxBasisSet}
+                    unsetValue={this.unsetParameter('auxBasisSet')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'auxBasisSet'
+                    )}
+                    setValue={this.setParameter('auxBasisSet')}
+                    label="Aux Basis Set"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('pseudoPotential') !== -1 ? (
+                <Grid item={true} xs={6} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.pseudoPotential}
+                    unsetValue={this.unsetParameter('pseudoPotential')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'pseudoPotential'
+                    )}
+                    setValue={this.setParameter('pseudoPotential')}
+                    label="Pseduo Potential"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('charge') !== -1 ? (
+                <Grid
+                  item={true}
+                  xs={12}
+                  sm={4}
+                  style={{
+                    padding: '23px 16px 0',
+                  }}
+                >
+                  <TextField
+                    id="chargeInput"
+                    label="Charge"
+                    type="number"
+                    onChange={this.handleInput('charge')}
+                    value={this.state.parameters.charge}
+                    className={classes.chargeInput}
+                    inputProps={{
+                      step: 1,
+                    }}
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('multiplicity') !== -1 ? (
+                <Grid item={true} xs={12} sm={4}>
+                  <DropdownMenu
+                    classes={this.props.classes}
+                    value={this.state.parameters.multiplicity}
+                    unsetValue={this.unsetParameter('multiplicity')}
+                    theme={this.props.theme}
+                    menuItems={getParameterOptions(
+                      this.state.xyz,
+                      this.state.parameters,
+                      'multiplicity'
+                    )}
+                    setValue={this.setParameter('multiplicity')}
+                    label="Multiplicity"
+                  />
+                </Grid>
+              ) : null}
+              <Grid item={true} xs={12} />{' '}
+              {possibleParameters.indexOf('kPoints') !== -1 ? (
+                <KPointsInput
+                  value={this.state.parameters.kPoints}
+                  setValue={this.setParameter('kPoints')}
+                  unsetValue={this.unsetParameter('kPoints')}
+                />
+              ) : null}
+              {possibleParameters.indexOf('kPoints') !== -1 ? (
+                <Grid item={true} sm={1} />
+              ) : null}
+              {possibleParameters.indexOf('latticeVectors') !== -1 ? (
+                <LatticeVectorsInput
+                  value={this.state.parameters.latticeVectors}
+                  setValue={this.setParameter('latticeVectors')}
+                  unsetValue={this.unsetParameter('latticeVectors')}
+                />
+              ) : null}
+              <Grid item={true} sm={1} />
+              <Grid item={true} xs={12} />
+              <Grid item={true} xs={1} sm={7} />
+              <Grid
+                item={true}
+                xs={12}
+                sm={3}
+                style={{
+                  textAlign: 'right',
+                  marginTop: 30,
                 }}
-              />
+              >
+                <Button
+                  raised={true}
+                  onClick={this._submitCalculation}
+                  color="primary"
+                  className={classes.submitButton}
+                >
+                  Start
+                </Button>
+              </Grid>
             </Grid>
-          ) : null}
-          {possibleParameters.indexOf('multiplicity') !== -1 ? (
-            <Grid item={true} xs={12} sm={4}>
-              <DropdownMenu
-                classes={this.props.classes}
-                value={this.state.parameters.multiplicity}
-                unsetValue={this.unsetParameter('multiplicity')}
-                theme={this.props.theme}
-                menuItems={getParameterOptions(
-                  this.state.xyz,
-                  this.state.parameters,
-                  'multiplicity'
-                )}
-                setValue={this.setParameter('multiplicity')}
-                label="Multiplicity"
-              />
-            </Grid>
-          ) : null}
-          <Grid item={true} xs={12} />{' '}
-          {possibleParameters.indexOf('kPoints') !== -1 ? (
-            <KPointsInput
-              value={this.state.parameters.kPoints}
-              setValue={this.setParameter('kPoints')}
-              unsetValue={this.unsetParameter('kPoints')}
-            />
-          ) : null}
-          {possibleParameters.indexOf('kPoints') !== -1 ? (
-            <Grid item={true} sm={1} />
-          ) : null}
-          {possibleParameters.indexOf('latticeVectors') !== -1 ? (
-            <LatticeVectorsInput
-              value={this.state.parameters.latticeVectors}
-              setValue={this.setParameter('latticeVectors')}
-              unsetValue={this.unsetParameter('latticeVectors')}
-            />
-          ) : null}
-          <Grid item={true} sm={1} />
-          <Grid item={true} xs={12} />
-          <Grid item={true} xs={1} sm={7} />
-          <Grid
-            item={true}
-            xs={12}
-            sm={3}
-            style={{
-              textAlign: 'right',
-              marginTop: 30,
-            }}
-          >
-            <Button
-              raised={true}
-              onClick={this._submitCalculation}
-              color="primary"
-              className={classes.submitButton}
-            >
-              Start
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
+          </div>
+        }
+      />
     );
   }
 }

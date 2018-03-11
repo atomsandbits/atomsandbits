@@ -1,38 +1,39 @@
 import styled from 'styled-components';
 import { Link as _Link } from 'react-router-dom';
 import Chip from 'material-ui/Chip';
+import { CircularProgress } from 'material-ui/Progress';
 import _SpeckRenderer from '/client/imports/components/SpeckRenderer';
 import { colors, fonts, breakpoints } from '/client/imports/theme';
 
-export const GeometryPageContainer = styled.div``;
-
-export const GeometryPageContent = styled.div`
-  display: flex;
-  margin: 0 auto;
-  text-align: center;
-  background-color: #f7f9fa;
-  @media (max-width: ${breakpoints.md}) {
-    flex-direction: column-reverse;
+export const GeometryPageContainer = styled.div`
+  height: auto;
+  @media (min-width: ${breakpoints.md}) {
+    height: 100%;
   }
 `;
 
-export const Column = styled.div`
-  width: 50%;
-  div {
-    max-width: 100%;
+export const GeometryPageContent = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f7f9fa;
+  flex-direction: column-reverse;
+  @media (min-width: ${breakpoints.md}) {
+    flex-direction: row;
   }
 `;
 
 export const ColumnContainer = styled.div`
-  width: 50%;
-  height: 100vh;
-  overflow: auto;
+  width: 100%;
+  height: auto;
   box-sizing: border-box;
   padding: 20px;
-  @media (max-width: ${breakpoints.md}) {
-    height: auto;
-    width: 100%;
-    padding: 20px;
+  @media (min-width: ${breakpoints.md}) {
+    height: 100%;
+    width: 50%;
+    overflow: auto;
   }
 `;
 
@@ -40,6 +41,9 @@ export const ColumnContent = styled.div`
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
+  @media (min-width: ${breakpoints.lg}) {
+    padding-top: 20px;
+  }
 `;
 
 export const FlatCard = styled.div`
@@ -77,6 +81,12 @@ export const CardPropertyRow = styled.div`
   flex-wrap: wrap;
   padding: 20px 0;
   width: 100%;
+`;
+export const LoadIndicator = styled(CircularProgress)`
+  && {
+    color: ${colors.secondary};
+    padding: 5px;
+  }
 `;
 export const CardProperty = styled.div`
   font-family: ${fonts.monospace};

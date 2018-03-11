@@ -50,10 +50,10 @@ const CalculationResultPure = ({ result, index }) => (
         ) : null}
       </CardTopRight>
       <SystemImage
-        src={`/${
-          result.calculation.geometries[0].images
-            ? result.calculation.geometries[0].images.small
-            : 'molecule1.png'
+        src={`${
+          result.calculation.geometries[0].mediumImage
+            ? result.calculation.geometries[0].mediumImage
+            : '/molecule4.png'
         }`}
       />
       <TimeInformation>

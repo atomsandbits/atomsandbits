@@ -1,68 +1,66 @@
 import { Meteor } from 'meteor/meteor';
-// import Speck from 'speck-renderer';
+import { Mongo } from 'meteor/mongo';
+import { exec } from 'child_process';
+import fs from 'fs';
+import webdriver from 'selenium-webdriver';
+import chromedriver from 'chromedriver';
 
-Meteor.startup(() => {
-  // code to run on server at startup
+// kill old chrome processes
+// TODO: handle the fact this kills real chrome processes
+exec("kill -9 `pgrep -f '\\-\\-headless'`");
+exec('killall chromedriver');
+
+/* Collections */
+const Geometries = new Mongo.Collection('geometries');
+
+/* Setup Chromedriver */
+const chromeCapabilities = webdriver.Capabilities.chrome();
+chromeCapabilities.set('chromeOptions', {
+  binary: '/usr/bin/google-chrome',
+  args: [
+    '--headless',
+    '--use-gl=osmesa',
+    '--ignore-gpu-blacklist',
+    '--enable-webgl-draft-extensions',
+  ],
 });
 
-const webdriverio = require('webdriverio');
-const chromedriver = require('chromedriver');
+/* Get DataURL with Selenium */
+const getDataURL = ({ xyz }) => {
+  const driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .withCapabilities(chromeCapabilities)
+    .build();
 
-const PORT = 9515;
+  // Navigate to google.com, enter a search.
+  driver.get(`${process.env.ROOT_URL}#${encodeURIComponent(xyz)}`);
 
-chromedriver.start(['--url-base=wd/hub', `--port=${PORT}`, '--verbose']);
+  const dataURLElement = driver.findElement(webdriver.By.id('data-url'));
+  driver
+    .wait(webdriver.until.elementIsVisible(dataURLElement), 5000)
+    .catch(error => {
+      driver.quit();
+      throw error;
+    });
 
-(async () => {
-  const opts = {
-    port: PORT,
-    desiredCapabilities: {
-      browserName: 'chrome',
-      loggingPrefs: { browser: 'ALL', driver: 'ALL' },
-      chromeOptions: { args: ['--headless', '--use-gl', '--ignore-gpu-blacklist', '--enable-webgl-draft-extensions'] },
-    },
-  };
+  return dataURLElement.getAttribute('innerHTML').then(dataURL => {
+    driver.quit();
+    return dataURL;
+  });
+};
 
-  const browser = webdriverio.remote(opts).init();
-
-  await browser.url('http://wwwtyro.github.io/speck/');
-
-  const title = await browser.getTitle();
-  console.log(`Title: ${title}`);
-
-  // const wait = await browser.pause(5000);
-
-  const buffer = await browser.saveScreenshot('screenshot.png');
-  console.log('Saved screenshot...');
-
-  const browserLogs = await browser.log('browser');
-  const clientLogs = await browser.log('driver');
-
-  chromedriver.stop();
-  browser.end();
-})();
-
-// const fs = require('fs');
-// const webdriver = require('selenium-webdriver');
-// const chromedriver = require('chromedriver');
-//
-// const chromeCapabilities = webdriver.Capabilities.chrome();
-// chromeCapabilities.set('chromeOptions', {args: ['--headless']});
-//
-// const driver = new webdriver.Builder()
-//   .forBrowser('chrome')
-//   .withCapabilities(chromeCapabilities)
-//   .build();
-//
-// // Navigate to google.com, enter a search.
-// driver.get('https://www.google.com/');
-// // driver.findElement({name: 'q'}).sendKeys('webdriver');
-// // driver.findElement({name: 'btnG'}).click();
-// // driver.wait(webdriver.until.titleIs('webdriver - Google Search'), 1000);
-//
-// // Take screenshot of results page. Save to disk.
-// driver.takeScreenshot().then(base64png => {
-//   console.log('Saving image...');
-//   fs.writeFileSync('screenshot.png', new Buffer(base64png, 'base64'));
-// });
-//
-// // driver.quit();
+Geometries.find().observe({
+  added: async geometry => {
+    if (!geometry.images || !geometry.images['512']) {
+      const xyz = `${geometry.totalAtoms}\n\n${geometry.atomicCoords}`;
+      const dataURL = await getDataURL({ xyz });
+      Geometries.update(geometry._id, {
+        $set: {
+          images: {
+            512: dataURL,
+          },
+        },
+      });
+    }
+  },
+});

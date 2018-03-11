@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Toolbar from 'material-ui/Toolbar';
 import MenuIcon from 'material-ui-icons/Menu';
 
-import { AppBar, AppBarContainer, MenuButtonContainer } from './styles';
+import { AppBar, AppBarContainer, MenuButtonContainer, Title } from './styles';
 
 class Header extends React.PureComponent {
   state = {
@@ -21,23 +21,20 @@ class Header extends React.PureComponent {
       .querySelector('main')
       .removeEventListener('scroll', this.handleScroll);
   }
-  handleScroll = _.throttle(
-    () => {
-      if (document.querySelector('main').scrollTop >= 10) {
-        this.setState({
-          elevated: true,
-        });
-      } else {
-        this.setState({
-          elevated: false,
-        });
-      }
-    },
-    100,
-  ).bind(this);
+  handleScroll = _.throttle(() => {
+    if (document.querySelector('main').scrollTop >= 10) {
+      this.setState({
+        elevated: true,
+      });
+    } else {
+      this.setState({
+        elevated: false,
+      });
+    }
+  }, 100).bind(this);
   render() {
     const { elevated } = this.state;
-    const { content, location } = this.props;
+    const { content, location, title } = this.props;
     const path = location.pathname.split('/')[1];
     let routeName = '';
     switch (path) {
@@ -62,7 +59,7 @@ class Header extends React.PureComponent {
         break;
     }
     return (
-      <AppBarContainer>
+      <AppBarContainer hide>
         <AppBar elevation={elevated ? 2 : 0} position="fixed">
           <Toolbar>
             <MenuButtonContainer
@@ -72,6 +69,7 @@ class Header extends React.PureComponent {
             >
               <MenuIcon />
             </MenuButtonContainer>
+            <Title>{title}</Title>
             {content}
           </Toolbar>
         </AppBar>
@@ -81,7 +79,7 @@ class Header extends React.PureComponent {
 }
 
 Header.propTypes = {
-  content: PropTypes.element.isRequired,
+  // content: PropTypes.element.isRequired,
   location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
     .isRequired,
 };

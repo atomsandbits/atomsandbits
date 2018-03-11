@@ -9,6 +9,9 @@ const convertCalculationToGraph = ({ calculationId, calculation, userId }) => {
   if (!calculation) {
     calculation = Calculations.findOne(calculationId);
   }
+  if (!calculationId) {
+    calculationId = calculation._id;
+  }
   const requests = Requests.findOne(
     { calculationId }
     // { sortBy: { createdAt: -1 } }
@@ -17,6 +20,8 @@ const convertCalculationToGraph = ({ calculationId, calculation, userId }) => {
   if (!calculation) {
     throw new Error('Calculation not found.');
   }
+  // console.log(Requests.find(
+  //   { calculationId }).fetch());
   return {
     // runTime: moment(lastRun.startedAt).diff(lastRun.completedAt),
     completed: Boolean(requests.completed),

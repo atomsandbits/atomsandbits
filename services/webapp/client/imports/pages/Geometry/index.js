@@ -11,6 +11,7 @@ import { withData } from './withData';
 
 import { LinearProgress } from 'material-ui/Progress';
 
+import AppLayout from '/client/imports/components/AppLayout';
 import { EnergyCard } from './Cards/Energy';
 import { ForceCard } from './Cards/Force';
 import { GeometryOptimizationCard } from './Cards/GeometryOptimization';
@@ -48,38 +49,45 @@ const GeometryPure = ({
   harmonicSpectra,
   refetch,
 }) => (
-  <GeometryPageContainer>
-    {console.log(geometry)}
-    <GeometryPageContent>
-      <GeometryCalculationColumn>
-        <ColumnContent>
-          <EnergyCard energies={energies} />
-          <ForceCard forces={forces} />
-          <GeometryOptimizationCard
-            geometryOptimizations={geometryOptimizations}
-          />
-        </ColumnContent>
-      </GeometryCalculationColumn>
-      <GeometryInformationColumn>
-        <ColumnContent>
-          <SpeckRenderer
-            xyz={xyzTools.prettyFormat({
-              xyzString: geometry.atomicCoords,
-            })}
-          />
-          <Tags tags={geometry.tags} refetch={refetch} />
-          <AtomicCoordsContainer>
-            <CardTitle>Atomic Coordinates</CardTitle>
-            <AtomicCoords>
-              {xyzTools.prettyFormat({
-                xyzString: geometry.atomicCoords,
-              })}
-            </AtomicCoords>
-          </AtomicCoordsContainer>
-        </ColumnContent>
-      </GeometryInformationColumn>
-    </GeometryPageContent>
-  </GeometryPageContainer>
+  <AppLayout
+    mobileOnlyToolbar
+    alwaysRaised
+    title="Geometry"
+    appContent={
+      <GeometryPageContainer>
+        {console.log(geometry)}
+        <GeometryPageContent>
+          <GeometryCalculationColumn>
+            <ColumnContent>
+              <EnergyCard energies={energies} />
+              <ForceCard forces={forces} />
+              <GeometryOptimizationCard
+                geometryOptimizations={geometryOptimizations}
+              />
+            </ColumnContent>
+          </GeometryCalculationColumn>
+          <GeometryInformationColumn>
+            <ColumnContent>
+              <SpeckRenderer
+                xyz={xyzTools.prettyFormat({
+                  xyzString: geometry.atomicCoords,
+                })}
+              />
+              <Tags tags={geometry.tags} refetch={refetch} />
+              <AtomicCoordsContainer>
+                <CardTitle>Atomic Coordinates</CardTitle>
+                <AtomicCoords>
+                  {xyzTools.prettyFormat({
+                    xyzString: geometry.atomicCoords,
+                  })}
+                </AtomicCoords>
+              </AtomicCoordsContainer>
+            </ColumnContent>
+          </GeometryInformationColumn>
+        </GeometryPageContent>
+      </GeometryPageContainer>
+    }
+  />
 );
 
 const LIMIT = 30;

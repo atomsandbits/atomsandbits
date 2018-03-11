@@ -12,6 +12,7 @@ const convertGeometryToGraph = ({ geometryId, userId }) => {
     atomicCoords: geometry.atomicCoords,
     molecularFormula: geometry.molecularFormula,
     atomCount: geometry.atomicCoords.split('\n').length,
+    mediumImage: geometry.images ? geometry.images['512'] : null,
     tags: geometry.users[0].tags,
   };
 };

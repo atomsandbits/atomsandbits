@@ -8,6 +8,7 @@ import {
   CardPropertyLabel,
   CardPropertyRow,
   CardTitle,
+  LoadIndicator,
 } from '../../styles';
 
 const matprint = mat => {
@@ -36,23 +37,37 @@ const matprint = mat => {
   return value;
 };
 
+const ForceRowLoading = ({ label }) => (
+  <CardPropertyRow key={`${label}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty>
+      <LoadIndicator size={20} thickness={5} />
+    </CardProperty>
+  </CardPropertyRow>
+);
+
+const ForceRowPure = ({ force, label }) => (
+  <CardPropertyRow key={`${label}-${force}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty small>{matprint(force)}</CardProperty>
+  </CardPropertyRow>
+);
+
+const ForceRow = compose(
+  branch(({ running }) => running, renderComponent(ForceRowLoading))
+)(ForceRowPure);
+
 const ForceCardPure = ({ forces }) => (
   <Expandable
     summary={[
       <CardTitle key="main-card-title">Force</CardTitle>,
-      <CardPropertyLabel key="main-card-label">
-        {forces[0].label}
-      </CardPropertyLabel>,
-      <CardProperty small key="main-card-property">
-        {forces[0].force}
-      </CardProperty>,
+      <ForceRow key="main-card-force" {...forces[0]} />,
     ]}
-    details={forces.slice(0, 1).map(({ label, force }) => (
-      <CardPropertyRow key={`${label}-${force}`}>
-        <CardPropertyLabel>{label}</CardPropertyLabel>
-        <CardProperty small>{force}</CardProperty>
-      </CardPropertyRow>
-    ))}
+    details={forces
+      .slice(1)
+      .map(forceDocument => (
+        <ForceRow key={`${forceDocument.label}-row`} {...forceDocument} />
+      ))}
   />
 );
 
@@ -61,12 +76,7 @@ const SingleForceCardPure = ({ forces }) => (
     expandable={false}
     summary={[
       <CardTitle key="main-card-title">Force</CardTitle>,
-      <CardPropertyLabel key="main-card-label">
-        {forces[0].label}
-      </CardPropertyLabel>,
-      <CardProperty small key="main-card-property">
-        {matprint(forces[0].force)}
-      </CardProperty>,
+      <ForceRow key="main-card-force" {...forces[0]} />,
     ]}
     details=""
   />

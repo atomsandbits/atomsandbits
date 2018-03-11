@@ -66,6 +66,7 @@ const HeaderPure = ({
   tag,
 }) => (
   <BaseHeader
+    title="Results Feed"
     content={
       <HeaderContent>
         <SortContainer>
