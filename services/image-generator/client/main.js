@@ -8,6 +8,7 @@ const speck = new SpeckRenderer({
 speck.gui.preset = "Cartoon";
 speck.gui.preset = "BallAndStick";
 speck.gui.__folders.Detail.__controllers[2].setValue(512)
+speck.gui.__folders.Detail.__controllers[0].setValue(100)
 if (window.location.hash) {
   const xyz = window.decodeURIComponent(window.location.hash.slice(1));
   console.log(xyz);
