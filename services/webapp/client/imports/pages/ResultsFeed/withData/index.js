@@ -24,6 +24,7 @@ const withData = compose(
             geometries {
               id
               molecularFormula
+              mediumImage
             }
           }
         }

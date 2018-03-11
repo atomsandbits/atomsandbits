@@ -54,6 +54,7 @@ const Geometry = () => [
     forces: [ForceProperty]!
     optimizations: [OptimizationProperty]!
     harmonicSpectra: [HarmonicSpectrumProperty]!
+    mediumImage: String
   }`,
   Calculation,
   EnergyProperty,

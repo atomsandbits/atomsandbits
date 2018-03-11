@@ -5,7 +5,7 @@ const styles = theme => ({
     maxWidth: 1000,
     margin: '0 auto 30px',
     [theme.breakpoints.up('md')]: {
-      margin: '20px auto 30px'
+      margin: '40px auto 30px'
     }
   },
   geometryTextareaContainer: {

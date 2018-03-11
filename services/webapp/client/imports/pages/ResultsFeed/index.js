@@ -5,6 +5,7 @@ import Fade from 'material-ui/transitions/Fade';
 import { LinearProgress } from 'material-ui/Progress';
 
 // import Header from '/client/imports/components/Header';
+import AppLayout from '/client/imports/components/AppLayout';
 import Header from './Header';
 import Result from './Result';
 import { withData } from './withData';
@@ -23,19 +24,26 @@ const displayLoadingState = branch(
 );
 
 const ResultsFeedPure = ({ data, ...otherProps }) => (
-  <ResultsFeedContainer>
-    <Header {...otherProps} />
-    <ResultsFeedContent>
-      {console.log(data.results)}
-      {data.results.map((result, index) => (
-        <Result
-          result={result}
-          index={index}
-          key={result.calculation ? result.calculation.id : result.project.id}
-        />
-      ))}
-    </ResultsFeedContent>
-  </ResultsFeedContainer>
+  <AppLayout
+    mobileOnlyToolbar
+    title="Results Feed"
+    appContent={
+      <ResultsFeedContainer>
+        <ResultsFeedContent>
+          {console.log(data.results)}
+          {data.results.map((result, index) => (
+            <Result
+              result={result}
+              index={index}
+              key={
+                result.calculation ? result.calculation.id : result.project.id
+              }
+            />
+          ))}
+        </ResultsFeedContent>
+      </ResultsFeedContainer>
+    }
+  />
 );
 
 const SORT_BY = 'createdAt';

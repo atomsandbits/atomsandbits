@@ -12,7 +12,7 @@ export const colors = {
     dark: '#404040',
   },
   text: {
-    default: '#484848',
+    default: '#484848', // #454545
     contrast: '#000000',
     light: '#637282',
     inverse: '#FFFFFF',
