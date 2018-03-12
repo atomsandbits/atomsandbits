@@ -22,7 +22,7 @@ concurrently \
 --prefix-colors "black,green,blue,red,cyan,yellow,magenta" \
 "mongod --replSet rs0 --dbpath data/db --quiet" \
 "(cd services/database && npm start -- --port 4000)" \
-"(cd services/tensormol && ./autoreload python app.py)" \
+"(cd services/tensormol && ./autoreload python3 app.py)" \
 "(cd services/psi4 && npm start -- --port 4200)" \
 "(cd services/webapp && npm start)" \
 "(cd services/about && npm start -- --port 3100 )" \
