@@ -6,8 +6,8 @@ import { colors, fonts, breakpoints } from '/client/imports/theme';
 
 export const RendererContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  fle
+  flex-direction: column;
+  height: 100%;
 `;
 export const Column = styled.div`
   width: 50%;
@@ -15,11 +15,36 @@ export const Column = styled.div`
   max-height: 350px;
   max-width: 350px;
 `;
-export const Geometry = styled.div`
+export const RendererRow = styled.div`
+  display: flex;
+  flex-direction: row;
   height: 100%;
-  overflow: auto;
+  @media (min-width: ${breakpoints.md}) {
+    flex-direction: column-reverse;
+  }
+  @media (min-width: 1600px) {
+    flex-direction: row;
+  }
+`;
+export const SpeckContainer = Column.extend`
+  display: none;
+  flex-shrink: 0;
+  height: 160px;
+  width: 160px;
+  margin: auto;
+  @media (min-width: ${breakpoints.sm}) {
+    display: block;
+  }
+`;
+export const Geometry = styled.div`
+  box-sizing: border-box;
   font-family: ${fonts.monospace};
   font-size: 0.8rem;
-  white-space: pre;
+  height: 100%;
+  margin: 0 auto;
+  overflow: auto;
+  padding: 0 15px;
   text-align: left;
+  white-space: pre;
+  width: 100%;
 `;

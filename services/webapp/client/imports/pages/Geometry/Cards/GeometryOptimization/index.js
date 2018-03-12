@@ -31,7 +31,7 @@ const GeometryOptimizationRowLoading = ({ label }) => (
 const GeometryOptimizationRowPure = ({ geometries, energies, label }) => (
   <CardPropertyRow key={`${label}-${energies}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
-    <CardProperty small>
+    <CardProperty small tall>
       <GeometryOptimizationRenderer
         key="temp-key"
         geometries={geometries}

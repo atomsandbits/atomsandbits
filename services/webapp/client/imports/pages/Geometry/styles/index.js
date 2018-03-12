@@ -91,8 +91,8 @@ export const LoadIndicator = styled(CircularProgress)`
 export const CardProperty = styled.div`
   font-family: ${fonts.monospace};
   font-size: ${props => (props.small ? '0.8rem' : '1.2rem')};
-  max-height: 300px;
-  max-width: 90%;
+  max-height: ${props => (props.tall ? '400px' : '300px')};
+  margin: 0 auto;
   overflow: auto;
   white-space: pre;
 `;
@@ -122,7 +122,10 @@ export const AtomicCoords = styled.div`
   font-family: ${fonts.monospace};
   font-size: 0.8rem;
   margin: 0 auto;
+  max-height: 350px;
+  overflow: auto;
   padding: 0 20px;
   white-space: pre;
+  width: 90%;
   width: fit-content;
 `;

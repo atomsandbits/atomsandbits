@@ -1,18 +1,20 @@
-import React from 'react';
+import styled from 'styled-components';
 
-const styles = (theme) => ({
-  container: {
-    margin: '0 auto 30px',
-  },
-  speckContainer: {
-    textAlign: 'center',
-    overflow: 'hidden',
-    userSelect: 'none',
-    maxHeight: 375,
-  },
-  speckCanvas: {
-    width: '100%',
-  },
-});
+export const SpeckRendererContainer = styled.div`
+  height: 100%;
+  div {
+    height: 100%;
+  }
+`;
 
-export default styles;
+export const SpeckCanvasContainer = styled.div`
+  text-align: center;
+  overflow: hidden;
+  user-select: none;
+  max-height: 375px;
+  height: 100%;
+`;
+
+export const SpeckCanvas = styled.canvas`
+  width: 100%;
+`;

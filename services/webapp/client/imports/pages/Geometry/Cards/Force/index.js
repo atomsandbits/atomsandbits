@@ -1,4 +1,5 @@
 import React from 'react';
+import { sprintf } from 'sprintf-js';
 import { compose, branch, renderComponent, renderNothing } from 'recompose';
 
 import Expandable from '/client/imports/components/Expandable';
@@ -11,30 +12,63 @@ import {
   LoadIndicator,
 } from '../../styles';
 
-const matprint = mat => {
-  let shape = [mat.length, mat[0].length];
-  function col(mat, i) {
-    return mat.map(row => row[i]);
+const countDecimals = number => {
+  if (Math.floor(number.valueOf()) === number.valueOf()) return 0;
+  if (number.toString().indexOf('e-') !== -1) {
+    return parseInt(number.toString().split('e-')[1], 10);
   }
-  let colMaxes = [];
-  for (let i = 0; i < shape[1]; i++) {
-    colMaxes.push(
-      Math.max.apply(null, col(mat, i).map(n => n.toString().length))
-    );
-  }
+  return number.toString().split('.')[1].length || 0;
+};
 
-  let value = mat
-    .map(row => {
-      return row.map((val, j) => {
-        return (
-          new Array(colMaxes[j] - val.toString().length + 1).join(' ') +
-          val.toString() +
-          '  '
-        );
-      });
-    })
-    .join('\n');
-  return value;
+const prettyPrint = matrix => {
+  const prettyStringArray = [];
+  const decimals = 8;
+  const prespacing = 5; // allows up to 99999 atoms
+  const positionSpacing = 2; // spacing after position
+  const spacing = 2; // spacing between values
+
+  let xLargestInt = 0;
+  let yLargestInt = 0;
+  let zLargestInt = 0;
+
+  const impreciseMatrix = matrix.map(matrixRow =>
+    matrixRow.map(item => item.toFixed(decimals))
+  );
+  impreciseMatrix.forEach(atomForce => {
+    const xIntCount = Number(atomForce[0])
+      .toFixed()
+      .toString().length;
+    const yIntCount = Number(atomForce[1])
+      .toFixed()
+      .toString().length;
+    const zIntCount = Number(atomForce[2])
+      .toFixed()
+      .toString().length;
+    xLargestInt = xLargestInt < xIntCount ? xIntCount : xLargestInt;
+
+    yLargestInt = yLargestInt < yIntCount ? yIntCount : yLargestInt;
+
+    zLargestInt = zLargestInt < zIntCount ? zIntCount : zLargestInt;
+  });
+  impreciseMatrix.forEach((atomForce, index) => {
+    const position = index + 1;
+    prettyStringArray.push(
+      sprintf(
+        `%${prespacing}f %${decimals +
+          xLargestInt +
+          positionSpacing}.${decimals}f %${decimals +
+          yLargestInt +
+          spacing}.${decimals}f %${decimals +
+          zLargestInt +
+          spacing}.${decimals}f  `,
+        position,
+        atomForce[0],
+        atomForce[1],
+        atomForce[2]
+      )
+    );
+  });
+  return prettyStringArray.join('\n');
 };
 
 const ForceRowLoading = ({ label }) => (
@@ -49,7 +83,7 @@ const ForceRowLoading = ({ label }) => (
 const ForceRowPure = ({ force, label }) => (
   <CardPropertyRow key={`${label}-${force}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
-    <CardProperty small>{matprint(force)}</CardProperty>
+    <CardProperty small>{prettyPrint(force)}</CardProperty>
   </CardPropertyRow>
 );
 

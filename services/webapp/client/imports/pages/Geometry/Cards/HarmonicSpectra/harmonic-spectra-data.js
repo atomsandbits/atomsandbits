@@ -35,8 +35,8 @@ const intensities = `1.683964674315208132e+00
 1.302662584100372722e+00
 1.985139088862631240e+00`.split('\n');
 const variance = 1;
-const sigma = 15 * (variance ** 0.5);
-const twoTimesSigmaSquared = 2 * (sigma ** 2);
+const sigma = 15 * variance ** 0.5;
+const twoTimesSigmaSquared = 2 * sigma ** 2;
 const m = sigma * Math.sqrt(2 * Math.PI);
 const resolution = 1000;
 const vStart = 0;
@@ -61,8 +61,10 @@ for (let i = 0; i < intensities.length; i += 1) {
   // add gaussian intensity values to the plotting space
   for (let j = 0; j < y.length; j += 1) {
     const xValue = x[j];
-    const e = Math.exp(-((xValue - wavelengths[i]) ** 2) / twoTimesSigmaSquared);
-    y[j] += (e / m) * intensities[i];
+    const e = Math.exp(
+      -((xValue - wavelengths[i]) ** 2) / twoTimesSigmaSquared
+    );
+    y[j] += e / m * intensities[i];
   }
 }
 

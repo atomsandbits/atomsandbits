@@ -7,9 +7,10 @@ import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 
 import SpeckRenderer from '/client/imports/components/SpeckRenderer';
+import { Molecule } from '/both/imports/tools/Molecule';
 import xyzTools from '/both/imports/tools/xyz';
 
-import { RendererContainer, Column, Geometry } from './styles';
+import { RendererContainer, RendererRow, Column, SpeckContainer, Geometry } from './styles';
 
 const GeometryOptimizationRendererPure = ({
   geometries,
@@ -19,19 +20,23 @@ const GeometryOptimizationRendererPure = ({
   decrement,
 }) => (
   <RendererContainer>
-    <Column>
+    <RendererRow>
       <Geometry>
         {`Energy: ${energies[selectedGeometryIndex]}\n`}
-        {geometries[selectedGeometryIndex]}
+        {new Molecule({ xyz: geometries[selectedGeometryIndex] })
+          .prettify({ positions: true })
+          .xyz.split('\n')
+          .slice(2)
+          .join('\n')}
       </Geometry>
-    </Column>
-    <Column>
-      <SpeckRenderer
-        xyz={xyzTools.prettyFormat({
-          xyzString: geometries[selectedGeometryIndex],
-        })}
-      />
-    </Column>
+      <SpeckContainer>
+        <SpeckRenderer
+          xyz={xyzTools.prettyFormat({
+            xyzString: geometries[selectedGeometryIndex],
+          })}
+        />
+      </SpeckContainer>
+    </RendererRow>
     <MobileStepper
       type="dots"
       steps={geometries.length}

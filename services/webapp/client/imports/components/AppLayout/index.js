@@ -21,7 +21,7 @@ const AppLayoutPure = ({
 }) => (
   <AppLayoutContainer>
     <AppBar
-      mobileOnlyToolbar
+      mobileonlytoolbar="true"
       elevation={alwaysRaised || elevated ? 2 : 0}
       position="fixed"
     >

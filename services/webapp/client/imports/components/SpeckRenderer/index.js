@@ -5,10 +5,13 @@ import MobileDetect from 'mobile-detect';
 import _ from 'lodash';
 import { Random } from 'meteor/random';
 
-import { withStyles } from 'material-ui/styles';
 import Hidden from 'material-ui/Hidden';
 
-import styles from './styles';
+import {
+  SpeckRendererContainer,
+  SpeckCanvasContainer,
+  SpeckCanvas,
+} from './styles';
 
 let md = new MobileDetect(window.navigator.userAgent);
 
@@ -31,7 +34,8 @@ class SpeckRenderer extends React.Component {
         });
         // this.speck.gui.preset = "Cartoon";
         // this.speck.gui.preset = "BallAndStick";
-        this.speck.gui.__folders.Detail.__controllers[2].setValue(canvasHeight);
+        const resolution = canvasHeight > 256 ? canvasHeight : 256;
+        this.speck.gui.__folders.Detail.__controllers[2].setValue(resolution);
         this.speck.loadStructure(this.props.xyz);
         window.addEventListener('resize', this.handleResize);
       }
@@ -62,29 +66,25 @@ class SpeckRenderer extends React.Component {
       this.speck.setOptions({
         zoomRatio: containerHeight * this.props.zoom / canvasHeight,
       });
-      this.speck.gui.__folders.Detail.__controllers[2].setValue(canvasHeight);
+      const resolution = canvasHeight > 256 ? canvasHeight : 256;
+      this.speck.gui.__folders.Detail.__controllers[2].setValue(resolution);
     }
   }, 2000).bind(this);
   render() {
     const { classes, theme, xyz } = this.props;
     return (
-      <div className={`${classes.container} ${this.props.className}`}>
+      <SpeckRendererContainer>
         <Hidden implementation="css" only="xs">
-          <div id={`speck-root-${this.id}`} className={classes.speckContainer}>
-            <canvas
-              id={`speck-canvas-${this.id}`}
-              className={classes.speckCanvas}
-            />
-          </div>
+          <SpeckCanvasContainer id={`speck-root-${this.id}`}>
+            <SpeckCanvas id={`speck-canvas-${this.id}`} />
+          </SpeckCanvasContainer>
         </Hidden>
-      </div>
+      </SpeckRendererContainer>
     );
   }
 }
 
 SpeckRenderer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
   xyz: PropTypes.string.isRequired,
   zoom: PropTypes.number,
 };
@@ -92,4 +92,4 @@ SpeckRenderer.defaultProps = {
   zoom: 1,
 };
 
-export default withStyles(styles, { withTheme: true })(SpeckRenderer);
+export default SpeckRenderer;

@@ -20,6 +20,7 @@ import { Tags } from './Tags';
 import { defaults, Line as LineChart } from 'react-chartjs-2';
 
 import Expandable from '/client/imports/components/Expandable';
+import { Molecule } from '/both/imports/tools/Molecule';
 import xyzTools from '/both/imports/tools/xyz';
 import {
   AtomicCoords,
@@ -77,9 +78,11 @@ const GeometryPure = ({
               <AtomicCoordsContainer>
                 <CardTitle>Atomic Coordinates</CardTitle>
                 <AtomicCoords>
-                  {xyzTools.prettyFormat({
-                    xyzString: geometry.atomicCoords,
-                  })}
+                  {new Molecule({ xyz: geometry.atomicCoords })
+                    .prettify({ positions: true })
+                    .xyz.split('\n')
+                    .slice(2)
+                    .join('\n')}
                 </AtomicCoords>
               </AtomicCoordsContainer>
             </ColumnContent>

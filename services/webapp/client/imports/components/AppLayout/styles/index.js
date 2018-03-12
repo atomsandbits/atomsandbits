@@ -9,7 +9,7 @@ export const AppBar = styled(_AppBar)`
     background-color: ${colors.background.default};
     transition: box-shadow 200ms;
     @media (min-width: ${breakpoints.lg}) {
-      display: ${props => (props.mobileOnlyToolbar ? 'none' : 'default')};
+      display: ${props => (props.mobileonlytoolbar ? 'none' : 'default')};
       width: calc(100% - ${sizes.drawer});
     }
   }

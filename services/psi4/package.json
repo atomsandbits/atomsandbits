@@ -1,0 +1,15 @@
+{
+  "name": "psi4-service",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "lodash": "^4.17.4",
+    "meteor-node-stubs": "^0.3.2",
+    "moment": "^2.20.1",
+    "socket.io": "^1.7.4",
+    "winston": "^3.0.0-rc2"
+  }
+}
