@@ -3,6 +3,7 @@ from TensorMol import GeomOptimizer, MSet, Mol, PARAMS
 
 def main(manager, molecule, emit_callback):
     """main."""
+
     def EnAndForce(x_, DoForce=True):
         """Calculate energy and force."""
         mtmp = Mol(molecule.atoms, x_)
@@ -21,8 +22,9 @@ def main(manager, molecule, emit_callback):
     PARAMS["OptMaxCycles"] = 2000
     PARAMS["OptThresh"] = 0.001
     Opt = GeomOptimizer(EnAndForce)
-    molecule = Opt.Opt(molecule,callback=emit_callback)
+    molecule = Opt.Opt(molecule, callback=emit_callback)
     return molecule
+
 
 if __name__ == "__main__":
     import os

@@ -54,7 +54,7 @@ def main():
                            {'calculationId': calculation_id}, socket_callback)
             print('Running Calculation: ', calculation_id)
             ping_timer = threading.Timer(1, ping_calculation_running,
-                                        [calculation])
+                                         [calculation])
             ping_timer.start()
 
         def stop_pinging():
@@ -63,6 +63,7 @@ def main():
 
         try:
             socket_result = {}
+
             def socket_callback(error='', result=''):
                 nonlocal calculation_running
                 nonlocal socket_result
@@ -104,13 +105,21 @@ def main():
                 #       after each step and pass it into geomopt method
                 def emit_callback(mol_hist):
                     print("Emitting Callback")
-                    socket_io.emit('saveIntermediateResults', {
-                        'calculationId': calculation_id,
-                        'properties': {
-                        'geometries': ['\n'.join(str(m).split('\n')[2:]) for m in mol_hist],
-                        'energies': [m.properties['energy'] for m in mol_hist]
-                        }})
-                finalm = geometry_optimization.main(network, molecule, emit_callback)
+                    socket_io.emit(
+                        'saveIntermediateResults', {
+                            'calculationId': calculation_id,
+                            'properties': {
+                                'geometries': [
+                                    '\n'.join(str(m).split('\n')[2:])
+                                    for m in mol_hist
+                                ],
+                                'energies':
+                                [m.properties['energy'] for m in mol_hist]
+                            }
+                        })
+
+                finalm = geometry_optimization.main(network, molecule,
+                                                    emit_callback)
                 xyz = '\n'.join(str(finalm).split('\n')[2:])
                 socket_io.emit(
                     'saveCalculationResult', {
@@ -121,7 +130,7 @@ def main():
                         }
                     })
             elif calculation_type == 'harmonicSpectra':
-                finalm,w,v = harmonic_spectra.main(network, molecule)
+                finalm, w, v = harmonic_spectra.main(network, molecule)
                 xyz = '\n'.join(str(finalm).split('\n')[2:])
                 socket_io.emit(
                     'saveCalculationResult', {
@@ -139,20 +148,33 @@ def main():
             elif calculation_type == 'conformerSearch':
                 # TODO: add parameters. (window etc.)
                 nConf = calculation.get('num_conformers')
+
                 def emit_callback(mol_hist):
-                    socket_io.emit('saveIntermediateResults', {
-                        'calculationId': calculation_id,
-                        'properties': {
-                        'geometries': ['\n'.join(str(m).split('\n')[2:]) for m in mol_hist],
-                        'energies': [m.properties['energy'] for m in mol_hist]
-                        }})
-                mol_hist = conformer_search.main(network, molecule, nConf, callback=emit_callback)
+                    socket_io.emit(
+                        'saveIntermediateResults', {
+                            'calculationId': calculation_id,
+                            'properties': {
+                                'geometries': [
+                                    '\n'.join(str(m).split('\n')[2:])
+                                    for m in mol_hist
+                                ],
+                                'energies':
+                                [m.properties['energy'] for m in mol_hist]
+                            }
+                        })
+
+                mol_hist = conformer_search.main(
+                    network, molecule, nConf, callback=emit_callback)
                 socket_io.emit(
                     'saveCalculationResult', {
                         'calculationId': calculation_id,
                         'properties': {
-                            'geometries': ['\n'.join(str(m).split('\n')[2:]) for m in mol_hist],
-                            'energies': [m.properties['energy'] for m in mol_hist]
+                            'geometries': [
+                                '\n'.join(str(m).split('\n')[2:])
+                                for m in mol_hist
+                            ],
+                            'energies':
+                            [m.properties['energy'] for m in mol_hist]
                         }
                     })
             else:

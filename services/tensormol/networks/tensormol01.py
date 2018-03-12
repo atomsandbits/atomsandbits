@@ -1,13 +1,5 @@
-from TensorMol import (
-    BOHRPERA,
-    GeomOptimizer,
-    Mol,
-    MolDigester,
-    MSet,
-    PARAMS,
-    TensorMolData_BP_Direct_EE_WithEle_Release,
-    TFMolManage
-)
+from TensorMol import (BOHRPERA, GeomOptimizer, Mol, MolDigester, MSet, PARAMS,
+                       TensorMolData_BP_Direct_EE_WithEle_Release, TFMolManage)
 import numpy as np
 
 
@@ -35,20 +27,16 @@ def main():
     PARAMS["AddEcc"] = True
     PARAMS["KeepProb"] = [1.0, 1.0, 1.0, 0.7]
     # Initialize a digester that apply descriptor for the fragme
-    d = MolDigester(TreatedAtoms,
-                    name_="ANI1_Sym_Direct",
-                    OType_="EnergyAndDipole")
-    tset = TensorMolData_BP_Direct_EE_WithEle_Release(a,
-                                                      d,
-                                                      order_=1,
-                                                      num_indis_=1,
-                                                      type_="mol")
-                                                      # WithGrad=True)
-    PARAMS["DSFAlpha"] = 0.18*BOHRPERA
+    d = MolDigester(
+        TreatedAtoms, name_="ANI1_Sym_Direct", OType_="EnergyAndDipole")
+    tset = TensorMolData_BP_Direct_EE_WithEle_Release(
+        a, d, order_=1, num_indis_=1, type_="mol")
+    # WithGrad=True)
+    PARAMS["DSFAlpha"] = 0.18 * BOHRPERA
     manager = TFMolManage("chemspider12_solvation", tset, False,
                           'fc_sqdiff_BP_Direct_EE_ChargeEncode' +
-                          '_Update_vdw_DSF_elu_Normalize_Dropout',
-                          False, False)
+                          '_Update_vdw_DSF_elu_Normalize_Dropout', False,
+                          False)
     return manager
 
 
