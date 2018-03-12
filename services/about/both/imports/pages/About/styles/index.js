@@ -17,6 +17,7 @@ export const VisualizeIcons = styled.div`
 
 export const SplashTextContainer = styled.div`
   padding: 30px;
+  max-width: 1000px;
 `;
 
 export const SectionTitle = styled.div`
@@ -42,22 +43,21 @@ export const FirstSection = styled.div`
 export const Title = styled.div`
   font-family: Poppins;
   color: #ff5252;
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
 `;
 export const Description = styled.div`
   font-family: Poppins;
   color: #404040;
-  font-size: 3.25rem;
+  font-size: 2rem;
   font-weight: bold;
 `;
 export const StartLink = styled.a`
   font-family: Poppins;
   float: right;
   font-weight: bold;
-  letter-spacing: 0.1rem;
   color: #0070e0;
-  font-size: 3rem;
+  font-size: 2.5rem;
 `;
 
 export const SecondSection = Section.extend`
