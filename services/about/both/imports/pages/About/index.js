@@ -56,7 +56,8 @@ const AboutPure = () => (
         <SplashTextContainer>
           <Title>cloudszi</Title>
           <Description>molecular discovery at scale</Description>
-          <StartLink href="https://www.cloudszi.com/">start</StartLink>
+          <StartLink href="https://www.cloudszi.com/">Get Started</StartLink>
+          <MethodType>Use cloud-based quantum calculations and deep learning ... and get your science done faster</MethodType>
         </SplashTextContainer>
       </FirstSection>
       <SecondSection id="explore">
@@ -175,6 +176,7 @@ const AboutPure = () => (
           </PricingSection>
         </PricingContainer>
       </FourthSection>
+      // We need a section on technology here, and more flash graphics throughout.
       <FifthSection id="team">
         {/* <SectionTitle>Team</SectionTitle> */}
         <ProfileContainerStyle>
