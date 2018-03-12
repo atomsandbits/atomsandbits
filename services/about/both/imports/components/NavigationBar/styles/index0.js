@@ -1,49 +1,18 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import FaCloud from 'react-icons/lib/fa/cloud';
-
-
-
-export const NavigationBarStyle = styled.header`
-    align-items: center;
-    box-sizing: border-box;
-    display: flex;
-    max-width: 1600px;
-    margin: 0 auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    transition: box-shadow 200ms;
-    width: 100%;
-    z-index: 100;
-    // animation: ${props => props.fixed ? "fadeStickyIn .3s ease-in-out forwards": ""};
-    @media (min-width: 600px) {
-      padding-right: 20px;
-    }
-`
-export const Logo = styled(FaCloud)`
-  font-size: 3rem;
-  color: white;
-  stroke: #0070e0;
-  padding: 15px 30px;
-  stroke-width: 3px;
-`;
 
 export const MenuButton = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
     height: 100%;
-    padding: 25px;
-    @media (min-width: 600px) {
+    @media (min-width: 767px) {
         display: none;
     }
 `
 export const MenuStyle = styled.div`
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 50px;
     background-color: white;
     color: black;
     border-radius: 2px;
@@ -52,7 +21,7 @@ export const MenuStyle = styled.div`
 export const MenuLink = styled(Link)`
     display: flex;
     align-items: center;
-    padding: 20px 60px 20px 40px;
+    padding: 20px 30px 20px 40px;
     transition: background-color 300ms;
     &:hover {
         background-color: gainsboro;
@@ -65,14 +34,14 @@ export const IconLink = styled(Link)`
     height: 100%;
     transition: color 300ms;
     &:hover {
-        color: #ff5252;
+        color: white;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
         display: none;
     }
 `;
 export const TextLink = IconLink.extend`
-    padding: 5px 10px;
+    padding: 0 0.5rem 0 0;
     font-weight: bold;
 `;
 export const GetStartedLink = styled("a")`
