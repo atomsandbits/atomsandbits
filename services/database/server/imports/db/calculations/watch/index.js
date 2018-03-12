@@ -12,7 +12,7 @@ const calculationWatcher = {
     calculationWatcher.observers.push(
       Requests.find().observe({
         added: request => {
-          console.log('request added!');
+          console.log('Request added, checking...');
           const calculation = Calculations.findOne(request.calculationId);
           calculationWatcher.checkCalculation({ calculation, request });
         },
@@ -51,7 +51,7 @@ const calculationWatcher = {
     // TODO: handle when a new request comes in and a request is already
     //       running, stopCalculation if new cluster node size is bigger
     //       else just mark the request as running
-    if (!request.running) {
+    if (!request.running && !request.completed) {
       const { serverId } = Clusters.findOne(request.clusterId);
       // TODO: make sure this makes sense for multiple database-service nodes
       runCalculation({

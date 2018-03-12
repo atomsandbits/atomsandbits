@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter, Redirect } from 'react-router-dom';
 import { compose, branch, renderComponent, withState } from 'recompose';
 
 import Fade from 'material-ui/transitions/Fade';
@@ -22,6 +23,11 @@ const displayLoadingState = branch(
   props => props.data.loading,
   renderComponent(Loading)
 );
+
+const redirectWithNoResults = branch(
+  props => props.data.results.length === 0,
+  renderComponent(<Redirect to="/new-calculation" />)
+)
 
 const ResultsFeedPure = ({ data, ...otherProps }) => (
   <AppLayout
@@ -59,7 +65,9 @@ const ResultsFeed = compose(
   withState('search', 'setSearch', SEARCH),
   withState('limit', 'setLimit', LIMIT),
   withData,
-  displayLoadingState
+  displayLoadingState,
+  withRouter,
+  redirectWithNoResults
 )(ResultsFeedPure);
 
 export { ResultsFeed };

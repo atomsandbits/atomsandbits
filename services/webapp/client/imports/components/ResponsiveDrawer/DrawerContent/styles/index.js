@@ -14,8 +14,8 @@ export const HeaderLogo = styled(Link)`
   && {
     color: ${colors.secondary};
     font-family: ${fonts.logo};
-    font-size: 1.9rem;
-    font-weight: 600;
+    font-size: 1.7rem;
+    font-weight: 700;
     justify-content: flex-start;
     letter-spacing: 0.04rem;
     padding: 25px;
@@ -50,7 +50,7 @@ export const LinkIcon = styled.span`
   padding-right: 15px;
 `;
 export const LinkText = styled.span`
-  color: ${colors.text.light};
+  color: ${colors.text.default};
   display: flex;
   align-items: center;
   font-weight: 500;

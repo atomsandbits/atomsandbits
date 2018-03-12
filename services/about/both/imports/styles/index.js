@@ -9,6 +9,7 @@ darker-blue: #3C9AD8
 injectGlobal`
     body {
         background-color: white;
+        color: #454545;
         margin: 0;
         font-family: Raleway, Helvetica, Arial, Sans-serif;
         cursor: default;
@@ -21,14 +22,15 @@ injectGlobal`
     h1 {
         font-size: 2.5rem;
         font-weight: 400;
-        @media (max-width: 768px) {
+        font-family: Poppins;
+        @media (max-width: 960px) {
             font-size: 1.5rem;
         }
     }
     h2 {
         font-size: 1.75rem;
         font-weight: 300;
-        @media (max-width: 768px) {
+        @media (max-width: 960px) {
             font-size: 1.25rem;
         }
     }
@@ -84,31 +86,12 @@ const NavigationBarStyle = styled.header`
     height: ${props => props.height ? props.height : "48px"};
     max-width: 1600px;
     padding: 0 1.25rem;
-    position: fixed;
     transition: box-shadow 200ms;
     width: 100%;
     z-index: 100;
     // animation: ${props => props.fixed ? "fadeStickyIn .3s ease-in-out forwards": ""};
 `
 
-const FooterStyle = styled.div`
-    align-items: center;
-    background-color: ${props => props.backgroundColor ? props.backgroundColor : "#223"};
-    box-sizing: border-box;
-    color:  ${props => props.textColor ? props.textColor : "#acf"};
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 1rem;
-    width: 100%;
-    @media (max-width: 768px) {
-        padding-bottom: 2rem;
-    }
-`
-const DividerStyle = styled.span`
-    color: white;
-    margin: 0 0.2rem;
-`
 
 const SmallSectionStyle = styled.section`
     background-color: ${props => props.backgroundColor ? props.backgroundColor : "#223"};
