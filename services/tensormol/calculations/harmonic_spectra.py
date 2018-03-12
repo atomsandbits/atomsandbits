@@ -1,4 +1,4 @@
-from TensorMol import GeomOptimizer, MSet, Mol, PARAMS
+from TensorMol import HarmonicSpectra, MSet, Mol, PARAMS
 
 
 def main(manager, molecule, emit_callback):
