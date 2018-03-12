@@ -37,7 +37,7 @@ const withData = compose(
           variables: {
             geometryInput: { id: geometryId, calculationId },
           },
-          pollInterval: 5000,
+          pollInterval: 2000,
         };
       },
     }

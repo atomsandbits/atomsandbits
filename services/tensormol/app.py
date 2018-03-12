@@ -106,7 +106,7 @@ def main():
                 def emit_callback(mol_hist):
                     print("Emitting Callback")
                     socket_io.emit(
-                        'saveIntermediateResults', {
+                        'saveIntermediateCalculationResult', {
                             'calculationId': calculation_id,
                             'properties': {
                                 'geometries': [
@@ -151,7 +151,7 @@ def main():
 
                 def emit_callback(mol_hist):
                     socket_io.emit(
-                        'saveIntermediateResults', {
+                        'saveIntermediateCalculationResult', {
                             'calculationId': calculation_id,
                             'properties': {
                                 'geometries': [

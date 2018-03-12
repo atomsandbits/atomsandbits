@@ -3,7 +3,7 @@ set -a
 DB_NAME=cloudszi
 MONGO_URL=mongodb://localhost:27017/cloudszi
 MONGO_OPLOG_URL=mongodb://oplogger:password@localhost:27017/local?authSource=admin
-TENSORMOL_PATH=~/Packages/TensorMol
+TENSORMOL_PATH=~/Packages/TensorMol_Dev
 PYTHONPATH=${PYTHONPATH}:~/Packages/pyscf
 
 OMP_NUM_THREADS=2

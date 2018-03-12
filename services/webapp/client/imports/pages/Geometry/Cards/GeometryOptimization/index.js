@@ -4,6 +4,7 @@ import {
   branch,
   renderComponent,
   renderNothing,
+  pure,
   mapProps,
 } from 'recompose';
 
@@ -28,8 +29,13 @@ const GeometryOptimizationRowLoading = ({ label }) => (
   </CardPropertyRow>
 );
 
-const GeometryOptimizationRowPure = ({ geometries, energies, label }) => (
-  <CardPropertyRow key={`${label}-${energies}`}>
+const GeometryOptimizationRowPure = ({
+  geometries,
+  energies,
+  label,
+  running,
+}) => (
+  <CardPropertyRow key={`${label}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
     <CardProperty small tall>
       <GeometryOptimizationRenderer
@@ -38,12 +44,21 @@ const GeometryOptimizationRowPure = ({ geometries, energies, label }) => (
         energies={energies}
       />
     </CardProperty>
+    {running ? (
+      <LoadIndicator
+        style={{ position: 'absolute', top: 20, right: 20 }}
+        size={20}
+        thickness={5}
+      />
+    ) : null}
   </CardPropertyRow>
 );
 
 const GeometryOptimizationRow = compose(
+  pure,
   branch(
-    ({ running }) => running,
+    ({ running, geometries }) =>
+      running && (!geometries || geometries.length === 0),
     renderComponent(GeometryOptimizationRowLoading)
   )
 )(GeometryOptimizationRowPure);
@@ -79,7 +94,9 @@ const SingleGeometryOptimizationCard = ({ geometryOptimizations }) => (
       />,
     ]}
     details=""
-  />
+  >
+    {console.log(geometryOptimizations[0])}
+  </Expandable>
 );
 
 const noOptimizationsBranch = branch(
