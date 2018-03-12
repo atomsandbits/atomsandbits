@@ -174,6 +174,9 @@ export const PriceLabel = styled.div`
 `;
 export const Price = styled.div``;
 
+export const SixthSection = Section.extend`
+  text-align: center;
+`;
 export const FifthSection = Section.extend`
   text-align: center;
 `;

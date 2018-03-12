@@ -63,7 +63,6 @@ def main():
 
         try:
             socket_result = {}
-
             def socket_callback(error='', result=''):
                 nonlocal calculation_running
                 nonlocal socket_result
@@ -99,19 +98,38 @@ def main():
                         }
                     })
             elif calculation_type == 'geometryOptimization':
-                # TODO: make geomopt method return intermediate geoms and energies
-                # TODO: submit intermediate geometries and energies
-                # TODO: define a function for emitting saveIntermediateResults
+                # [X]: make geomopt method return intermediate geoms and energies
+                # [x]: submit intermediate geometries and energies
+                # [X]: define a function for emitting saveIntermediateResults
                 #       after each step and pass it into geomopt method
-                xyz = '\n'.join(
-                    str(geometry_optimization.main(network,
-                                                   molecule)).split('\n')[2:])
+                def emit_callback(mol_hist):
+                    print("Emitting Callback")
+                    socket_io.emit('saveIntermediateResults', {
+                        'calculationId': calculation_id,
+                        'properties': {
+                        'geometries': ['\n'.join(str(m).split('\n')[2:]) for m in mol_hist],
+                        'energies': [m.properties['energy'] for m in mol_hist]
+                        }})
+                finalm = geometry_optimization.main(network, molecule, emit_callback)
+                xyz = '\n'.join(str(finalm).split('\n')[2:])
                 socket_io.emit(
                     'saveCalculationResult', {
                         'calculationId': calculation_id,
                         'properties': {
                             'geometries': [xyz],
-                            'energies': [0]
+                            'energies': [finalm.properties['energy']]
+                        }
+                    })
+            elif calculation_type == 'harmonicSpectra':
+                finalm,w,v = harmonic_spectra.main(network, molecule)
+                xyz = '\n'.join(str(finalm).split('\n')[2:])
+                socket_io.emit(
+                    'saveCalculationResult', {
+                        'calculationId': calculation_id,
+                        'properties': {
+                            'geometries': [xyz],
+                            'frequencies': w,
+                            'intensities': v
                         }
                     })
             elif calculation_type == 'nudgedElasticBand':
@@ -119,9 +137,24 @@ def main():
                 # values = nudged_elastic_band.main(network, [mol1, mol2])
                 pass
             elif calculation_type == 'conformerSearch':
-                # run conformer search
-                # values = conformer_search.main(network, molecule)
-                pass
+                # TODO: add parameters. (window etc.)
+                nConf = calculation.get('num_conformers')
+                def emit_callback(mol_hist):
+                    socket_io.emit('saveIntermediateResults', {
+                        'calculationId': calculation_id,
+                        'properties': {
+                        'geometries': ['\n'.join(str(m).split('\n')[2:]) for m in mol_hist],
+                        'energies': [m.properties['energy'] for m in mol_hist]
+                        }})
+                mol_hist = conformer_search.main(network, molecule, nConf, callback=emit_callback)
+                socket_io.emit(
+                    'saveCalculationResult', {
+                        'calculationId': calculation_id,
+                        'properties': {
+                            'geometries': ['\n'.join(str(m).split('\n')[2:]) for m in mol_hist],
+                            'energies': [m.properties['energy'] for m in mol_hist]
+                        }
+                    })
             else:
                 print('Unknown CalculationType!', calculation_type)
         except:
