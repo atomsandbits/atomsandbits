@@ -121,11 +121,13 @@ def main():
                         }
                     })
             elif calculation_type == 'harmonicSpectra':
-                w,v = harmonic_spectra.main(network, molecule)
+                finalm,w,v = harmonic_spectra.main(network, molecule)
+                xyz = '\n'.join(str(finalm).split('\n')[2:])
                 socket_io.emit(
                     'saveCalculationResult', {
                         'calculationId': calculation_id,
                         'properties': {
+                            'geometries': [xyz],
                             'frequencies': w,
                             'intensities': v
                         }
