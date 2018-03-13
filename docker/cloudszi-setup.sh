@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Download TensorMol networks from Google Drive
-if [ ! -f ./images/tensormol-service/networks.zip ]; then
+if [ ! -f ./images/tensormol/networks.zip ]; then
     echo "Downloading TensorMol Networks..."
     cd ./images/tensormol-service
-    ggID='1YK5W7hzqNKyrNqwO2coyF5qX9b5iEqob'  
-    ggURL='https://drive.google.com/uc?export=download'  
-    filename="$(curl -sc /tmp/gcokie "${ggURL}&id=${ggID}" | grep -o '="uc-name.*</span>' | sed 's/.*">//;s/<.a> .*//')"  
-    getcode="$(awk '/_warning_/ {print $NF}' /tmp/gcokie)"  
+    ggID='1YK5W7hzqNKyrNqwO2coyF5qX9b5iEqob'
+    ggURL='https://drive.google.com/uc?export=download'
+    filename="$(curl -sc /tmp/gcokie "${ggURL}&id=${ggID}" | grep -o '="uc-name.*</span>' | sed 's/.*">//;s/<.a> .*//')"
+    getcode="$(awk '/_warning_/ {print $NF}' /tmp/gcokie)"
     curl -Lb /tmp/gcokie "${ggURL}&confirm=${getcode}&id=${ggID}" -o "${filename}"
     rm uc*
     cd ../../
@@ -21,9 +21,10 @@ if [ -f ./user-variables.env ]; then
 fi
 
 # Build Images
-docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN webapp
-docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN scheduler
-docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN psi4-service
-docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN pyscf-service
-docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN tensormol-service
+./scripts/build-image.sh about
+./scripts/build-image.sh webapp
+./scripts/build-image.sh database
+./scripts/build-image.sh tensormol
+./scripts/build-image.sh psi4
+./scripts/build-image.sh image-generator
 docker-compose build

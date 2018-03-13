@@ -1,0 +1,42 @@
+/* CSS declarations go here */
+
+html, body, #react-root {
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  font-family: Quicksand, Roboto, Helvetica, Arial;
+}
+
+html {
+  font-size: 18px;
+}
+
+.dg {
+  font-weight: 500;
+  text-shadow: none;
+  font-family: Quicksand, Helvetica, Arial;
+}
+.dg.ac {
+  z-index: 2000 !important;
+}
+.dg.a {
+  margin-right: 0;
+}
+.dg .closed li.title {
+  background: none;
+  background-image: none !important;
+  background-color: #000;
+}
+.dg.main .close-button {
+  background-color: #404040 !important;
+  color: white;
+  font-size: 0.775rem;
+  font-weight: 500;
+  font-family: Quicksand;
+  height: 24px !important;
+  line-height: 24px !important;
+}
+.dg.main .close-button:hover {
+  background-color: #404040;
+}

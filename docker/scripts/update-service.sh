@@ -8,7 +8,7 @@ if [ -f user-variables.env ]; then
 fi
 
 # Run Docker Compose
-docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN $1
+./scripts/build-image.sh $1
 
 # Run the new Image
- docker-compose up --no-deps -d $1
+docker-compose up --no-deps -d $1

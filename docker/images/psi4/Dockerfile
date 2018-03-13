@@ -1,11 +1,7 @@
 # Set the base image
-FROM continuumio/anaconda
+FROM node
 # Dockerfile author /maintainer
 MAINTAINER Jordan Garside <jordangarside@gmail.com>
-
-# Install Node.js
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-RUN apt-get install -y nodejs
 
 # Install Forever
 RUN npm install -g forever
@@ -14,26 +10,25 @@ RUN npm install -g forever
 RUN curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor && rm ./meteor
 
 # Install Psi4
-RUN apt-get install -y libblas-dev build-essential gfortran cmake
-RUN conda config --add channels http://conda.anaconda.org/psi4 && conda install psi4
+RUN wget http://vergil.chemistry.gatech.edu/psicode-download/psi4conda-1.1-py36-Linux-x86_64.sh
+RUN apt-get install bzip2
+RUN echo '/psi4conda' | bash /psi4conda-1.1-py36-Linux-x86_64.sh
+RUN rm /psi4conda-1.1-py36-Linux-x86_64.sh
 
-# Download and Build Psi4-service
-ARG GITHUB_TOKEN
-ADD https://$GITHUB_TOKEN@api.github.com/repos/cloudszi/psi4-service/compare/master...HEAD /dev/null
-RUN git clone https://$GITHUB_TOKEN@github.com/cloudszi/psi4-service.git
-RUN cd ./psi4-service && meteor npm install
-RUN cd ./psi4-service && meteor build ../build --allow-superuser --architecture os.linux.x86_64 && cd ../build && tar -xzvf ./psi4-service.tar.gz
+# Download and Build Service
+COPY ./src src
+RUN cd ./src && meteor npm install
+RUN cd ./src && meteor build ../build --allow-superuser --architecture os.linux.x86_64 && cd ../build && tar -xzvf ./src.tar.gz
 RUN cd build/bundle/programs/server && npm install
 
 # Cleanup
 RUN rm /usr/local/bin/meteor && rm -rf ~/.meteor
-RUN rm -r /psi4-service && rm /build/psi4-service.tar.gz
+RUN rm -r /src && rm /build/src.tar.gz
 
 # Set Environment Variables
-ENV PORT 4200
-
-EXPOSE 4200
+ENV PORT 80
+EXPOSE 80
 
 # Default Command
 WORKDIR build/bundle
-ENTRYPOINT forever -l ../forever.log -o ../node.log -e ../error.log --minUptime 1000 --spinSleepTime 1000 main.js
+ENTRYPOINT source /psi4conda/bin/activate && forever -l ../forever.log -o ../node.log -e ../error.log --minUptime 1000 --spinSleepTime 1000 main.js
