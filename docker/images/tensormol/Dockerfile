@@ -26,7 +26,7 @@ RUN pip install -e /TensorMol
 # Download and Build Service
 COPY ./src src
 RUN cd ./src && meteor npm install
-RUN cd ./src && meteor build ../build --allow-superuser --architecture os.linux.x86_64 && cd ../build && tar -xzvf ./src.tar.gz
+RUN cd ./src && meteor build ../build --allow-superuser --architecture os.linux.x86_64 && cd ../build && tar -xzf ./src.tar.gz
 RUN cd build/bundle/programs/server && npm install
 
 # Cleanup

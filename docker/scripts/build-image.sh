@@ -1,7 +1,14 @@
 #!/bin/bash
 
-rm -rf ./docker/images/$1/$1
+rm -rf ./images/$1/src
 cp -r ../services/$1 ./images/$1/src
 
+# Load Environment Variables
+set -a
+source variables.env
+if [ -f user-variables.env ]; then
+    source user-variables.env
+fi
+
 # Run Docker Compose
-(cd ./images/$1 && docker build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN .)
+docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN $1
