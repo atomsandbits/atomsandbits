@@ -3,13 +3,12 @@
 # Download TensorMol networks from Google Drive
 if [ ! -f ./images/tensormol/networks.zip ]; then
     echo "Downloading TensorMol Networks..."
-    cd ./images/tensormol-service
+    cd ./images/tensormol
     ggID='1YK5W7hzqNKyrNqwO2coyF5qX9b5iEqob'
     ggURL='https://drive.google.com/uc?export=download'
     filename="$(curl -sc /tmp/gcokie "${ggURL}&id=${ggID}" | grep -o '="uc-name.*</span>' | sed 's/.*">//;s/<.a> .*//')"
     getcode="$(awk '/_warning_/ {print $NF}' /tmp/gcokie)"
     curl -Lb /tmp/gcokie "${ggURL}&confirm=${getcode}&id=${ggID}" -o "${filename}"
-    rm uc*
     cd ../../
 fi
 
