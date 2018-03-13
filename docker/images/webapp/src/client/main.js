@@ -1,1 +1,0 @@
-import '/client/imports/main';
