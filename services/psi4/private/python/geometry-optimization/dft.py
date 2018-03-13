@@ -1,7 +1,8 @@
 # -----------------------
 #     Argument Parser
 # -----------------------
-import sys, argparse
+import sys
+import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--atomic-coords', help='atomic coordinates')
@@ -25,6 +26,7 @@ sys.argv = [sys.argv[0]]
 
 import os
 import psi4
+import json
 psi4.set_memory(os.environ.get('PSI4_MAX_MEMORY') + " MB")
 psi4.core.set_num_threads(int(os.environ.get('OMP_NUM_THREADS')))
 
@@ -33,4 +35,28 @@ molecule = psi4.geometry("""
 {atomic_coords}
 """.format(charge=charge, multiplicity=multiplicity, atomic_coords=atomic_coords))
 
-psi4.optimize('{}/{}'.format(functional, basis_set), molecule=molecule)
+final_energy, wfn = psi4.optimize(
+    '{}/{}'.format(functional, basis_set), molecule=molecule, return_wfn=True)
+final_geometry = wfn.molecule()
+
+def get_xyz(geometry):
+    xyz = ""
+    atom_count = geometry.natom()
+    for iat in range(atom_count):
+        xyz += "{} {:.6f} {:.6f} {:.6f}".format(
+            geometry.symbol(iat),  # element symbol
+            geometry.x(iat) * psi4.constants.bohr2angstroms,  # x-coordinate
+            geometry.y(iat) * psi4.constants.bohr2angstroms,  # y-coordinate
+            geometry.z(iat) * psi4.constants.bohr2angstroms,  # z-coordinate
+        )
+        if iat is not atom_count - 1:
+            xyz += '\n'
+    return xyz
+
+
+properties = {
+    "energies": [final_energy],
+    "geometries": [get_xyz(final_geometry)]
+}
+stringified_properties = json.dumps(properties)
+print('Cloudszi Properties:\n~{}~'.format(stringified_properties))

@@ -17,6 +17,7 @@ export const AppFrame = styled.div`
 export const Content = styled.main`
   height: 100%;
   width: 100%;
+  overflow: auto;
 `;
 export const Drawer = styled(_Drawer)`
   height: 100%;

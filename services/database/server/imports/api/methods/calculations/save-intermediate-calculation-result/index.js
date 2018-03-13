@@ -12,17 +12,19 @@ io.on(
         (
           {
             calculationId = isRequired('calculationId'),
-            properties = isRequired('properties'),
+            properties,
             output,
+            error,
           },
           callback = () => {},
         ) => {
-          logger.info('API saveIntermediateCalculationResult: ', arguments);
+          logger.info('API saveCalculationResult...', properties);
           try {
             const calculationUpdated = saveIntermediateCalculationResult({
               calculationId,
               properties,
               output,
+              error,
             });
             callback(null, {
               updated: calculationUpdated,

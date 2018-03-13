@@ -112,13 +112,15 @@ const stopCalculation = ({
 
 const saveIntermediateCalculationResult = ({
   calculationId = isRequired('calculationdId'),
-  properties = isRequired('properties'),
+  properties,
   output,
+  error,
 }) =>
   Calculations.update(calculationId, {
     $set: {
       properties,
       output,
+      error,
     },
   });
 
@@ -126,6 +128,7 @@ const saveCalculationResult = ({
   calculationId = isRequired('calculationdId'),
   properties = isRequired('properties'),
   output,
+  error,
 }) => {
   Requests.update(
     {
@@ -144,6 +147,7 @@ const saveCalculationResult = ({
     $set: {
       properties,
       output,
+      error,
     },
   });
 };

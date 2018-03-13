@@ -73,7 +73,7 @@ const GeometryOptimizationCardPure = ({ geometryOptimizations }) => (
       />,
     ]}
     details={geometryOptimizations
-      .slice(0, 1)
+      .slice(1)
       .map(geometryOptimization => (
         <GeometryOptimizationRow
           key={`${geometryOptimization.label}-row`}

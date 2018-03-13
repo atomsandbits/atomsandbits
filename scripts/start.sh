@@ -3,6 +3,7 @@ set -a
 DB_NAME=cloudszi
 MONGO_URL=mongodb://localhost:27017/cloudszi
 MONGO_OPLOG_URL=mongodb://oplogger:password@localhost:27017/local?authSource=admin
+PSI4_PATH=~/Packages/psi4conda
 TENSORMOL_PATH=~/Packages/TensorMol_Dev
 PYTHONPATH=${PYTHONPATH}:~/Packages/pyscf
 
@@ -23,7 +24,7 @@ concurrently \
 "mongod --replSet rs0 --dbpath data/db --quiet" \
 "(cd services/database && npm start -- --port 4000)" \
 "(cd services/tensormol && ./autoreload python3 app.py)" \
-"(cd services/psi4 && npm start -- --port 4200)" \
+"(source $PSI4_PATH/bin/activate && cd services/psi4 && npm start -- --port 4200)" \
 "(cd services/webapp && npm start)" \
 "(cd services/about && npm start -- --port 3100 )" \
 "(cd services/image-generator && npm start -- --port 3200 )"

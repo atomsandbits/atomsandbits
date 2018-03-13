@@ -100,7 +100,31 @@ class SplashPage extends React.Component {
             <li className={classes.footerListItem}>
               <a
                 className={classes.footerLink}
-                href="https://about.cloudszi.com/team"
+                href="https://about.cloudszi.com/#explore"
+              >
+                Explore
+              </a>
+            </li>
+            <li className={classes.footerListItem}>
+              <a
+                className={classes.footerLink}
+                href="https://about.cloudszi.com/#methods"
+              >
+                Methods
+              </a>
+            </li>
+            <li className={classes.footerListItem}>
+              <a
+                className={classes.footerLink}
+                href="https://about.cloudszi.com/#pricing"
+              >
+                Pricing
+              </a>
+            </li>
+            <li className={classes.footerListItem}>
+              <a
+                className={classes.footerLink}
+                href="https://about.cloudszi.com/#team"
               >
                 Team
               </a>
@@ -108,23 +132,7 @@ class SplashPage extends React.Component {
             <li className={classes.footerListItem}>
               <a
                 className={classes.footerLink}
-                href="https://about.cloudszi.com/technology"
-              >
-                Technology
-              </a>
-            </li>
-            <li className={classes.footerListItem}>
-              <a
-                className={classes.footerLink}
-                href="https://about.cloudszi.com/privacy-policy"
-              >
-                Privacy Policy
-              </a>
-            </li>
-            <li className={classes.footerListItem}>
-              <a
-                className={classes.footerLink}
-                href="https://about.cloudszi.com/contact"
+                href="https://about.cloudszi.com/#contact"
               >
                 Contact
               </a>

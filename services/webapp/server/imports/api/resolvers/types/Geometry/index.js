@@ -10,7 +10,9 @@ const prettyPropertyLabel = ({ parameters }) => {
     case 'machineLearning':
       return `${parameters.network}`;
     default:
-      return 'unknown property type';
+      return `${parameters.method} ${parameters.basisSet} ${
+        parameters.functional ? parameters.functional : ''
+      }`;
   }
 };
 

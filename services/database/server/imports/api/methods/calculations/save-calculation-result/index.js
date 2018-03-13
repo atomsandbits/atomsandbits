@@ -14,6 +14,7 @@ io.on(
             calculationId = isRequired('calculationId'),
             properties = isRequired('properties'),
             output,
+            error,
           },
           callback = () => {},
         ) => {
@@ -23,6 +24,7 @@ io.on(
               calculationId,
               properties,
               output,
+              error,
             });
             callback(null, {
               updated: calculationUpdated,
