@@ -1,23 +1,29 @@
 version: '3'
 services:
+  about:
+    build: ./images/about
+    ports:
+      - "$ABOUT_PORT:80"
+    environment:
+      - ROOT_URL=$ABOUT_ROOT_URL
   webapp:
     build: ./images/webapp
     ports:
       - "$WEBAPP_PORT:80"
     depends_on:
-      - db
+      - mongo
       - elasticsearch
     environment:
-      - ROOT_URL=$ROOT_URL
+      - ROOT_URL=$WEBAPP_ROOT_URL
       - MONGO_URL=$METEOR_MONGO_URL
       - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
       - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
       - DB_NAME=$DB_NAME
       - GITHUB_TOKEN=$GITHUB_TOKEN
-  db:
-    build: ./images/db
+  mongo:
+    build: ./images/mongo
     ports:
-      - "27017:27017"
+      - "$MONGO_PORT:27017"
     environment:
       -  MONGO_HOST=$MONGO_HOST
       -  OPLOG_USER=$OPLOG_USER
@@ -29,54 +35,57 @@ services:
   mongoconnector:
     build: ./images/mongo-connector
     depends_on:
-      - db
+      - mongo
       - elasticsearch
     environment:
       - MONGO_URL=$MONGO_URL
       - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
-  scheduler:
-    build: ./images/calculation-scheduler
-    depends_on:
-      - db
-      - tensormol-service
-      - psi4-service
-      - pyscf-service
+  image-generator:
+    build: ./images/image-generator
     environment:
-      - ROOT_URL=http://scheduler:4000/
+      - ROOT_URL=http://image-generator:4000/
+      - MONGO_URL=$METEOR_MONGO_URL
+      - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
+  database:
+    build: ./images/database
+    depends_on:
+      - mongo
+    environment:
+      - ROOT_URL=http://database:4000/
       - MONGO_URL=$METEOR_MONGO_URL
       - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
       - TENSORMOL_URL=$TENSORMOL_URL
       - PSI4_URL=$PSI4_URL
       - PYSCF_URL=$PYSCF_URL
       - GITHUB_TOKEN=$GITHUB_TOKEN
-  tensormol-service:
-    build: ./images/tensormol-service
+  tensormol:
+    build: ./images/tensormol
     depends_on:
-      - db
+      - database
     environment:
-      - ROOT_URL=http://tensormol-service:4100/
+      - ROOT_URL=http://tensormol:4100/
       - MONGO_URL=$METEOR_MONGO_URL
       - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
       - GITHUB_TOKEN=$GITHUB_TOKEN
-  psi4-service:
-    build: ./images/psi4-service
+  psi4:
+    build: ./images/psi4
     depends_on:
-      - db
+      - database
     environment:
-      - ROOT_URL=http://psi4-service:4200/
+      - ROOT_URL=http://psi4:4200/
       - MONGO_URL=$METEOR_MONGO_URL
       - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
       - OMP_NUM_THREADS=$PSI4_NUM_THREADS
       - PSI4_MAX_MEMORY=$PSI4_MAX_MEMORY
       - GITHUB_TOKEN=$GITHUB_TOKEN
-  pyscf-service:
-    build: ./images/pyscf-service
-    depends_on:
-      - db
-    environment:
-      - ROOT_URL=http://pyscf-service:4300/
-      - MONGO_URL=$METEOR_MONGO_URL
-      - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
-      - OMP_NUM_THREADS=$PYSCF_NUM_THREADS
-      - PYSCF_MAX_MEMORY=$PYSCF_MAX_MEMORY
-      - GITHUB_TOKEN=$GITHUB_TOKEN
+  # pyscf:
+  #   build: ./images/pyscf
+  #   depends_on:
+  #     - mongo
+  #   environment:
+  #     - ROOT_URL=http://pyscf:4300/
+  #     - MONGO_URL=$METEOR_MONGO_URL
+  #     - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
+  #     - OMP_NUM_THREADS=$PYSCF_NUM_THREADS
+  #     - PYSCF_MAX_MEMORY=$PYSCF_MAX_MEMORY
+  #     - GITHUB_TOKEN=$GITHUB_TOKEN

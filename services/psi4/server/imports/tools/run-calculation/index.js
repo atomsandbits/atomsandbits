@@ -137,7 +137,7 @@ const runCalculation = ({
         output.split('Cloudszi Properties:\n~')[1].split('~')[0]
       );
     }
-    console.log(`Properties: ${properties}`);
+    console.log('Properties: ', properties);
 
     socket.emit(
       'saveCalculationResult',
