@@ -11,7 +11,7 @@ RUN curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor
 
 # Download and Build Service
 COPY ./src src
-RUN cd ./src && meteor reset --allow-superuser  && meteor npm install --allow-superuser 
+RUN cd ./src && meteor reset --allow-superuser  && meteor npm install --allow-superuser
 RUN cd ./src && meteor build ../build --allow-superuser --architecture os.linux.x86_64 && cd ../build && tar -xzf ./src.tar.gz
 RUN cd build/bundle/programs/server && npm install
 
@@ -25,4 +25,4 @@ EXPOSE 80
 
 # Default Command
 WORKDIR build/bundle
-ENTRYPOINT echo "hello"
+ENTRYPOINT forever -l ../forever.log -o ../node.log -e ../error.log --minUptime 1000 --spinSleepTime 1000 main.js
