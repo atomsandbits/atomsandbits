@@ -9,6 +9,7 @@ import {
   CardPropertyLabel,
   CardPropertyRow,
   CardTitle,
+  ErrorIcon,
   LoadIndicator,
 } from '../../styles';
 
@@ -80,6 +81,15 @@ const ForceRowLoading = ({ label }) => (
   </CardPropertyRow>
 );
 
+const ForceRowError = ({ label }) => (
+  <CardPropertyRow key={`${label}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty>
+      <ErrorIcon />
+    </CardProperty>
+  </CardPropertyRow>
+);
+
 const ForceRowPure = ({ force, label }) => (
   <CardPropertyRow key={`${label}-${force}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
@@ -88,6 +98,7 @@ const ForceRowPure = ({ force, label }) => (
 );
 
 const ForceRow = compose(
+  branch(({ error }) => Boolean(error), renderComponent(ForceRowError)),
   branch(({ running }) => running, renderComponent(ForceRowLoading))
 )(ForceRowPure);
 

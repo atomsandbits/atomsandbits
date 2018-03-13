@@ -16,6 +16,7 @@ import {
   CardPropertyLabel,
   CardPropertyRow,
   CardTitle,
+  ErrorIcon,
   Column,
   LoadIndicator,
 } from '../../styles';
@@ -25,6 +26,15 @@ const GeometryOptimizationRowLoading = ({ label }) => (
     <CardPropertyLabel>{label}</CardPropertyLabel>
     <CardProperty>
       <LoadIndicator size={20} thickness={5} />
+    </CardProperty>
+  </CardPropertyRow>
+);
+
+const GeometryOptimizationRowError = ({ label }) => (
+  <CardPropertyRow key={`${label}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty>
+      <ErrorIcon />
     </CardProperty>
   </CardPropertyRow>
 );
@@ -57,10 +67,14 @@ const GeometryOptimizationRowPure = ({
 const GeometryOptimizationRow = compose(
   pure,
   branch(
+    ({ error }) => Boolean(error),
+    renderComponent(GeometryOptimizationRowError)
+  ),
+  branch(
     ({ running, geometries }) =>
       running && (!geometries || geometries.length === 0),
     renderComponent(GeometryOptimizationRowLoading)
-  )
+  ),
 )(GeometryOptimizationRowPure);
 
 const GeometryOptimizationCardPure = ({ geometryOptimizations }) => (

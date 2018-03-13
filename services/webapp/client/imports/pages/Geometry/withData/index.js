@@ -14,17 +14,20 @@ const withData = compose(
             energy
             label
             running
+            error
           }
           forces {
             force
             label
             running
+            error
           }
           optimizations {
             geometries
             energies
             label
             running
+            error
           }
         }
       }

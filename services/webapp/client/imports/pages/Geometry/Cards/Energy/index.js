@@ -8,6 +8,7 @@ import {
   CardPropertyLabel,
   CardPropertyRow,
   CardTitle,
+  ErrorIcon,
   LoadIndicator,
 } from '../../styles';
 
@@ -20,6 +21,15 @@ const EnergyRowLoading = ({ label }) => (
   </CardPropertyRow>
 );
 
+const EnergyRowError = ({ label }) => (
+  <CardPropertyRow key={`${label}`}>
+    <CardPropertyLabel>{label}</CardPropertyLabel>
+    <CardProperty>
+      <ErrorIcon />
+    </CardProperty>
+  </CardPropertyRow>
+);
+
 const EnergyRowPure = ({ energy, label }) => (
   <CardPropertyRow key={`${label}-${energy}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
@@ -28,6 +38,7 @@ const EnergyRowPure = ({ energy, label }) => (
 );
 
 const EnergyRow = compose(
+  branch(({ error }) => Boolean(error), renderComponent(EnergyRowError)),
   branch(({ running }) => running, renderComponent(EnergyRowLoading))
 )(EnergyRowPure);
 

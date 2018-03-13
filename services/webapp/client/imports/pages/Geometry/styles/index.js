@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link as _Link } from 'react-router-dom';
 import Chip from 'material-ui/Chip';
+import _ErrorIcon from 'react-icons/lib/fa/exclamation-circle';
 import { CircularProgress } from 'material-ui/Progress';
 import _SpeckRenderer from '/client/imports/components/SpeckRenderer';
 import { colors, fonts, breakpoints } from '/client/imports/theme';
@@ -87,6 +88,10 @@ export const LoadIndicator = styled(CircularProgress)`
     color: ${colors.secondary};
     padding: 5px;
   }
+`;
+export const ErrorIcon = styled(_ErrorIcon)`
+  color: ${colors.secondary};
+  font-size: 1.6rem;
 `;
 export const CardProperty = styled.div`
   font-family: ${fonts.monospace};

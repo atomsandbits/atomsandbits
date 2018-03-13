@@ -120,13 +120,8 @@ const runCalculation = ({
   /* Calculation Finished */
   job.on('exit', (code, error) => {
     if (isNaN(code)) code = -1;
-    const properties = JSON.parse(
-      output.split('Cloudszi Properties:\n~')[1].split('~')[0]
-    );
-
     console.log(`Finished: Calculation #${calculationId}...`);
     console.log(`Exit Code: ${code}`);
-    console.log(`Properties: ${properties}`);
 
     /* Temporary Fix for Stderr problems of Psi4 */
     if (error || output.split('ERROR: ')[1]) {
@@ -135,6 +130,14 @@ const runCalculation = ({
         : output.split('ERROR: ')[1].split('\n')[0];
       onCalculationError(errorMsg);
     }
+
+    let properties = {};
+    if (output.split('Cloudszi Properties:\n~')[1]) {
+      JSON.parse(
+        output.split('Cloudszi Properties:\n~')[1].split('~')[0]
+      );
+    }
+    console.log(`Properties: ${properties}`);
 
     socket.emit(
       'saveCalculationResult',

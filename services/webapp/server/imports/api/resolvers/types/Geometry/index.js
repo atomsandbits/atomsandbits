@@ -35,6 +35,7 @@ const Geometry = {
       return {
         energy: calculation.properties ? calculation.properties.energy : null,
         label: prettyPropertyLabel({ parameters: calculation.parameters }),
+        error: calculation.errorMessage,
         running: !calculation.completed,
         calculation: calculation,
       };
@@ -56,6 +57,7 @@ const Geometry = {
       return {
         force: calculation.properties ? calculation.properties.force : null,
         label: prettyPropertyLabel({ parameters: calculation.parameters }),
+        error: calculation.errorMessage,
         running: !calculation.completed,
         calculation: calculation,
       };
@@ -81,6 +83,7 @@ const Geometry = {
           ? calculation.properties.energies
           : null,
         label: prettyPropertyLabel({ parameters: calculation.parameters }),
+        error: calculation.errorMessage,
         running: !calculation.completed,
         calculation: calculation,
       };
@@ -99,6 +102,7 @@ const Geometry = {
         frequencies: calculation.properties.frequencies,
         intensities: calculation.properties.intensities,
         label: prettyPropertyLabel({ parameters: calculation.parameters }),
+        error: calculation.errorMessage,
         running: !calculation.completed,
         calculation: getCalculation({ calculationId: calculation._id }),
       };

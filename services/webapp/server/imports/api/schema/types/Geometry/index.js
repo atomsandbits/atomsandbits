@@ -4,6 +4,7 @@ const EnergyProperty = () => [
   `type EnergyProperty {
     energy: Float
     label: String!
+    error: String
     running: Boolean!
     calculation: Calculation!
   }`,
@@ -14,6 +15,7 @@ const ForceProperty = () => [
   `type ForceProperty {
     force: [[Float]]
     label: String!
+    error: String
     running: Boolean!
     calculation: Calculation!
   }`,
@@ -25,6 +27,7 @@ const OptimizationProperty = () => [
     geometries: [String]
     energies: [Float]
     label: String!
+    error: String
     running: Boolean!
     calculation: Calculation!
   }`,
@@ -36,6 +39,7 @@ const HarmonicSpectrumProperty = () => [
     frequencies: [Float]
     wavelengths: [Float]
     label: String!
+    error: String
     running: Boolean!
     calculation: Calculation!
   }`,
