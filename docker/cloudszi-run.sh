@@ -6,4 +6,4 @@ if [ -f ./user-variables.env ]; then
 fi
 
 # Run Docker Compose
-nvidia-docker-compose up
+docker-compose up

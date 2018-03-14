@@ -12,5 +12,5 @@ if [ -f user-variables.env ]; then
 fi
 
 # Run Docker Compose
-nvidia-docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN $1
+docker-compose build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN $1
 rm -rf ./images/$1/src
