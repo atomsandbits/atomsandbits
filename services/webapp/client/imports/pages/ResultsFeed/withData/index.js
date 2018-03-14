@@ -31,7 +31,7 @@ const withData = compose(
       }
     `,
     {
-      options: () => ({ pollInterval: 5000 }),
+      options: () => ({ pollInterval: 3000 }),
     }
   )
 );

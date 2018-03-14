@@ -11,4 +11,4 @@ fi
 ./scripts/build-image.sh $1
 
 # Run the new Image
-docker-compose up --no-deps -d $1
+nvidia-docker-compose up --no-deps -d $1

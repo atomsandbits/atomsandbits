@@ -133,7 +133,7 @@ const runCalculation = ({
 
     let properties = {};
     if (output.split('Cloudszi Properties:\n~')[1]) {
-      JSON.parse(
+      properties = JSON.parse(
         output.split('Cloudszi Properties:\n~')[1].split('~')[0]
       );
     }

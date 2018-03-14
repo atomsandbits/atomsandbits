@@ -3,6 +3,7 @@
 # logging.getLogger('requests').setLevel(logging.WARNING)
 # logging.basicConfig(level=logging.DEBUG)
 
+import os
 import sys
 import threading
 from socketIO_client import SocketIO
@@ -189,8 +190,10 @@ def main():
         print('Calculation Finished: ', calculation_id)
 
     # Start SocketIO Client
+    address = os.environ.get('DATABASE_ADDRESS') or 'localhost'
+    port = os.environ.get('DATABASE_PORT') or '8080'
     socket_io = SocketIO(
-        'localhost', 8080, params={
+        address, port, params={
             'program': 'tensormol',
             'serverId': 'free'
         })

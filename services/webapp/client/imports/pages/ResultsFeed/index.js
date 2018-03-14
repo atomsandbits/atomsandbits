@@ -26,8 +26,8 @@ const displayLoadingState = branch(
 
 const redirectWithNoResults = branch(
   props => props.data.results.length === 0,
-  renderComponent(<Redirect to="/new-calculation" />)
-)
+  renderComponent(() => <Redirect to="/new-calculation" />)
+);
 
 const ResultsFeedPure = ({ data, ...otherProps }) => (
   <AppLayout

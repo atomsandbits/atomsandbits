@@ -1,6 +1,6 @@
-./data
-./results
-./densities
+/data
+/results
+/densities
 
 ####################
 # common.gitignore #
