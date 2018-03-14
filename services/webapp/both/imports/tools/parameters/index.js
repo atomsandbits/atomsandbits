@@ -12,6 +12,9 @@ getPossibleParameters = (currentParameters) => {
   if (currentParameters.calculationMethod === "dft" || currentParameters.calculationMethod === "tddft") {
     possibleParameters.push("functional")
   }
+  if (currentParameters.calculationType === "conformerSearch") {
+    possibleParameters.push("numberConformers")
+  }
   if (currentParameters.calculationType === "periodicBoundaryCondition") {
     possibleParameters.push("densityFit")
     possibleParameters.push("periodicCalculationType")
@@ -26,7 +29,6 @@ getPossibleParameters = (currentParameters) => {
       possibleParameters.push("kPoints")
     }
   }
-
   return possibleParameters;
 }
 
@@ -78,6 +80,10 @@ getParameterOptions = (xyz, currentParameters, parameter) => {
         return geometryOptimizationMethods;
       if (currentParameters.calculationType == "groundState")
         return groundStateMethods;
+      if (currentParameters.calculationType == "conformationSearch")
+        return conformationSearchMethods;
+      if (currentParameters.calculationType == "harmonicSpectra")
+        return harmonicSpectraMethods;
       if (currentParameters.calculationType == "excitedState")
         return excitedStateMethods;
       if (currentParameters.calculationType == "periodicBoundaryCondition")
@@ -115,7 +121,9 @@ getParameterOptions = (xyz, currentParameters, parameter) => {
       break;
   }
 }
-validateParameters = (parameters) => {}
+validateParameters = (parameters) => {
+// TODO: validateParameters :P
+}
 
 export {
   getPossibleParameters,

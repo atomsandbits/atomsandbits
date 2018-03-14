@@ -32,6 +32,22 @@ const geometryOptimizationMethods = [
     program: 'psi4',
   },
 ];
+const conformerSearchMethods = [
+  {
+    value: 'machineLearning',
+    prettyName: 'Machine Learning',
+    type: 'conformerSearch',
+    program: 'tensormol',
+  },
+];
+const harmonicSpectraMethods = [
+  {
+    value: 'machineLearning',
+    prettyName: 'Machine Learning',
+    type: 'harmonicSpectra',
+    program: 'tensormol',
+  },
+];
 const groundStateMethods = [
   {
     value: 'machineLearning',
@@ -129,6 +145,8 @@ const periodicBoundaryConditionMethods = [
 
 const calculationMethods = _.concat(
   geometryOptimizationMethods,
+  conformerSearchMethods,
+  harmonicSpectraMethods,
   groundStateMethods,
   excitedStateMethods,
   periodicBoundaryConditionMethods
@@ -137,6 +155,8 @@ const calculationMethods = _.concat(
 export {
   calculationMethods,
   geometryOptimizationMethods,
+  conformerSearchMethods,
+  harmonicSpectraMethods,
   groundStateMethods,
   excitedStateMethods,
   periodicBoundaryConditionMethods,

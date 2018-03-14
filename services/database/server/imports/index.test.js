@@ -13,6 +13,7 @@ const PORT = 8080;
 const ROOT_URL = 'http://localhost';
 
 // TODO: add neb and conformer search tests
+// TODO: What will the input for Neb look like? 
 describe('integration', () => {
   beforeEach(() => {
     resetDatabase();
