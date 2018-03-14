@@ -82,6 +82,7 @@ services:
       - ROOT_URL=$TENSORMOL_URL
       - DATABASE_ADDRESS=$DATABASE_ADDRESS
       - DATABASE_PORT=$DATABASE_PORT
+      - CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
   psi4:
     build: ./images/psi4
     depends_on:

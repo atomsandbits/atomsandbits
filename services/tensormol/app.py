@@ -3,7 +3,6 @@
 # logging.getLogger('requests').setLevel(logging.WARNING)
 # logging.basicConfig(level=logging.DEBUG)
 import os
-os.environ["CUDA_VISIBLE_DEVICES"]=""
 import sys
 import threading
 from socketIO_client import SocketIO
