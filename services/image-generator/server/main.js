@@ -20,6 +20,7 @@ chromeCapabilities.set('chromeOptions', {
   args: [
     '--headless',
     '--use-gl=osmesa',
+    '--no-sandbox',
     '--ignore-gpu-blacklist',
     '--enable-webgl-draft-extensions',
   ],

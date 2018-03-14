@@ -1,5 +1,24 @@
-version: '3'
+version: '2'
 services:
+  # ~~~ SSL ~~~
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/etc/nginx/vhost.d"
+      - "/usr/share/nginx/html"
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "./certs:/etc/nginx/certs:ro"
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - "./certs:/etc/nginx/certs:rw"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    volumes_from:
+      - "nginx-proxy"
+
   mongo:
     build: ./images/mongo
     ports:
@@ -8,39 +27,45 @@ services:
       -  MONGO_HOST=$MONGO_HOST
       -  OPLOG_USER=$OPLOG_USER
       -  OPLOG_PASSWORD=$OPLOG_PASSWORD
-  elasticsearch:
-    image: "elasticsearch:5"
-    ports:
-      - "$ELASTICSEARCH_PORT:9200"
-  mongoconnector:
-    build: ./images/mongo-connector
-    depends_on:
-      - mongo
-      - elasticsearch
-    environment:
-      - MONGO_URL=$MONGO_URL
-      - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
+  # elasticsearch:
+  #   image: "elasticsearch:5"
+  #   ports:
+  #     - "$ELASTICSEARCH_PORT:9200"
+  # mongo-connector:
+  #   build: ./images/mongo-connector
+  #   depends_on:
+  #     - mongo
+  #     - elasticsearch
+  #   environment:
+  #     - MONGO_URL=$MONGO_URL
+  #     - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
   about:
     build: ./images/about
     ports:
       - "$ABOUT_PORT:80"
     environment:
       - ROOT_URL=$ABOUT_URL
+      - VIRTUAL_HOST=about.cloudszi.com
+      - LETSENCRYPT_HOST=about.cloudszi.com
+      - LETSENCRYPT_EMAIL=contact@cloudszi.com
   webapp:
     build: ./images/webapp
     ports:
       - "$WEBAPP_PORT:80"
     depends_on:
       - mongo
-      - elasticsearch
+      # - elasticsearch
+      - database
     environment:
       - ROOT_URL=$WEBAPP_URL
       - MONGO_URL=$METEOR_MONGO_URL
       - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
-      - DATABASE_SERVICE_URL=$DATABASE_URL
-      - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
+      - DATABASE_URL=$DATABASE_URL
+      # - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
       - DB_NAME=$DB_NAME
-      - GITHUB_TOKEN=$GITHUB_TOKEN
+      - VIRTUAL_HOST=www.cloudszi.com
+      - LETSENCRYPT_HOST=www.cloudszi.com
+      - LETSENCRYPT_EMAIL=contact@cloudszi.com
   database:
     build: ./images/database
     depends_on:
@@ -49,43 +74,39 @@ services:
       - ROOT_URL=$DATABASE_URL
       - MONGO_URL=$METEOR_MONGO_URL
       - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
-      - GITHUB_TOKEN=$GITHUB_TOKEN
   tensormol:
     build: ./images/tensormol
     depends_on:
       - database
     environment:
       - ROOT_URL=$TENSORMOL_URL
-      - MONGO_URL=$METEOR_MONGO_URL
-      - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
-      - DATABASE_SERVICE_URL=$DATABASE_URL
-      - GITHUB_TOKEN=$GITHUB_TOKEN
+      - DATABASE_ADDRESS=$DATABASE_ADDRESS
+      - DATABASE_PORT=$DATABASE_PORT
   psi4:
     build: ./images/psi4
     depends_on:
       - database
     environment:
       - ROOT_URL=$PSI4_URL
-      - MONGO_URL=$METEOR_MONGO_URL
-      - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
-      - DATABASE_SERVICE_URL=$DATABASE_URL
+      - DATABASE_URL=$DATABASE_URL
       - OMP_NUM_THREADS=$PSI4_NUM_THREADS
       - PSI4_MAX_MEMORY=$PSI4_MAX_MEMORY
-      - GITHUB_TOKEN=$GITHUB_TOKEN
   # pyscf:
   #   build: ./images/pyscf
   #   depends_on:
   #     - mongo
   #   environment:
   #     - ROOT_URL=http://pyscf:4300/
-  #     - MONGO_URL=$METEOR_MONGO_URL
-  #     - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
+  #     - MONGO_URL=""
+  #     - MONGO_OPLOG_URL=""
   #     - OMP_NUM_THREADS=$PYSCF_NUM_THREADS
   #     - PYSCF_MAX_MEMORY=$PYSCF_MAX_MEMORY
   #     - GITHUB_TOKEN=$GITHUB_TOKEN
-  image-generator:
-    build: ./images/image-generator
-    environment:
-      - ROOT_URL=$IMAGE_GENERATOR_URL
-      - MONGO_URL=$METEOR_MONGO_URL
-      - MONGO_OPLOG_URL=$MONGO_OPLOG_URL
+  # image-generator:
+  #   build: ./images/image-generator
+  #   depends_on:
+  #     - mongo
+  #   environment:
+  #     - ROOT_URL=$IMAGE_GENERATOR_URL
+  #     - MONGO_URL=$METEOR_MONGO_URL
+  #     - MONGO_OPLOG_URL=$MONGO_OPLOG_URL

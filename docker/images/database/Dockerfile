@@ -11,7 +11,7 @@ RUN curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor
 
 # Download and Build Service
 COPY ./src src
-RUN cd ./src && meteor reset --allow-superuser  && meteor npm install --allow-superuser 
+RUN cd ./src && meteor reset --allow-superuser  && meteor npm install --allow-superuser
 RUN cd ./src && meteor build ../build --allow-superuser --architecture os.linux.x86_64 && cd ../build && tar -xzf ./src.tar.gz
 RUN cd build/bundle/programs/server && npm install
 
@@ -22,6 +22,7 @@ RUN rm -r /src && rm /build/src.tar.gz
 # Set Environment Variables
 ENV PORT 80
 EXPOSE 80
+EXPOSE 8080
 
 # Default Command
 WORKDIR build/bundle

@@ -1,11 +1,10 @@
 import socketIOClient from 'socket.io-client';
 
-const PORT = 8080;
-const ROOT_URL = 'http://localhost';
-const serverId = 'free';
+const DATABASE_URL = process.env.DATABASE_URL || 'http://localhost:8080';
+const serverId = process.env.SERVER_ID || 'free';
 const program = 'psi4';
 
-const socket = socketIOClient(`${ROOT_URL}:${PORT}`, {
+const socket = socketIOClient(DATABASE_URL, {
   transports: ['websocket', 'polling'],
   query: {
     program,

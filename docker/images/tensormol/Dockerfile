@@ -1,11 +1,15 @@
 # Set the base image
-FROM python:3
+FROM nvidia/cuda:9.0-cudnn7-runtime
 # Dockerfile author /maintainer
 MAINTAINER Jordan Garside <jordangarside@gmail.com>
 
+RUN apt-get update
+RUN apt-get install -y git
+
 # Install Node.js
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-RUN apt-get install -y nodejs
+RUN apt-get install -y curl && \
+  curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
+  apt-get install -y nodejs
 
 # Install Forever
 RUN npm install -g forever
@@ -14,30 +18,26 @@ RUN npm install -g forever
 RUN curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor && rm ./meteor
 
 # Install TensorMol
+RUN apt-get install -y python3-pip
+RUN pip3 install numpy scipy h5py tensorflow-gpu
 ARG GITHUB_TOKEN
 ADD https://$GITHUB_TOKEN@api.github.com/repos/jparkhill/TensorMol_Dev/compare/master...HEAD /dev/null
 RUN git clone https://$GITHUB_TOKEN@github.com/jparkhill/TensorMol_Dev.git && mv TensorMol_Dev TensorMol
 COPY networks.zip /networks.zip
 RUN apt-get install unzip
 RUN unzip /networks.zip -d /TensorMol && rm /networks.zip
-RUN pip install numpy scipy h5py tensorflow
-RUN pip install -e /TensorMol
+RUN pip3 install -e /TensorMol
+RUN pip3 install socketIO_client
 
 # Download and Build Service
 COPY ./src src
-RUN cd ./src && meteor reset --allow-superuser  && meteor npm install --allow-superuser 
-RUN cd ./src && meteor build ../build --allow-superuser --architecture os.linux.x86_64 && cd ../build && tar -xzf ./src.tar.gz
-RUN cd build/bundle/programs/server && npm install
-
-# Cleanup
-RUN rm /usr/local/bin/meteor && rm -rf ~/.meteor
-RUN rm -r /src && rm /build/src.tar.gz
 
 # Set Environment Variables
+ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 ENV TENSORMOL_PATH /TensorMol
 ENV PORT 80
 EXPOSE 80
 
 # Default Command
-WORKDIR build/bundle
-ENTRYPOINT forever -l ../forever.log -o ../node.log -e ../error.log --minUptime 1000 --spinSleepTime 1000 main.js
+WORKDIR src
+ENTRYPOINT python3 app.py
