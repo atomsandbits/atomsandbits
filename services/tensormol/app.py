@@ -147,8 +147,10 @@ def main():
                 pass
             elif calculation_type == 'conformerSearch':
                 # TODO: add parameters. (window etc.)
-                nConf = calculation.get('num_conformers')
-
+                nConf = calculation.get('numberConformers')
+                if nConf == None:
+                   print("Bad Conformer number: ",nConf)
+                   nConf = 20
                 def emit_callback(mol_hist):
                     socket_io.emit(
                         'saveIntermediateCalculationResult', {
@@ -162,9 +164,8 @@ def main():
                                 [m.properties['energy'] for m in mol_hist]
                             }
                         })
-
                 mol_hist = conformer_search.main(
-                    network, molecule, nConf, callback=emit_callback)
+                    network, molecule, emit_callback, n_conf=nConf)
                 socket_io.emit(
                     'saveCalculationResult', {
                         'calculationId': calculation_id,
