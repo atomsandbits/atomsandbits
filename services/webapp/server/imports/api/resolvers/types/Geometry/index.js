@@ -67,7 +67,7 @@ const Geometry = {
     const calculationIds = Calculations.find(
       {
         geometryIds: geometry.id,
-        'parameters.type': 'geometryOptimization',
+        'parameters.type': {$in:['geometryOptimization','conformerSearch']},
       },
       { fields: { _id: 1 } }
     )

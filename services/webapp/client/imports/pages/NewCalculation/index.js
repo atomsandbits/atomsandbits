@@ -56,6 +56,7 @@ if (!Session.get('parameters')) {
     network: 'tensormol01',
     charge: 0,
     multiplicity: 1,
+    numberConformers: 40
   });
 }
 class NewCalculationPure extends React.Component {
@@ -132,6 +133,7 @@ class NewCalculationPure extends React.Component {
           : undefined,
         functional: this.state.parameters.functional,
         charge: this.state.parameters.charge ? this.state.parameters.charge : 0,
+        numberConformers: this.state.parameters.numberConformers ? this.state.parameters.numberConformers:null,
         multiplicity: this.state.parameters.multiplicity
           ? this.state.parameters.multiplicity
           : 1,
@@ -310,6 +312,28 @@ class NewCalculationPure extends React.Component {
                     )}
                     setValue={this.setParameter('pseudoPotential')}
                     label="Pseduo Potential"
+                  />
+                </Grid>
+              ) : null}
+              {possibleParameters.indexOf('numberConformers') !== -1 ? (
+                <Grid
+                  item={true}
+                  xs={12}
+                  sm={4}
+                  style={{
+                    padding: '23px 16px 0',
+                  }}
+                >
+                  <TextField
+                    id="numberConformers"
+                    label="Conformers to Find"
+                    type="number"
+                    onChange={this.handleInput('numberConformers')}
+                    value={this.state.parameters.numberConformers}
+                    className={classes.chargeInput}
+                    inputProps={{
+                      step: 1,
+                    }}
                   />
                 </Grid>
               ) : null}

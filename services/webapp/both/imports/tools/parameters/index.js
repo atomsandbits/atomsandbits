@@ -42,6 +42,8 @@ import {
   geometryOptimizationMethods,
   groundStateMethods,
   excitedStateMethods,
+  conformerSearchMethods,
+  harmonicSpectraMethods,
   periodicBoundaryConditionMethods
 } from '/both/imports/config/calculation-methods';
 import {
@@ -78,16 +80,18 @@ getParameterOptions = (xyz, currentParameters, parameter) => {
     case "calculationMethod":
       if (currentParameters.calculationType === "geometryOptimization")
         return geometryOptimizationMethods;
-      if (currentParameters.calculationType == "groundState")
+      else if (currentParameters.calculationType == "groundState")
         return groundStateMethods;
-      if (currentParameters.calculationType == "conformationSearch")
-        return conformationSearchMethods;
-      if (currentParameters.calculationType == "harmonicSpectra")
+      else if (currentParameters.calculationType == "conformerSearch")
+        return conformerSearchMethods;
+      else if (currentParameters.calculationType == "harmonicSpectra")
         return harmonicSpectraMethods;
-      if (currentParameters.calculationType == "excitedState")
+      else if (currentParameters.calculationType == "excitedState")
         return excitedStateMethods;
-      if (currentParameters.calculationType == "periodicBoundaryCondition")
+      else if (currentParameters.calculationType == "periodicBoundaryCondition")
         return periodicBoundaryConditionMethods;
+      else
+        throw new Error("Calc method not found.")
       break;
     case "network":
       return networks;

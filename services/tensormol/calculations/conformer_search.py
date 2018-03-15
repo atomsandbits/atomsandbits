@@ -1,7 +1,8 @@
 from TensorMol import PARAMS
+from TensorMol import GeomOptimizer, MSet, Mol, PARAMS
+from TensorMol.Simulations import ScannedOptimization
 
-
-def main(manager, molecule, n_conf, emit_callback):
+def main(manager, molecule, emit_callback, n_conf=20):
     """main."""
 
     def EnAndForce(x_, DoForce=True):
@@ -21,9 +22,8 @@ def main(manager, molecule, n_conf, emit_callback):
     # Perform geometry optimization
     PARAMS["OptMaxCycles"] = 2000
     PARAMS["OptThresh"] = 0.001
-    Opt = ScannedOptimization(EnAndForce, molecule, n_conf)
-    return Opt.Search(molecule, callback=emit_callback)
-
+    Opt = ScannedOptimization(EnAndForce, molecule, StopAfter_=n_conf)
+    return Opt.Search(molecule,callback=emit_callback)
 
 if __name__ == "__main__":
     import os
