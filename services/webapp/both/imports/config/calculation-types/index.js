@@ -7,14 +7,14 @@ const calculationTypes = [
     value: 'geometryOptimization',
     prettyName: 'Geometry Optimization',
   },
-  {
-    value: 'conformerSearch',
-    prettyName: 'Conformation Search',
-  },
-  {
-    value: 'harmonicSpectra',
-    prettyName: 'Harmonic Spectra',
-  },
+  // {
+  //   value: 'conformerSearch',
+  //   prettyName: 'Conformation Search',
+  // },
+  // {
+  //   value: 'harmonicSpectra',
+  //   prettyName: 'Harmonic Spectra',
+  // },
   // {
   //   value: "excitedState",
   //   prettyName: "Excited State"
