@@ -1,23 +1,23 @@
 version: '2'
 services:
   # ~~~ SSL ~~~
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "/etc/nginx/vhost.d"
-      - "/usr/share/nginx/html"
-      - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "./certs:/etc/nginx/certs:ro"
-  letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    volumes:
-      - "./certs:/etc/nginx/certs:rw"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    volumes_from:
-      - "nginx-proxy"
+  # nginx-proxy:
+  #   image: jwilder/nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - "/etc/nginx/vhost.d"
+  #     - "/usr/share/nginx/html"
+  #     - "/var/run/docker.sock:/tmp/docker.sock:ro"
+  #     - "./certs:/etc/nginx/certs:ro"
+  # letsencrypt-nginx-proxy-companion:
+  #   image: jrcs/letsencrypt-nginx-proxy-companion
+  #   volumes:
+  #     - "./certs:/etc/nginx/certs:rw"
+  #     - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  #   volumes_from:
+  #     - "nginx-proxy"
 
   mongo:
     build: ./images/mongo
@@ -109,5 +109,6 @@ services:
   #     - mongo
   #   environment:
   #     - ROOT_URL=$IMAGE_GENERATOR_URL
+  #     - PORT=$IMAGE_GENERATOR_PORT
   #     - MONGO_URL=$METEOR_MONGO_URL
   #     - MONGO_OPLOG_URL=$MONGO_OPLOG_URL

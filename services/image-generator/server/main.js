@@ -5,6 +5,8 @@ import fs from 'fs';
 import webdriver from 'selenium-webdriver';
 import chromedriver from 'chromedriver';
 
+console.log(process.env.ROOT_URL);
+
 // kill old chrome processes
 // TODO: handle the fact this kills real chrome processes
 exec("kill -9 `pgrep -f '\\-\\-headless'`");

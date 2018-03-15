@@ -80,7 +80,7 @@ const GeometryOptimizationRow = compose(
 const GeometryOptimizationCardPure = ({ geometryOptimizations }) => (
   <Expandable
     summary={[
-      <CardTitle key="main-card-title">GeometryOptimization</CardTitle>,
+      <CardTitle key="main-card-title">Geometry Optimization</CardTitle>,
       <GeometryOptimizationRow
         key="main-card-optimization"
         {...geometryOptimizations[0]}
@@ -101,7 +101,7 @@ const SingleGeometryOptimizationCard = ({ geometryOptimizations }) => (
   <Expandable
     expandable={false}
     summary={[
-      <CardTitle key="main-card-title">GeometryOptimization</CardTitle>,
+      <CardTitle key="main-card-title">Geometry Optimization</CardTitle>,
       <GeometryOptimizationRow
         key="main-card-optimization"
         {...geometryOptimizations[0]}
