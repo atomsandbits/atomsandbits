@@ -147,7 +147,7 @@ def main():
                 pass
             elif calculation_type == 'conformerSearch':
                 # TODO: add parameters. (window etc.)
-                nConf = calculation.get('numberConformers')
+                nConf = calculation.get('numberOfConformers')
                 if nConf == None:
                    print("Bad Conformer number: ",nConf)
                    nConf = 20

@@ -56,7 +56,7 @@ if (!Session.get('parameters')) {
     network: 'tensormol01',
     charge: 0,
     multiplicity: 1,
-    numberConformers: 40
+    numberOfConformers: 40
   });
 }
 class NewCalculationPure extends React.Component {
@@ -133,7 +133,7 @@ class NewCalculationPure extends React.Component {
           : undefined,
         functional: this.state.parameters.functional,
         charge: this.state.parameters.charge ? this.state.parameters.charge : 0,
-        numberConformers: this.state.parameters.numberConformers ? this.state.parameters.numberConformers:null,
+        numberOfConformers: this.state.parameters.numberOfConformers ? this.state.parameters.numberOfConformers:null,
         multiplicity: this.state.parameters.multiplicity
           ? this.state.parameters.multiplicity
           : 1,
@@ -315,7 +315,7 @@ class NewCalculationPure extends React.Component {
                   />
                 </Grid>
               ) : null}
-              {possibleParameters.indexOf('numberConformers') !== -1 ? (
+              {possibleParameters.indexOf('numberOfConformers') !== -1 ? (
                 <Grid
                   item={true}
                   xs={12}
@@ -325,11 +325,11 @@ class NewCalculationPure extends React.Component {
                   }}
                 >
                   <TextField
-                    id="numberConformers"
+                    id="numberOfConformers"
                     label="Conformers to Find"
                     type="number"
-                    onChange={this.handleInput('numberConformers')}
-                    value={this.state.parameters.numberConformers}
+                    onChange={this.handleInput('numberOfConformers')}
+                    value={this.state.parameters.numberOfConformers}
                     className={classes.chargeInput}
                     inputProps={{
                       step: 1,

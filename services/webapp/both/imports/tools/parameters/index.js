@@ -13,7 +13,7 @@ getPossibleParameters = (currentParameters) => {
     possibleParameters.push("functional")
   }
   if (currentParameters.calculationType === "conformerSearch") {
-    possibleParameters.push("numberConformers")
+    possibleParameters.push("numberOfConformers")
   }
   if (currentParameters.calculationType === "periodicBoundaryCondition") {
     possibleParameters.push("densityFit")
