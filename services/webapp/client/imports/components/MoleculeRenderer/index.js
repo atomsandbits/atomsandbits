@@ -11,7 +11,7 @@ import Hidden from 'material-ui/Hidden';
 import xyzTools from '/both/imports/tools/xyz';
 import SpeckRenderer from '/client/imports/components/SpeckRenderer';
 
-import styles from '/client/imports/styles/calculation';
+import styles from '/client/imports/pages/NewCalculation/styles';
 
 let speck,
   lastGeometryInput,

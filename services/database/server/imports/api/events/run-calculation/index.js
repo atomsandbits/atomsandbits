@@ -27,6 +27,7 @@ const runCalculation = Meteor.bindEnvironment(
       network: calculation.parameters.network,
       basisSet: calculation.parameters.basisSet,
       functional: calculation.parameters.functional,
+      numberOfConformers: calculation.parameters.numberOfConformers,
     };
     logger.info(`Emitting: Calculation #${calculation._id} to ${serverId}-${program}...`);
     io

@@ -43,32 +43,34 @@ const GeometryOptimizationRendererPure = ({
         />
       </SpeckContainer>
     </RendererRow>
-    <MobileStepper
-      type="dots"
-      steps={geometries.length}
-      position="static"
-      activeStep={selectedGeometryIndex}
-      nextButton={
-        <Button
-          dense
-          onClick={increment}
-          disabled={selectedGeometryIndex === geometries.length - 1}
-        >
-          Next
-          <KeyboardArrowRight />
-        </Button>
-      }
-      backButton={
-        <Button
-          dense
-          onClick={decrement}
-          disabled={selectedGeometryIndex === 0}
-        >
-          <KeyboardArrowLeft />
-          Back
-        </Button>
-      }
-    />
+    {geometries.length > 1 ? (
+      <MobileStepper
+        type="dots"
+        steps={geometries.length}
+        position="static"
+        activeStep={selectedGeometryIndex}
+        nextButton={
+          <Button
+            dense
+            onClick={increment}
+            disabled={selectedGeometryIndex === geometries.length - 1}
+          >
+            Next
+            <KeyboardArrowRight />
+          </Button>
+        }
+        backButton={
+          <Button
+            dense
+            onClick={decrement}
+            disabled={selectedGeometryIndex === 0}
+          >
+            <KeyboardArrowLeft />
+            Back
+          </Button>
+        }
+      />
+    ) : null}
   </RendererContainer>
 );
 

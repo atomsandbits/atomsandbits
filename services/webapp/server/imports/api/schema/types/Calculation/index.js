@@ -8,7 +8,7 @@ const CalculationInputParameters = () => [
     network: String
     basisSet: String
     charge: Int!
-    numberOfConformers: Int!
+    numberOfConformers: Int
     multiplicity: Int!
     functional: String
     densityFit: String
@@ -28,7 +28,7 @@ const CalculationParameters = () => [
     network: String
     basisSet: String
     charge: Int!
-    numberOfConformers: Int!
+    numberOfConformers: Int
     multiplicity: Int!
     functional: String
     densityFit: String
@@ -50,6 +50,7 @@ const CalculationProperties = () => [
     forces: [[[Float]]]
     frequencies: [Float]
     intensities: [Float]
+    optimizedGeometry: String
     excitationEnergy: Float
   }`,
 ];

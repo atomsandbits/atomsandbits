@@ -23,7 +23,7 @@ import LatticeVectorsInput from './LatticeVectorsInput';
 import KPointsInput from './KPointsInput';
 import DropdownMenu from '/client/imports/components/DropdownMenu';
 
-import styles from '/client/imports/styles/calculation';
+import styles from '/client/imports/pages/NewCalculation/styles';
 
 if (!Session.get('xyz')) {
   Session.set(
@@ -48,6 +48,7 @@ if (!Session.get('xyz')) {
     })
   );
 }
+
 if (!Session.get('parameters')) {
   // Default Parameters
   Session.set('parameters', {
@@ -56,7 +57,6 @@ if (!Session.get('parameters')) {
     network: 'tensormol01',
     charge: 0,
     multiplicity: 1,
-    numberOfConformers: 40
   });
 }
 class NewCalculationPure extends React.Component {
@@ -91,14 +91,15 @@ class NewCalculationPure extends React.Component {
   _submitCalculation = () => {
     // Create client-side checks system here
     // ----------
+    const xyzCollection = xyzTools.convertToCollection({
+      xyzString: this.state.xyz,
+    }).collection;
+    if (xyzCollection.length === 0) {
+      alert('No atoms in xyz.');
+      return;
+    }
     if (this.state.parameters.calculationMethod === 'machineLearning') {
-      let atoms = _.uniq(
-        _.map(
-          xyzTools.convertToCollection({ xyzString: this.state.xyz })
-            .collection,
-          atomicCoord => atomicCoord.atom
-        )
-      );
+      let atoms = _.uniq(_.map(xyzCollection, atomicCoord => atomicCoord.atom));
       let supportedAtoms = _.find(
         getParameterOptions(this.state.xyz, this.state.parameters, 'network'),
         { value: this.state.parameters.network }
@@ -133,7 +134,12 @@ class NewCalculationPure extends React.Component {
           : undefined,
         functional: this.state.parameters.functional,
         charge: this.state.parameters.charge ? this.state.parameters.charge : 0,
-        numberOfConformers: this.state.parameters.numberOfConformers ? this.state.parameters.numberOfConformers:null,
+        numberOfConformers:
+          this.state.parameters.calculationType === 'conformerSearch'
+            ? this.state.parameters.numberOfConformers
+              ? this.state.parameters.numberOfConformers
+              : 20
+            : null,
         multiplicity: this.state.parameters.multiplicity
           ? this.state.parameters.multiplicity
           : 1,
@@ -146,11 +152,22 @@ class NewCalculationPure extends React.Component {
       input,
     });
   };
-  componentDidMount = () => {};
-  componentWillUnmount = () => {
+  componentDidMount() {}
+  componentWillUnmount() {
     Session.set('xyz', this.state.xyz);
     Session.set('parameters', this.state.parameters);
-  };
+  }
+  componentDidUpdate() {
+    let parameters = this.state.parameters;
+    if (this.state.parameters.numberOfConformers > 100) {
+      parameters['numberOfConformers'] = 100;
+      this.setState({ parameters: parameters });
+    }
+    if (this.state.parameters.numberOfConformers < 1) {
+      parameters['numberOfConformers'] = 1;
+      this.setState({ parameters: parameters });
+    }
+  }
   render() {
     const { classes, theme } = this.props;
     const possibleParameters = getPossibleParameters(this.state.parameters);
@@ -328,6 +345,7 @@ class NewCalculationPure extends React.Component {
                     id="numberOfConformers"
                     label="Conformers to Find"
                     type="number"
+                    defaultValue="20"
                     onChange={this.handleInput('numberOfConformers')}
                     value={this.state.parameters.numberOfConformers}
                     className={classes.chargeInput}

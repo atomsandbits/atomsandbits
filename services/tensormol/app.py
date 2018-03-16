@@ -8,7 +8,7 @@ import threading
 from socketIO_client import SocketIO
 from TensorMol import Mol
 from networks import tensormol01
-from calculations import (conformer_search, energy_and_force,
+from calculations import (conformer_search, energy_and_force, harmonic_spectra,
                           geometry_optimization, nudged_elastic_band)
 
 # TODO: start tensorflow session so GPU resources get allocated
@@ -103,7 +103,7 @@ def main():
                 # [x]: submit intermediate geometries and energies
                 # [X]: define a function for emitting saveIntermediateResults
                 #       after each step and pass it into geomopt method
-                def emit_callback(mol_hist):
+                def on_optimization_step_completed(mol_hist):
                     print("Emitting Callback")
                     socket_io.emit(
                         'saveIntermediateCalculationResult', {
@@ -119,7 +119,7 @@ def main():
                         })
 
                 finalm = geometry_optimization.main(network, molecule,
-                                                    emit_callback)
+                                                    on_optimization_step_completed)
                 xyz = '\n'.join(str(finalm).split('\n')[2:])
                 socket_io.emit(
                     'saveCalculationResult', {
@@ -136,9 +136,9 @@ def main():
                     'saveCalculationResult', {
                         'calculationId': calculation_id,
                         'properties': {
-                            'geometries': [xyz],
-                            'frequencies': w,
-                            'intensities': v
+                            'optimizedGeometry': xyz,
+                            'frequencies': w.tolist(),
+                            'intensities': v.tolist()
                         }
                     })
             elif calculation_type == 'nudgedElasticBand':
@@ -151,7 +151,7 @@ def main():
                 if nConf == None:
                    print("Bad Conformer number: ",nConf)
                    nConf = 20
-                def emit_callback(mol_hist):
+                def on_conformer_found(mol_hist):
                     socket_io.emit(
                         'saveIntermediateCalculationResult', {
                             'calculationId': calculation_id,
@@ -165,7 +165,7 @@ def main():
                             }
                         })
                 mol_hist = conformer_search.main(
-                    network, molecule, emit_callback, n_conf=nConf)
+                    network, molecule, on_conformer_found, n_conf=nConf)
                 socket_io.emit(
                     'saveCalculationResult', {
                         'calculationId': calculation_id,
