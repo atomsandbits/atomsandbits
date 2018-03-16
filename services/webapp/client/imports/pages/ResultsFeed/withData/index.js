@@ -18,10 +18,9 @@ const dataQuery = gql`
         id
         createdAt
         completed
-        properties {
-          energy
-          force
-          geometries
+        parameters {
+          type
+          method
         }
         geometries {
           id

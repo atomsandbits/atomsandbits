@@ -139,7 +139,7 @@ class NewCalculationPure extends React.Component {
             ? this.state.parameters.numberOfConformers
               ? this.state.parameters.numberOfConformers
               : 20
-            : null,
+            : undefined,
         multiplicity: this.state.parameters.multiplicity
           ? this.state.parameters.multiplicity
           : 1,
