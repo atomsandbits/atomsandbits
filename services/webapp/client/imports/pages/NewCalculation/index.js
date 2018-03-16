@@ -88,7 +88,7 @@ class NewCalculationPure extends React.Component {
     };
   };
 
-  _submitCalculation = () => {
+  _submitCalculation = _.throttle(() => {
     // Create client-side checks system here
     // ----------
     const xyzCollection = xyzTools.convertToCollection({
@@ -151,7 +151,7 @@ class NewCalculationPure extends React.Component {
     this.props.submitCalculation({
       input,
     });
-  };
+  }, 10000);
   componentDidMount() {}
   componentWillUnmount() {
     Session.set('xyz', this.state.xyz);

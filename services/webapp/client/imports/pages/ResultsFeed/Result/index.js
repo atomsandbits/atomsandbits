@@ -25,13 +25,14 @@ const convertToLabel = ({ type, method }) =>
           .charAt(0)
           .toUpperCase()
       : ''
-  }-${method.charAt(0).toUpperCase()}${
+  }-${
     method.split(/(?=[A-Z])/)[1]
-      ? method
+      ? method.charAt(0).toUpperCase() +
+        method
           .split(/(?=[A-Z])/)[1]
           .charAt(0)
           .toUpperCase()
-      : ''
+      : method.toUpperCase()
   }`;
 // Object.keys(properties)
 //   .filter(property => properties[property] !== null)
