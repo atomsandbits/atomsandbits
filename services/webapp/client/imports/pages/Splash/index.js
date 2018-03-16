@@ -34,7 +34,7 @@ class SplashPage extends React.Component {
   }
   tracker = null;
   loginWithGoogle = () => {
-    Meteor.loginWithGoogle({}, (err) => {
+    Meteor.loginWithGoogle({}, err => {
       if (err) {
         // Login Error
       } else {
@@ -72,8 +72,7 @@ class SplashPage extends React.Component {
           <div className={classes.sectionContainer}>
             <div>
               <div className={classes.logo} />
-              <div className={classes.headerText}>Welcome to Cloudszi</div>
-              <div className={classes.headerSubtext}>Login With Google</div>
+              <div className={classes.headerText}>cloudszi</div>
               <div className={classes.loginButtons}>
                 <Button
                   raised
