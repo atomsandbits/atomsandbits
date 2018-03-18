@@ -29,6 +29,7 @@ export const SectionTitle = styled.div`
 `;
 export const Section = styled.div`
   padding: 60px 0 90px;
+  overflow: hidden;
   text-align: center;
 `;
 
@@ -37,7 +38,7 @@ export const FirstSection = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  min-height: 500px;
+  min-height: 600px;
   max-height: 1000px;
 `;
 export const Title = styled.div`
