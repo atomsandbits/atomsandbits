@@ -13,10 +13,15 @@ import { withData } from './withData';
 import { ResultsFeedContainer, ResultsFeedContent } from './styles';
 
 const Loading = props => (
-  <ResultsFeedContainer>
-    <Header {...props} />
-    <LinearProgress />
-  </ResultsFeedContainer>
+  <AppLayout
+    mobileOnlyToolbar
+    title="Results Feed"
+    appContent={
+      <ResultsFeedContainer>
+        <LinearProgress />
+      </ResultsFeedContainer>
+    }
+  />
 );
 
 const displayLoadingState = branch(

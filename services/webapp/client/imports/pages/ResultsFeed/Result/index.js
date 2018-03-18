@@ -67,11 +67,7 @@ const CalculationResultPure = ({ result, index }) => (
         ) : null}
       </CardTopRight>
       <SystemImage
-        src={`${
-          result.calculation.geometries[0].mediumImage
-            ? result.calculation.geometries[0].mediumImage
-            : '/molecule4.png'
-        }`}
+        src={`/geometry/${result.calculation.geometries[0].id}/image/medium`}
       />
       <TimeInformation>
         {moment.unix(result.calculation.createdAt / 1000).fromNow()}

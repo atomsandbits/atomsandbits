@@ -3,7 +3,9 @@ import _AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import { colors, sizes, breakpoints, fonts } from '/client/imports/theme';
 
-export const AppLayoutContainer = styled.div``;
+export const AppLayoutContainer = styled.div`
+  height: 100%;
+`;
 export const AppBar = styled(_AppBar)`
   && {
     background-color: ${colors.background.default};
@@ -32,13 +34,13 @@ export const Title = styled.div`
 
 export const App = styled.div`
   box-sizing: border-box;
-  height: calc(100vh - 56px);
+  height: calc(100% - 56px);
   margin-top: 56px;
   ${'' /* padding-top: 17px; */}
   overflow: auto;
   @media (min-width: ${breakpoints.lg}) {
     height: ${props =>
-      props.mobileOnlyToolbar ? '100vh' : 'calc(100vh - 64px)'};
+      props.mobileOnlyToolbar ? '100%' : 'calc(100% - 64px)'};
     margin-top: ${props => (props.mobileOnlyToolbar ? '0px' : '56')};
     padding-top: ${props => (props.mobileOnlyToolbar ? '0px' : '8px')};
   }

@@ -41,6 +41,7 @@ def main():
                 multiplicity = calculation.get('multiplicity')
                 network_name = calculation.get('network')
                 ping_timer = None
+                print('Calculation Received: ', calculation_id)
 
                 # print(calculation)
 
@@ -54,7 +55,8 @@ def main():
                         # print(result)
 
                     socket_io.emit('pingCalculationRunning',
-                                   {'calculationId': calculation_id}, socket_callback)
+                                   {'calculationId': calculation_id},
+                                   socket_callback)
                     print('Running Calculation: ', calculation_id)
                     ping_timer = threading.Timer(1, ping_calculation_running,
                                                  [calculation])
@@ -76,7 +78,8 @@ def main():
                         socket_result = result
 
                     socket_io.emit('setCalculationRunning',
-                                   {'calculationId': calculation_id}, socket_callback)
+                                   {'calculationId': calculation_id},
+                                   socket_callback)
                     socket_io.wait_for_callbacks()
                     if not socket_result.get('updated'):
                         # calculation not started, exit
@@ -87,12 +90,14 @@ def main():
 
                     molecule = Mol()
                     molecule.FromXYZString(
-                        str(len(geometries[0].split('\n'))) + '\n\n' + geometries[0])
+                        str(len(geometries[0].split('\n'))) + '\n\n' +
+                        geometries[0])
                     network = tensormol01_network  # add switch based on network_name
                     # TODO: Attempt to run saveCalculationResult a few times on
                     #       error in callback
                     if calculation_type == 'groundState':
-                        energy, force = energy_and_force.main(network, molecule)
+                        energy, force = energy_and_force.main(
+                            network, molecule)
                         socket_io.emit(
                             'saveCalculationResult', {
                                 'calculationId': calculation_id,
@@ -116,13 +121,15 @@ def main():
                                             '\n'.join(str(m).split('\n')[2:])
                                             for m in mol_hist
                                         ],
-                                        'energies':
-                                        [m.properties['energy'] for m in mol_hist]
+                                        'energies': [
+                                            m.properties['energy']
+                                            for m in mol_hist
+                                        ]
                                     }
                                 })
 
-                        finalm = geometry_optimization.main(network, molecule,
-                                                            on_optimization_step_completed)
+                        finalm = geometry_optimization.main(
+                            network, molecule, on_optimization_step_completed)
                         xyz = '\n'.join(str(finalm).split('\n')[2:])
                         socket_io.emit(
                             'saveCalculationResult', {
@@ -152,8 +159,9 @@ def main():
                         # TODO: add parameters. (window etc.)
                         nConf = calculation.get('numberOfConformers')
                         if nConf == None:
-                           print("Bad Conformer number: ",nConf)
-                           nConf = 20
+                            print("Bad Conformer number: ", nConf)
+                            nConf = 20
+
                         def on_conformer_found(mol_hist):
                             socket_io.emit(
                                 'saveIntermediateCalculationResult', {
@@ -163,12 +171,18 @@ def main():
                                             '\n'.join(str(m).split('\n')[2:])
                                             for m in mol_hist
                                         ],
-                                        'energies':
-                                        [m.properties['energy'] for m in mol_hist]
+                                        'energies': [
+                                            m.properties['energy']
+                                            for m in mol_hist
+                                        ]
                                     }
                                 })
+
                         mol_hist = conformer_search.main(
-                            network, molecule, on_conformer_found, n_conf=nConf)
+                            network,
+                            molecule,
+                            on_conformer_found,
+                            n_conf=nConf)
                         socket_io.emit(
                             'saveCalculationResult', {
                                 'calculationId': calculation_id,
@@ -193,8 +207,7 @@ def main():
                                 'message': str(e),
                                 'createdAt': int(round(time.time() * 1000)),
                             },
-                        }
-                    )
+                        })
                     stop_pinging()
                     calculation_running = False
                     raise
@@ -206,7 +219,9 @@ def main():
             address = os.environ.get('DATABASE_ADDRESS') or 'localhost'
             port = os.environ.get('DATABASE_PORT') or '8080'
             socket_io = SocketIO(
-                address, port, params={
+                address,
+                port,
+                params={
                     'program': 'tensormol',
                     'serverId': 'free'
                 })
@@ -215,6 +230,7 @@ def main():
         except Exception as e:
             print('Error:', e)
             pass
+
 
 if __name__ == "__main__":
     main()

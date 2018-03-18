@@ -26,6 +26,7 @@
   "globals": {
     "window": true,
     "document": true,
+    "Picker": true,
     "isRequired": true
   }
 }
