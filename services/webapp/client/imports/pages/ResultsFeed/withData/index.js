@@ -18,15 +18,13 @@ const dataQuery = gql`
         id
         createdAt
         completed
-        properties {
-          energy
-          force
-          geometries
+        parameters {
+          type
+          method
         }
         geometries {
           id
           molecularFormula
-          mediumImage
         }
       }
     }
@@ -35,7 +33,7 @@ const dataQuery = gql`
 
 const withData = compose(
   graphql(dataQuery, {
-    options: () => ({ pollInterval: 60000 }),
+    // options: () => ({ pollInterval: 60000 }),
   })
 );
 
@@ -43,11 +41,10 @@ const queryWatcher = apolloClient.watchQuery({
   query: dataQuery,
   fetchPolicy: 'network-only',
 });
-let loginTracker;
 Meteor.startup(() => {
-  loginTracker = Tracker.autorun(() => {
+  Tracker.autorun(() => {
     if (Meteor.userId()) {
-      queryWatcher.startPolling(5000);
+      queryWatcher.startPolling(6000);
     } else {
       queryWatcher.stopPolling();
     }

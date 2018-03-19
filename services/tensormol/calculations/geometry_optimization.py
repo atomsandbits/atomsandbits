@@ -19,7 +19,7 @@ def main(manager, molecule, emit_callback):
             return energy
 
     # Perform geometry optimization
-    PARAMS["OptMaxCycles"] = 2000
+    PARAMS["OptMaxCycles"] = 300
     PARAMS["OptThresh"] = 0.001
     Opt = GeomOptimizer(EnAndForce)
     molecule = Opt.Opt(molecule, callback=emit_callback)

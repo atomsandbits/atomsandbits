@@ -17,12 +17,28 @@ import {
   TimeInformation,
 } from './styles';
 
-const convertPropertiesToLabel = ({ properties }) =>
-  Object.keys(properties)
-    .filter(property => properties[property] !== null)
-    .map(property => property.charAt(0).toUpperCase())
-    .join(', ')
-    .replace(', _', '');
+const convertToLabel = ({ type, method }) =>
+  `${type.charAt(0).toUpperCase()}${
+    type.split(/(?=[A-Z])/)[1]
+      ? type
+          .split(/(?=[A-Z])/)[1]
+          .charAt(0)
+          .toUpperCase()
+      : ''
+  }-${
+    method.split(/(?=[A-Z])/)[1]
+      ? method.charAt(0).toUpperCase() +
+        method
+          .split(/(?=[A-Z])/)[1]
+          .charAt(0)
+          .toUpperCase()
+      : method.toUpperCase()
+  }`;
+// Object.keys(properties)
+//   .filter(property => properties[property] !== null)
+//   .map(property => property.charAt(0).toUpperCase())
+//   .join(', ')
+//   .replace(', _', '');
 
 const CalculationResultPure = ({ result, index }) => (
   <CardLink
@@ -39,8 +55,9 @@ const CalculationResultPure = ({ result, index }) => (
           }
         />
         <InformationalTags>
-          {convertPropertiesToLabel({
-            properties: result.calculation.properties || {},
+          {convertToLabel({
+            type: result.calculation.parameters.type,
+            method: result.calculation.parameters.method,
           })}
         </InformationalTags>
       </CardTopLeft>
@@ -50,11 +67,7 @@ const CalculationResultPure = ({ result, index }) => (
         ) : null}
       </CardTopRight>
       <SystemImage
-        src={`${
-          result.calculation.geometries[0].mediumImage
-            ? result.calculation.geometries[0].mediumImage
-            : '/molecule4.png'
-        }`}
+        src={`/geometry/${result.calculation.geometries[0].id}/image/medium`}
       />
       <TimeInformation>
         {moment.unix(result.calculation.createdAt / 1000).fromNow()}

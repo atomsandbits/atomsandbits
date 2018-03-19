@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import '/server/imports/config';
 import '/server/imports/api';
-import { Calculations, Geometries } from '/server/imports/db';
+import '/server/imports/routes';
+// import { Calculations, Geometries } from '/server/imports/db';
 
 Meteor.startup(() => {});
 

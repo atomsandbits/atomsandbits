@@ -1,4 +1,4 @@
-from TensorMol import HarmonicSpectra, MSet, Mol, PARAMS
+from TensorMol import HarmonicSpectra, GeomOptimizer, MSet, Mol, PARAMS
 import numpy as np
 
 
@@ -6,7 +6,7 @@ def main(manager, molecule):
     """main."""
     m = molecule
 
-    def EnAndForce(x_, DoForce=True):
+    def EnAndForce(x_, DoForce=False):
         """Calculate energy and force."""
         mtmp = Mol(molecule.atoms, x_)
         (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
@@ -36,10 +36,10 @@ def main(manager, molecule):
             dipole += q[i] * x_[i]
         return dipole
 
-    PARAMS["OptMaxCycles"] = 2000
+    PARAMS["OptMaxCycles"] = 300
     PARAMS["OptThresh"] = 0.001
     Opt = GeomOptimizer(EnAndForce)
-    molecule = Opt.Opt(molecule, callback=emit_callback)
+    molecule = Opt.Opt(molecule)
     # Gotta optimize before running spectra
     w, v, i = HarmonicSpectra(
         EnAndForce,

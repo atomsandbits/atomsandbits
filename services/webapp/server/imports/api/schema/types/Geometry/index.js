@@ -1,43 +1,40 @@
 import { Calculation } from '../Calculation';
 
-const EnergyProperty = () => [
+const Properties = () => [
   `type EnergyProperty {
     energy: Float
     label: String!
     error: String
     running: Boolean!
     calculation: Calculation!
-  }`,
-  Calculation,
-];
-
-const ForceProperty = () => [
-  `type ForceProperty {
+  }
+  type ForceProperty {
     force: [[Float]]
     label: String!
     error: String
     running: Boolean!
     calculation: Calculation!
-  }`,
-  Calculation,
-];
-
-const OptimizationProperty = () => [
-  `type OptimizationProperty {
+  }
+  type OptimizationProperty {
     geometries: [String]
     energies: [Float]
     label: String!
     error: String
     running: Boolean!
     calculation: Calculation!
-  }`,
-  Calculation,
-];
-
-const HarmonicSpectrumProperty = () => [
-  `type HarmonicSpectrumProperty {
+  }
+  type ConformerSearchProperty {
+    geometries: [String]
+    energies: [Float]
+    label: String!
+    error: String
+    running: Boolean!
+    calculation: Calculation!
+  }
+  type HarmonicSpectrumProperty {
     frequencies: [Float]
-    wavelengths: [Float]
+    intensities: [Float]
+    optimizedGeometry: String
     label: String!
     error: String
     running: Boolean!
@@ -57,14 +54,12 @@ const Geometry = () => [
     energies: [EnergyProperty]!
     forces: [ForceProperty]!
     optimizations: [OptimizationProperty]!
+    conformerSearches: [ConformerSearchProperty]!
     harmonicSpectra: [HarmonicSpectrumProperty]!
     mediumImage: String
   }`,
   Calculation,
-  EnergyProperty,
-  ForceProperty,
-  OptimizationProperty,
-  HarmonicSpectrumProperty,
+  Properties,
 ];
 
 export { Geometry };

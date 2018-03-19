@@ -6,7 +6,13 @@ import { Tracker } from 'meteor/tracker';
 
 import Hidden from 'material-ui/Hidden';
 import DrawerContent from './DrawerContent';
-import { Content, RootDiv, AppFrame, Drawer } from './styles';
+import {
+  Content,
+  RootDiv,
+  AppFrame,
+  Drawer,
+} from './styles';
+import './styles/index.css';
 
 class ResponsiveDrawer extends React.Component {
   state = {
@@ -55,12 +61,20 @@ class ResponsiveDrawer extends React.Component {
                   ModalProps={{
                     keepMounted: true /* Better open performance on mobile. */,
                   }}
+                  classes={{
+                    paper: 'drawer-container',
+                  }}
                 >
                   <DrawerContent toggleDrawer={this.handleDrawerToggle} />
                 </Drawer>
               </Hidden>
               <Hidden mdDown implementation="css">
-                <Drawer type="permanent">
+                <Drawer
+                  type="permanent"
+                  classes={{
+                    paper: 'drawer-container',
+                  }}
+                >
                   <DrawerContent toggleDrawer={() => {}} />
                 </Drawer>
               </Hidden>

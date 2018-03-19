@@ -1,5 +1,5 @@
 import React from 'react';
-import { colors } from '/client/imports/theme';
+import { colors, fonts } from '/client/imports/theme';
 
 const styles = theme => ({
   container: {
@@ -39,15 +39,17 @@ const styles = theme => ({
     marginRight: 20
   },
   headerText: {
-    fontSize: 26,
+    fontFamily: fonts.header,
+    fontSize: 34,
     fontWeight: 'bold',
+    color: colors.text.default,
   },
   headerSubtext: {
     fontSize: 18,
     margin: '16px auto'
   },
   loginWithGoogle: {
-    margin: '40px 0',
+    margin: '35px 0 60px',
     backgroundColor: '#4885ed !important',
     color: 'white',
     cursor: 'pointer',
@@ -92,7 +94,7 @@ const styles = theme => ({
     color: 'gray',
     transition: 'color 300ms',
     '&:hover': {
-      color: 'black'
+      color: colors.primary,
     }
   }
 });

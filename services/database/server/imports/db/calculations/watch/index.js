@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
-
+import moment from 'moment';
 import { Calculations, Clusters, Requests } from '/both/imports/collections';
 import { runCalculation } from '/server/imports/api/events/run-calculation';
+
+const timeBeforeRetry = 5 * 60 * 1000;
 
 // TODO: User Calculation Limits and Checks
 const calculationWatcher = {
@@ -21,7 +23,7 @@ const calculationWatcher = {
         //   const calculation = Calculations.findOne(request.calculationId);
         //   calculationWatcher.checkCalculation({ calculation, request });
         // },
-      }),
+      })
     );
     // poll for calculations that don't go through
     calculationWatcher.watchInterval = Meteor.setInterval(() => {
@@ -29,10 +31,15 @@ const calculationWatcher = {
         completedAt: { $exists: false },
         $or: [
           {
-            running: undefined,
+            running: { $exists: false },
           },
           {
             running: false,
+          },
+          {
+            updatedAt: {
+              $lt: moment().valueOf() - timeBeforeRetry,
+            },
           },
         ],
       });
@@ -41,7 +48,7 @@ const calculationWatcher = {
         const calculation = Calculations.findOne(request.calculationId);
         calculationWatcher.checkCalculation({ calculation, request });
       });
-    }, 5000);
+    }, 10000);
   },
   stop: () => {
     calculationWatcher.observers.forEach(observer => observer.stop());
@@ -51,8 +58,15 @@ const calculationWatcher = {
     // TODO: handle when a new request comes in and a request is already
     //       running, stopCalculation if new cluster node size is bigger
     //       else just mark the request as running
-    if (!request.running && !request.completed) {
+    if (
+      !request.completed &&
+      (!request.running ||
+        request.updatedAt < moment().valueOf() - timeBeforeRetry)
+    ) {
       const { serverId } = Clusters.findOne(request.clusterId);
+      Requests.update(request._id, {
+        $set: { running: false, startedAt: null, updatedAt: null },
+      });
       // TODO: make sure this makes sense for multiple database-service nodes
       runCalculation({
         calculationId: calculation._id,

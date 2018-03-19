@@ -67,7 +67,33 @@ const Geometry = {
     const calculationIds = Calculations.find(
       {
         geometryIds: geometry.id,
-        'parameters.type': {$in:['geometryOptimization','conformerSearch']},
+        'parameters.type': 'geometryOptimization',
+      },
+      { fields: { _id: 1 } }
+    )
+      .fetch()
+      .map(calculation => calculation._id);
+    const calculations = getCalculations({ calculationIds });
+    return calculations.map(calculation => {
+      return {
+        geometries: calculation.properties
+          ? calculation.properties.geometries
+          : null,
+        energies: calculation.properties
+          ? calculation.properties.energies
+          : null,
+        label: prettyPropertyLabel({ parameters: calculation.parameters }),
+        error: calculation.errorMessage,
+        running: !calculation.completed,
+        calculation: calculation,
+      };
+    });
+  },
+  conformerSearches(geometry, args, context, self) {
+    const calculationIds = Calculations.find(
+      {
+        geometryIds: geometry.id,
+        'parameters.type': 'conformerSearch',
       },
       { fields: { _id: 1 } }
     )
@@ -90,21 +116,31 @@ const Geometry = {
     });
   },
   harmonicSpectra(geometry) {
-    const calculations = Calculations.find(
+    const calculationIds = Calculations.find(
       {
         geometryIds: geometry.id,
         'parameters.type': 'harmonicSpectra',
       },
-      { fields: { parameters: 1, running: 1, properties: 1 } }
-    ).fetch();
+      { fields: { _id: 1 } }
+    )
+      .fetch()
+      .map(calculation => calculation._id);
+    const calculations = getCalculations({ calculationIds });
     return calculations.map(calculation => {
       return {
-        frequencies: calculation.properties.frequencies,
-        intensities: calculation.properties.intensities,
+        frequencies: calculation.properties
+          ? calculation.properties.frequencies
+          : null,
+        intensities: calculation.properties
+          ? calculation.properties.intensities
+          : null,
+        optimizedGeometry: calculation.properties
+          ? calculation.properties.optimizedGeometry
+          : null,
         label: prettyPropertyLabel({ parameters: calculation.parameters }),
         error: calculation.errorMessage,
         running: !calculation.completed,
-        calculation: getCalculation({ calculationId: calculation._id }),
+        calculation: calculation,
       };
     });
   },

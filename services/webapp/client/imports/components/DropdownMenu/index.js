@@ -6,7 +6,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
-import styles from '/client/imports/styles/calculation';
+import styles from '/client/imports/pages/NewCalculation/styles';
 
 const ITEM_HEIGHT = 48;
 

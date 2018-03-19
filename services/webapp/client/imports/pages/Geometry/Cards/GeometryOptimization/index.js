@@ -74,13 +74,15 @@ const GeometryOptimizationRow = compose(
     ({ running, geometries }) =>
       running && (!geometries || geometries.length === 0),
     renderComponent(GeometryOptimizationRowLoading)
-  ),
+  )
 )(GeometryOptimizationRowPure);
 
-const GeometryOptimizationCardPure = ({ geometryOptimizations }) => (
+const GeometryOptimizationCardPure = ({ geometryOptimizations, title }) => (
   <Expandable
     summary={[
-      <CardTitle key="main-card-title">Geometry Optimization</CardTitle>,
+      <CardTitle key="main-card-title">
+        {title ? title : 'Geometry Optimization'}
+      </CardTitle>,
       <GeometryOptimizationRow
         key="main-card-optimization"
         {...geometryOptimizations[0]}
@@ -97,11 +99,13 @@ const GeometryOptimizationCardPure = ({ geometryOptimizations }) => (
   />
 );
 
-const SingleGeometryOptimizationCard = ({ geometryOptimizations }) => (
+const SingleGeometryOptimizationCard = ({ geometryOptimizations, title }) => (
   <Expandable
     expandable={false}
     summary={[
-      <CardTitle key="main-card-title">Geometry Optimization</CardTitle>,
+      <CardTitle key="main-card-title">
+        {title ? title : 'Geometry Optimization'}
+      </CardTitle>,
       <GeometryOptimizationRow
         key="main-card-optimization"
         {...geometryOptimizations[0]}

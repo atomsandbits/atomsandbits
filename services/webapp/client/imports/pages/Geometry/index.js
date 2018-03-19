@@ -15,6 +15,8 @@ import AppLayout from '/client/imports/components/AppLayout';
 import { EnergyCard } from './Cards/Energy';
 import { ForceCard } from './Cards/Force';
 import { GeometryOptimizationCard } from './Cards/GeometryOptimization';
+import { ConformerSearchCard } from './Cards/ConformerSearch';
+import { HarmonicSpectrumCard } from './Cards/HarmonicSpectrum';
 import { Tags } from './Tags';
 
 import { defaults, Line as LineChart } from 'react-chartjs-2';
@@ -47,6 +49,7 @@ const GeometryPure = ({
   energies,
   forces,
   geometryOptimizations,
+  conformerSearches,
   harmonicSpectra,
   refetch,
 }) => (
@@ -65,6 +68,8 @@ const GeometryPure = ({
               <GeometryOptimizationCard
                 geometryOptimizations={geometryOptimizations}
               />
+              <HarmonicSpectrumCard harmonicSpectra={harmonicSpectra} />
+              <ConformerSearchCard conformerSearches={conformerSearches} />
             </ColumnContent>
           </GeometryCalculationColumn>
           <GeometryInformationColumn>
@@ -109,6 +114,7 @@ const mapDataProps = mapProps(({ match, data, ...otherProps }) => {
     energies: data.geometry.energies,
     forces: data.geometry.forces,
     geometryOptimizations: data.geometry.optimizations,
+    conformerSearches: data.geometry.conformerSearches,
     harmonicSpectra: data.geometry.harmonicSpectra,
     refetch: data.refetch,
     ...otherProps,

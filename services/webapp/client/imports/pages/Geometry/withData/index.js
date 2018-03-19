@@ -29,6 +29,21 @@ const withData = compose(
             running
             error
           }
+          conformerSearches {
+            geometries
+            energies
+            label
+            running
+            error
+          }
+          harmonicSpectra {
+            frequencies
+            intensities
+            optimizedGeometry
+            label
+            running
+            error
+          }
         }
       }
     `,

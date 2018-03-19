@@ -22,7 +22,7 @@ import SpeckRenderer from '/client/imports/components/SpeckRenderer';
 import GeometryOptimizationRenderer from './GeometryOptimizationRenderer';
 import prettyFormat from '/both/imports/tools/pretty-format';
 import xyzTools from '/both/imports/tools/xyz';
-import styles from '/client/imports/styles/calculation';
+import styles from '/client/imports/pages/NewCalculation/styles';
 
 
 class Calculation extends React.Component {

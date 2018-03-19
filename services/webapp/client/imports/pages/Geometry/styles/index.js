@@ -8,6 +8,8 @@ import { colors, fonts, breakpoints } from '/client/imports/theme';
 
 export const GeometryPageContainer = styled.div`
   height: auto;
+  min-height: 100%;
+  background-color: #f7f9fa;
   @media (min-width: ${breakpoints.md}) {
     height: 100%;
   }
@@ -16,10 +18,9 @@ export const GeometryPageContainer = styled.div`
 export const GeometryPageContent = styled.div`
   box-sizing: border-box;
   display: flex;
-  height: 100%;
   margin: 0 auto;
+  height: 100%;
   text-align: center;
-  background-color: #f7f9fa;
   flex-direction: column-reverse;
   @media (min-width: ${breakpoints.md}) {
     flex-direction: row;

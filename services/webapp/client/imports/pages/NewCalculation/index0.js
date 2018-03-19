@@ -22,7 +22,7 @@ import LatticeVectorsInput from './LatticeVectorsInput';
 import KPointsInput from './KPointsInput';
 import DropdownMenu from '/client/imports/components/DropdownMenu';
 
-import styles from '/client/imports/styles/calculation';
+import styles from '/client/imports/pages/NewCalculation/styles';
 
 if (!Session.get('xyz')) {
   Session.set(
