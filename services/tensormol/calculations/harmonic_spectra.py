@@ -46,7 +46,7 @@ def main(manager, molecule):
         molecule.coords,
         molecule.atoms,
         WriteNM_=True,
-        Mu=DipoleField)
+        Mu_=DipoleField)
     return molecule, w, i
 
 
