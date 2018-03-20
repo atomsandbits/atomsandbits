@@ -41,17 +41,17 @@ def main(manager, molecule):
         return dipole
 
     PARAMS["OptMaxCycles"] = 300
-    PARAMS["OptThresh"] = 0.001
+    PARAMS["OptThresh"] = 0.0002
     Opt = GeomOptimizer(EnAndForce)
     molecule = Opt.Opt(molecule)
     # Gotta optimize before running spectra
-    w, v, i = HarmonicSpectra(
+    w, v, i, TD = HarmonicSpectra(
         EnAndForce,
         molecule.coords,
         molecule.atoms,
         WriteNM_=True,
         Mu_=DipoleField,
-		h_ = lambda x: EFH(x)[2])
+        h_ = lambda x: EFH(x)[2])
     return molecule, w, i, TD
 
 if __name__ == "__main__":
