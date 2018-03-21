@@ -14,6 +14,7 @@ import { LinearProgress } from 'material-ui/Progress';
 import AppLayout from '/client/imports/components/AppLayout';
 import { EnergyCard } from './Cards/Energy';
 import { ForceCard } from './Cards/Force';
+import { FreeEnergyCard } from './Cards/FreeEnergy';
 import { GeometryOptimizationCard } from './Cards/GeometryOptimization';
 import { ConformerSearchCard } from './Cards/ConformerSearch';
 import { HarmonicSpectrumCard } from './Cards/HarmonicSpectrum';
@@ -48,6 +49,7 @@ const GeometryPure = ({
   geometry,
   energies,
   forces,
+  freeEnergies,
   geometryOptimizations,
   conformerSearches,
   harmonicSpectra,
@@ -65,6 +67,7 @@ const GeometryPure = ({
             <ColumnContent>
               <EnergyCard energies={energies} />
               <ForceCard forces={forces} />
+              <FreeEnergyCard freeEnergies={freeEnergies} />
               <GeometryOptimizationCard
                 geometryOptimizations={geometryOptimizations}
               />
@@ -113,6 +116,7 @@ const mapDataProps = mapProps(({ match, data, ...otherProps }) => {
     geometry: data.geometry,
     energies: data.geometry.energies,
     forces: data.geometry.forces,
+    freeEnergies: data.geometry.freeEnergies,
     geometryOptimizations: data.geometry.optimizations,
     conformerSearches: data.geometry.conformerSearches,
     harmonicSpectra: data.geometry.harmonicSpectra,

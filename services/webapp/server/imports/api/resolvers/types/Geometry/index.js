@@ -63,6 +63,31 @@ const Geometry = {
       };
     });
   },
+  freeEnergies(geometry, args, context, self) {
+    // console.log(self.variableValues.geometryInput.calculationId);
+    const calculationIds = Calculations.find(
+      {
+        geometryIds: geometry.id,
+        'parameters.type': 'harmonicSpectra',
+      },
+      { fields: { _id: 1 } }
+    )
+      .fetch()
+      .map(calculation => calculation._id);
+    const calculations = getCalculations({ calculationIds });
+    return calculations.map(calculation => {
+      return {
+        freeEnergy:
+          calculation.properties && calculation.properties.freeEnergy
+            ? calculation.properties.freeEnergy['300K1ATM']
+            : null,
+        label: prettyPropertyLabel({ parameters: calculation.parameters }) + ' - STP ',
+        error: calculation.errorMessage,
+        running: !calculation.completed,
+        calculation: calculation,
+      };
+    });
+  },
   optimizations(geometry, args, context, self) {
     const calculationIds = Calculations.find(
       {

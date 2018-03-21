@@ -31,6 +31,13 @@ const Properties = () => [
     running: Boolean!
     calculation: Calculation!
   }
+  type FreeEnergyProperty {
+    freeEnergy: Float
+    label: String!
+    error: String
+    running: Boolean!
+    calculation: Calculation!
+  }
   type HarmonicSpectrumProperty {
     frequencies: [Float]
     intensities: [Float]
@@ -53,6 +60,7 @@ const Geometry = () => [
     calculations: [Calculation]
     energies: [EnergyProperty]!
     forces: [ForceProperty]!
+    freeEnergies: [FreeEnergyProperty]!
     optimizations: [OptimizationProperty]!
     conformerSearches: [ConformerSearchProperty]!
     harmonicSpectra: [HarmonicSpectrumProperty]!

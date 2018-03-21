@@ -22,6 +22,12 @@ const withData = compose(
             running
             error
           }
+          freeEnergies {
+            freeEnergy
+            label
+            running
+            error
+          }
           optimizations {
             geometries
             energies

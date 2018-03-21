@@ -140,7 +140,8 @@ def main():
                                 }
                             })
                     elif calculation_type == 'harmonicSpectra':
-                        finalm, w, v, td = harmonic_spectra.main(network, molecule)
+                        finalm, w, v, td = harmonic_spectra.main(
+                            network, molecule)
                         xyz = '\n'.join(str(finalm).split('\n')[2:])
                         socket_io.emit(
                             'saveCalculationResult', {
@@ -149,7 +150,10 @@ def main():
                                     'optimizedGeometry': xyz,
                                     'frequencies': w.tolist(),
                                     'intensities': v.tolist(),
-                                    'freeEnergy300K1ATM': td['Grot']+td['Gtrans']+td['Gvib']
+                                    'freeEnergy': {
+                                        '300K1ATM':
+                                        td['Grot'] + td['Gtrans'] + td['Gvib']
+                                    }
                                 }
                             })
                     elif calculation_type == 'nudgedElasticBand':
