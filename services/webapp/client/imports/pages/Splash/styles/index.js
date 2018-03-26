@@ -3,57 +3,68 @@ import { colors, fonts } from '/client/imports/theme';
 
 const styles = theme => ({
   container: {
-    minHeight: "100%",
-    display: "flex",
-    flexDirection: "column",
-    cursor: "default",
-    [theme.breakpoints.down('md')]: {
-      paddingTop: 60
-    }
+    minHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    cursor: 'default',
   },
   contentContainer: {
-    display: "flex",
+    display: 'flex',
     flexGrow: 1,
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column-reverse',
-    }
+    },
   },
   sectionContainer: {
-    display: "flex",
+    display: 'flex',
     flexGrow: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    maxWidth: '50%',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 'initial',
+    },
   },
   firstSection: {
     backgroundColor: colors.background.dark,
-    color: "white"
+    color: 'white',
+  },
+  secondSection: {
+    maxWidth: '50%',
+    marginTop: 40,
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 'initial',
+      padding: '80px 40px 40px',
+      marginTop: 0,
+    },
   },
   proposition: {
-    margin: "48px auto",
-    fontWeight: "bold",
-    fontSize: "18px",
-    cursor: 'default'
+    margin: '48px auto',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    cursor: 'default',
   },
   propositionIcon: {
     fontSize: 35,
-    marginRight: 20
+    marginRight: 20,
   },
   headerText: {
     fontFamily: fonts.header,
-    fontSize: 34,
+    fontSize: 30,
     fontWeight: 'bold',
-    color: colors.text.default,
+    color: colors.secondary,
   },
   headerSubtext: {
-    fontSize: 18,
-    margin: '16px auto'
+    fontSize: 22,
+    fontWeight: 500,
+    margin: '10px auto 30px',
   },
   loginWithGoogle: {
-    margin: '35px 0 60px',
+    margin: '35px 0 60px auto',
     backgroundColor: '#4885ed !important',
     color: 'white',
     cursor: 'pointer',
-    display: 'inline-block',
+    display: 'block',
     padding: '10px 15px',
     borderRadius: 2,
     fontWeight: 'bold',
@@ -63,16 +74,16 @@ const styles = theme => ({
     textTransform: 'none',
     [theme.breakpoints.down('md')]: {
       fontWeight: 400,
-    }
+    },
   },
   googleIcon: {
     fontSize: '1.1rem',
-    marginRight: 10
+    marginRight: 10,
   },
   footerContainer: {
     textAlign: 'center',
     padding: 11,
-    borderTop: '1px solid #e6ecf0'
+    borderTop: '1px solid #e6ecf0',
   },
   footerList: {
     display: 'flex',
@@ -85,7 +96,7 @@ const styles = theme => ({
   },
   footerListItem: {
     display: 'inline-block',
-    listItemStyle: 'none'
+    listItemStyle: 'none',
   },
   footerLink: {
     display: 'block',
@@ -95,8 +106,8 @@ const styles = theme => ({
     transition: 'color 300ms',
     '&:hover': {
       color: colors.primary,
-    }
-  }
+    },
+  },
 });
 
 export default styles;
