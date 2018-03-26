@@ -55,7 +55,7 @@ const AboutPure = () => (
         <NavigationBar />
         <SplashTextContainer>
           <Title>cloudszi</Title>
-          <Description>molecular discovery with cloud-based quantum calculations and deep learning</Description>
+          <Description>molecular discovery with cloud-based quantum simulations and deep learning</Description>
           <StartLink href="https://www.cloudszi.com/">get started</StartLink>
         </SplashTextContainer>
       </FirstSection>

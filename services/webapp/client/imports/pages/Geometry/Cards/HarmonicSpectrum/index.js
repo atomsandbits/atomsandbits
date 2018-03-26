@@ -1,8 +1,6 @@
 import React from 'react';
 import { compose, branch, renderComponent, renderNothing } from 'recompose';
 
-import Expandable from '/client/imports/components/Expandable';
-
 import Chart from './Chart';
 
 import {
@@ -12,6 +10,7 @@ import {
   CardTitle,
   ErrorIcon,
   LoadIndicator,
+  Expandable,
 } from '../../styles';
 
 const HarmonicSpectrumRowLoading = ({ label }) => (

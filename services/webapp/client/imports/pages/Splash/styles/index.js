@@ -79,6 +79,7 @@ const styles = theme => ({
   googleIcon: {
     fontSize: '1.1rem',
     marginRight: 10,
+    paddingBottom: 3,
   },
   footerContainer: {
     textAlign: 'center',

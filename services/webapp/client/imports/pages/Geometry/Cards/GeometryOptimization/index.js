@@ -8,8 +8,6 @@ import {
   mapProps,
 } from 'recompose';
 
-import Expandable from '/client/imports/components/Expandable';
-
 import { GeometryOptimizationRenderer } from './Renderer';
 import {
   CardProperty,
@@ -18,6 +16,7 @@ import {
   CardTitle,
   ErrorIcon,
   Column,
+  Expandable,
   LoadIndicator,
 } from '../../styles';
 

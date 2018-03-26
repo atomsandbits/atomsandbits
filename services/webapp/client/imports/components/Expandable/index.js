@@ -24,6 +24,7 @@ const enhance = compose(
 );
 
 const Expandable = ({
+  className,
   summary,
   details,
   expandable,
@@ -31,7 +32,7 @@ const Expandable = ({
   expandIcon,
   setExpanded,
 }) => (
-  <ExpansionPanel expanded={expanded}>
+  <ExpansionPanel className={className} expanded={expanded}>
     <ExpansionPanelSummary
       style={{ content: { maxWidth: '100%' } }}
       expandIcon={expandable ? expandIcon : null}

@@ -73,7 +73,7 @@ class SplashPage extends React.Component {
             <div className={classes.secondSection}>
               <div className={classes.headerText}>cloudszi</div>
               <div className={classes.headerSubtext}>
-                molecular discovery with cloud-based quantum calculations and
+                molecular discovery with cloud-based quantum simulations and
                 deep learning
               </div>
               <div className={classes.loginButtons}>

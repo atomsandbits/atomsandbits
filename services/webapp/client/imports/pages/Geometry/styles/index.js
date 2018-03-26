@@ -4,6 +4,7 @@ import Chip from 'material-ui/Chip';
 import _ErrorIcon from 'react-icons/lib/fa/exclamation-circle';
 import { CircularProgress } from 'material-ui/Progress';
 import _SpeckRenderer from '/client/imports/components/SpeckRenderer';
+import _Expandable from '/client/imports/components/Expandable';
 import { colors, fonts, breakpoints } from '/client/imports/theme';
 
 export const GeometryPageContainer = styled.div`
@@ -70,6 +71,13 @@ export const CardTitle = styled.div`
   text-align: left;
   width: 100%;
 `;
+export const Expandable = styled(_Expandable)`
+  && {
+    > div {
+      user-select: auto;
+    }
+  }
+`;
 export const CardPropertyLabel = styled.div`
   flex-grow: 1;
   font-size: 0.8rem;
@@ -100,6 +108,7 @@ export const CardProperty = styled.div`
   max-height: ${props => (props.tall ? '400px' : '300px')};
   margin: 0 auto;
   overflow: auto;
+  user-select: all;
   white-space: pre;
 `;
 
@@ -131,6 +140,7 @@ export const AtomicCoords = styled.div`
   max-height: 350px;
   overflow: auto;
   padding: 0 20px;
+  user-select: all;
   white-space: pre;
   width: 90%;
   width: fit-content;

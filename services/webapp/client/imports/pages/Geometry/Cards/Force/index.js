@@ -2,14 +2,13 @@ import React from 'react';
 import { sprintf } from 'sprintf-js';
 import { compose, branch, renderComponent, renderNothing } from 'recompose';
 
-import Expandable from '/client/imports/components/Expandable';
-
 import {
   CardProperty,
   CardPropertyLabel,
   CardPropertyRow,
   CardTitle,
   ErrorIcon,
+  Expandable,
   LoadIndicator,
 } from '../../styles';
 
