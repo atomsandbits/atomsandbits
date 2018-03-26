@@ -34,7 +34,6 @@ class MoleculeRenderer extends React.Component {
   };
   render() {
     const { classes, theme } = this.props;
-    console.log("Renderered...")
     return (
       <Grid container={true} spacing={0}>
         <Grid item={true} xs={12} sm={6}>

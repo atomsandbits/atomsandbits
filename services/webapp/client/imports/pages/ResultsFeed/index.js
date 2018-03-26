@@ -1,10 +1,19 @@
 import React from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-import { compose, branch, renderComponent, withState } from 'recompose';
+import {
+  compose,
+  branch,
+  lifecycle,
+  mapProps,
+  pure,
+  renderComponent,
+  withState,
+} from 'recompose';
 
 import Fade from 'material-ui/transitions/Fade';
 import { LinearProgress } from 'material-ui/Progress';
 
+import { logger } from '/both/imports/logger';
 // import Header from '/client/imports/components/Header';
 import AppLayout from '/client/imports/components/AppLayout';
 import Header from './Header';
@@ -25,24 +34,24 @@ const Loading = props => (
 );
 
 const displayLoadingState = branch(
-  props => props.data.loading,
+  props => props.loading,
   renderComponent(Loading)
 );
 
 const redirectWithNoResults = branch(
-  props => props.data.results.length === 0,
+  props => props.results.length === 0,
   renderComponent(() => <Redirect to="/new-calculation" />)
 );
 
-const ResultsFeedPure = ({ data, ...otherProps }) => (
+const ResultsFeedPure = ({ results, ...otherProps }) => (
   <AppLayout
     mobileOnlyToolbar
     title="Results Feed"
     appContent={
       <ResultsFeedContainer>
         <ResultsFeedContent>
-          {console.log(data.results)}
-          {data.results.map((result, index) => (
+          {logger.info('Results', results)}
+          {results.map((result, index) => (
             <Result
               result={result}
               index={index}
@@ -63,6 +72,14 @@ const DEFAULT_TAG = '';
 const SEARCH = '';
 const LIMIT = 30;
 
+const mapDataProps = mapProps(({ data, ...otherProps }) => {
+  return {
+    results: data.results,
+    loading: data.loading,
+    ...otherProps,
+  };
+});
+
 const ResultsFeed = compose(
   withState('sortBy', 'setSortBy', SORT_BY),
   withState('sortDirection', 'setSortDirection', SORT_DIRECTION),
@@ -70,9 +87,11 @@ const ResultsFeed = compose(
   withState('search', 'setSearch', SEARCH),
   withState('limit', 'setLimit', LIMIT),
   withData,
+  mapDataProps,
   displayLoadingState,
   withRouter,
-  redirectWithNoResults
+  redirectWithNoResults,
+  pure
 )(ResultsFeedPure);
 
 export { ResultsFeed };

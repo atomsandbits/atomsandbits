@@ -31,11 +31,7 @@ const dataQuery = gql`
   }
 `;
 
-const withData = compose(
-  graphql(dataQuery, {
-    // options: () => ({ pollInterval: 60000 }),
-  })
-);
+const withData = graphql(dataQuery);
 
 const queryWatcher = apolloClient.watchQuery({
   query: dataQuery,

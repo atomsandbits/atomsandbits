@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import _ from 'lodash';
-import logger from '/both/imports/tools/logger';
+import logger from '/both/imports/logger';
 import { socket } from '/server/imports/db-server-socket';
 import { calculationMethods } from '/both/imports/config/calculation-methods';
 import { getCalculation } from '/server/imports/db/calculations/read';

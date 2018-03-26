@@ -57,12 +57,18 @@ const runCalculation = ({
     throw new Error('runCalculation: cluster not defined');
   }
   // TODO: Check that the User has access to this cluster
+  // TODO: Allow forcing a calculation to re-run
+  const previousRequest = Requests.findOne({
+    type: 'calculation',
+    calculationId,
+    completed: true,
+  });
   return Requests.insert({
     type: 'calculation',
     calculationId,
     userId,
     clusterId: cluster._id,
-    completed: false,
+    completed: previousRequest !== undefined,
     running: false,
     createdAt: moment().valueOf(),
   });
@@ -72,6 +78,7 @@ const setCalculationRunning = ({ calculationId }) =>
   Requests.update(
     { calculationId, running: { $ne: true } },
     { $set: { startedAt: moment().valueOf(), running: true } },
+    { multi: true },
   );
 
 const pingCalculationRunning = ({
@@ -84,6 +91,7 @@ const pingCalculationRunning = ({
         updatedAt: moment().valueOf(),
       },
     },
+    { multi: true },
   );
 
 const stopCalculation = ({
@@ -142,6 +150,7 @@ const saveCalculationResult = ({
         completedAt: moment().valueOf(),
       },
     },
+    { multi: true },
   );
   return Calculations.update(calculationId, {
     $set: {

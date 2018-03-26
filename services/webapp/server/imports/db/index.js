@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import logger from '/both/imports/tools/logger';
+import logger from '/both/imports/logger';
 
 logger.info('Creating collections...');
 

@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  compose,
-  branch,
-  renderComponent,
-  mapProps,
-  withState,
-} from 'recompose';
+import { compose, branch, renderComponent, mapProps } from 'recompose';
 import { withData } from './withData';
 
 import { LinearProgress } from 'material-ui/Progress';
+
+import { logger } from '/both/imports/logger';
 
 import AppLayout from '/client/imports/components/AppLayout';
 import { EnergyCard } from './Cards/Energy';
@@ -20,28 +16,17 @@ import { ConformerSearchCard } from './Cards/ConformerSearch';
 import { HarmonicSpectrumCard } from './Cards/HarmonicSpectrum';
 import { Tags } from './Tags';
 
-import { defaults, Line as LineChart } from 'react-chartjs-2';
-
-import Expandable from '/client/imports/components/Expandable';
 import { Molecule } from '/both/imports/tools/Molecule';
 import xyzTools from '/both/imports/tools/xyz';
 import {
   AtomicCoords,
   AtomicCoordsContainer,
-  CardProperty,
-  CardPropertyLabel,
-  CardPropertyRow,
   CardTitle,
   ColumnContent,
-  ExpandableCardDetails,
-  ExpandableCardSummary,
-  ExpansionPanel,
   GeometryCalculationColumn,
   GeometryInformationColumn,
   GeometryPageContainer,
   GeometryPageContent,
-  Link,
-  Links,
   SpeckRenderer,
 } from './styles';
 
@@ -61,7 +46,7 @@ const GeometryPure = ({
     title="Geometry"
     appContent={
       <GeometryPageContainer>
-        {console.log(geometry)}
+        {logger.info('Geometry', geometry)}
         <GeometryPageContent>
           <GeometryCalculationColumn>
             <ColumnContent>

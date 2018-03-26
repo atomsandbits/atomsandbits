@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 
+import { logger } from '/both/imports/logger';
 import xyzTools from '/both/imports/tools/xyz';
 import {
   getPossibleParameters,
@@ -147,7 +148,7 @@ class NewCalculationPure extends React.Component {
         latticeVectors: this.state.parameters.latticeVectors,
       },
     };
-    console.log('Submitting Calculation...', input);
+    logger.info('Submitting Calculation', input);
     this.props.submitCalculation({
       input,
     });
