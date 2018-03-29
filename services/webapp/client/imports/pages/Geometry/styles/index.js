@@ -114,7 +114,7 @@ export const CardProperty = styled.div`
 
 /* ~~~~~~~ Calculation Column ~~~~~~~ */
 export const GeometryCalculationColumn = ColumnContainer.extend`
-  padding-top: 60px;
+  padding-bottom: 40px;
   & > div {
     max-width: 800px;
   }
