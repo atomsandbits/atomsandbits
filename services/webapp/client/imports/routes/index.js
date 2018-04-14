@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import SplashPage from '/client/imports/pages/Splash';
 import NewCalculationPage from '/client/imports/pages/NewCalculation';
+import NewProjectPage from '/client/imports/pages/NewProject';
+import GeometrySearchPage from '/client/imports/pages/GeometrySearch';
 import GeometryPage from '/client/imports/pages/Geometry';
 import ProjectPage from '/client/imports/pages/Project';
 
@@ -10,20 +12,14 @@ import ProjectPage from '/client/imports/pages/Project';
 // import CalculationPage from '/client/imports/pages/Calculation';
 // import CalculationOutputPage from '/client/imports/pages/CalculationOutput';
 
+import { lifecycle } from 'recompose';
+
 const Routes = () => (
   <Switch>
     <Route path="/" exact component={SplashPage} />
     <Route path="/new-calculation" component={NewCalculationPage} />
-    <Route path="/new-project" component={ProjectPage} />
-    {/* <Route
-      path="/calculation/:primeCalculationId"
-      exact
-      component={CalculationPage}
-    />
-    <Route
-      path="/calculation/:primeCalculationId/output"
-      component={CalculationOutputPage}
-    /> */}
+    <Route path="/new-project" component={NewProjectPage} />
+    <Route path="/geometry-search" component={GeometrySearchPage} />
     <Route
       path="/geometry/:geometryId/calculation/:calculationId"
       component={GeometryPage}

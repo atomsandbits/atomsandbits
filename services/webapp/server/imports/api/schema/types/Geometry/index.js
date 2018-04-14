@@ -1,3 +1,5 @@
+import { Node } from '../../interfaces/Node';
+import { PageInfo } from '../PageInfo';
 import { Calculation } from '../Calculation';
 
 const Properties = () => [
@@ -51,11 +53,13 @@ const Properties = () => [
 ];
 
 const Geometry = () => [
-  `type Geometry {
-    id: String!
+  `type Geometry implements Node {
+    id: ID!
     atomicCoords: String!
     molecularFormula: String!
+    mass: Float!
     atomCount: Int!
+    createdAt: Float!
     tags: [String]
     calculations: [Calculation]
     energies: [EnergyProperty]!
@@ -65,7 +69,19 @@ const Geometry = () => [
     conformerSearches: [ConformerSearchProperty]!
     harmonicSpectra: [HarmonicSpectrumProperty]!
     mediumImage: String
+  }
+  type GeometriesEdge {
+    node: Geometry
+    cursor: String!
+  }
+  type GeometriesConnection {
+    pageInfo: PageInfo!
+    edges: [GeometriesEdge]
+    geometries: [Geometry]
+    totalCount: Int
   }`,
+  Node,
+  PageInfo,
   Calculation,
   Properties,
 ];

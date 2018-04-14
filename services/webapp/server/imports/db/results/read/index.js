@@ -9,13 +9,15 @@ const convertResultToGraph = ({ result }) => {
 };
 
 const getResults = ({ userId, limit, skip, search, sortBy, sortOrder }) => {
+  const sort = {};
+  sort[sortBy] = sortOrder;
   const calculations = Calculations.find(
     { 'users._id': userId },
-    { limit, fields: { _id: 1, 'users.$': 1 } }
+    { limit, sort, fields: { _id: 1, 'users.$': 1 } }
   ).fetch();
   const projects = Projects.find(
     { userId },
-    { limit, fields: { _id: 1, createdAt: 1 } }
+    { limit, sort, fields: { _id: 1, createdAt: 1 } }
   ).fetch();
   let results = [];
   results.push(

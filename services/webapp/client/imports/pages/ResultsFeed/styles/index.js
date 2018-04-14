@@ -5,9 +5,12 @@ import _EmpiricalFormula from '/client/imports/components/EmpiricalFormula';
 
 import { colors, breakpoints, fonts } from '/client/imports/theme';
 
-export const ResultsFeedContainer = styled.div``;
+export const ResultsFeedContainer = styled.div`
+  display: flex;
+`;
 
 export const ResultsFeedContent = styled.div`
+  flex-grow: 1;
   text-align: center;
   @media (min-width: ${breakpoints.xl}) {
     margin: 0 30px;

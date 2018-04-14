@@ -12,6 +12,7 @@ const createCalculation = ({
   xyzs = [],
   parameters = isRequired('parameters'),
   userId = isRequired('userId'),
+  explicit,
   output,
   properties,
 }) => {
@@ -43,7 +44,11 @@ const createCalculation = ({
   });
   // TODO: If output or properties are passed in and they don't exist, add them
   if (existingCalculation) {
-    addUserToCalculation({ userId, calculationId: existingCalculation._id });
+    addUserToCalculation({
+      userId,
+      calculationId: existingCalculation._id,
+      explicit,
+    });
     return existingCalculation._id;
   }
   // Calculation doesn't exist, create it
@@ -54,6 +59,9 @@ const createCalculation = ({
       createdAt,
     },
   ];
+  if (explicit) {
+    calculation.users[0].explicit = true;
+  }
   calculation.creatorId = userId;
   calculation.createdAt = createdAt;
   calculation.properties = properties;

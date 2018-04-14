@@ -7,9 +7,9 @@ const CalculationInputParameters = () => [
     method: String!
     network: String
     basisSet: String
-    charge: Int!
+    charge: Int = 0
     numberOfConformers: Int
-    multiplicity: Int!
+    multiplicity: Int = 1
     functional: String
     densityFit: String
     auxBasisSet: String

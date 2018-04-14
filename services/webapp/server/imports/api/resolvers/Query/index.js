@@ -2,8 +2,10 @@ import { getGeometry } from '/server/imports/db/geometries/read';
 import { getCalculation } from '/server/imports/db/calculations/read';
 import { getResults } from '/server/imports/db/results/read';
 
+import { Geometries } from '/server/imports/db/geometries';
+import { Results } from '/server/imports/db/results';
+
 const Query = {
-  say: () => 'hello world',
   geometry: (root, args, context) => {
     const { id } = args.input;
     const { userId } = context;
@@ -14,12 +16,60 @@ const Query = {
     const { userId } = context;
     return getCalculation({ calculationId: id, userId });
   },
-  geometries: (root, args, context) => {},
   project: (root, args, context) => {},
-  results: (root, args, context) => {
+  allGeometries: (root, args, context) => {
     const { userId } = context;
-    const { limit, skip, search, sortBy, sortOrder } = args.input || {};
-    return getResults({ userId, limit, skip, search, sortBy, sortOrder });
+    const { first, after, last, before, orderBy, filters } = args.input || {};
+    const geometry = new Geometries({
+      userId,
+      first,
+      after,
+      last,
+      before,
+      orderBy,
+      filters,
+    });
+    return {
+      pageInfo: {
+        hasNextPage: geometry.hasNextPage(),
+        hasPreviousPage: geometry.hasPreviousPage(),
+        startCursor: geometry.first().id,
+        endCursor: geometry.last().id,
+      },
+      edges: geometry.get().map(geometry => ({
+        node: geometry,
+        cursor: geometry.id,
+      })),
+      geometries: geometry.get(),
+      totalCount: geometry.count(),
+    };
+  },
+  userResults: (root, args, context) => {
+    const { userId } = context;
+    const { first, after, last, before, orderBy, filters } = args.input || {};
+    const userResults = new Results({
+      userId,
+      first,
+      after,
+      last,
+      before,
+      orderBy,
+      filters,
+    });
+    return {
+      pageInfo: {
+        hasNextPage: userResults.hasNextPage(),
+        hasPreviousPage: userResults.hasPreviousPage(),
+        startCursor: userResults.first().id,
+        endCursor: userResults.last().id,
+      },
+      edges: userResults.get().map(userResult => ({
+        node: userResult,
+        cursor: userResult.id,
+      })),
+      results: userResults.get(),
+      totalCount: userResults.count(),
+    };
   },
 };
 

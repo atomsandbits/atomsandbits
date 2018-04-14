@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import { compose, onlyUpdateForPropTypes } from 'recompose';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
 
-import styles from '/client/imports/pages/NewCalculation/styles';
+import {
+  DropdownContainer,
+  LabelButton,
+  LabelText,
+  LabelValue,
+} from './styles';
 
 const ITEM_HEIGHT = 48;
+
+const enhance = compose(onlyUpdateForPropTypes);
 
 class DropdownMenu extends React.Component {
   state = {
     selectedIndex: this.props.menuItems
-      .map((menuItem) => {
+      .map(menuItem => {
         return menuItem.value;
       })
       .indexOf(this.props.value),
@@ -27,24 +31,25 @@ class DropdownMenu extends React.Component {
       this.props.setValue(value);
     }
   }
-  componentWillUpdate(nextProps, nextState) {
-    if (!nextState) nextState = this.state;
+  componentDidUpdate(prevProps, prevState) {
+    // Update State and Value if index no longer exists in menuItems or
+    // the menuItems have changed
     if (
-      typeof nextProps.menuItems[nextState.selectedIndex] === 'undefined' ||
-      nextProps.value !== nextProps.menuItems[nextState.selectedIndex].value
+      typeof this.props.menuItems[this.state.selectedIndex] === 'undefined' ||
+      prevProps.menuItems !== this.props.menuItems
     ) {
-      const { value } = nextProps.menuItems[0];
+      const { value } = this.props.menuItems[0];
       this.setState({ selectedIndex: 0 });
-      nextProps.setValue(value);
+      this.props.setValue(value);
     }
   }
   componentWillUnmount() {
     this.props.unsetValue();
   }
-  handleClickListItem = (event) => {
+  handleLabelClick = event => {
     this.setState({ open: true, anchorEl: event.currentTarget });
   };
-  handleMenuItemClick = (event, index, value) => {
+  handleMenuItemClick = (index, value) => event => {
     this.setState({
       selectedIndex: index,
       open: false,
@@ -55,53 +60,33 @@ class DropdownMenu extends React.Component {
     this.setState({ open: false });
   };
   render() {
-    const { classes, theme, menuItems, label, labelElement } = this.props;
-    if (typeof this.props.menuItems[this.state.selectedIndex] === 'undefined') {
+    const { className, menuItems, label, labelElement } = this.props;
+    const { anchorEl, open, selectedIndex } = this.state;
+    if (typeof this.props.menuItems[selectedIndex] === 'undefined') {
       return <div />;
     }
     return (
-      <div className={this.props.className}>
+      <DropdownContainer className={className}>
         {labelElement ? (
           React.cloneElement(labelElement, {
-            onClick: (event) => {
-              this.handleClickListItem(event);
-            },
+            onClick: this.handleLabelClick,
           })
         ) : (
-          <List>
-            <ListItem
-              button
-              className={classes.selectable}
-              aria-haspopup="true"
-              aria-controls="lock-menu"
-              aria-label={label}
-              onClick={(event) => {
-                this.handleClickListItem(event);
-              }}
-            >
-              <ListItemText
-                disableTypography
-                primary={
-                  <div>
-                    <Typography type="body1" color="textSecondary">
-                      {label}
-                    </Typography>
-                    <Typography type="subheading">
-                      {menuItems[this.state.selectedIndex].prettyName}
-                    </Typography>
-                  </div>
-                }
-              />
-            </ListItem>
-          </List>
+          <LabelButton
+            aria-haspopup="true"
+            aria-controls="lock-menu"
+            aria-label={label}
+            onMouseDown={this.handleLabelClick}
+            onClick={this.handleLabelClick}
+          >
+            <LabelText>{label}</LabelText>
+            <LabelValue>{menuItems[selectedIndex].prettyName}</LabelValue>
+          </LabelButton>
         )}
         <Menu
-          id="lock-menu"
-          anchorEl={this.state.anchorEl}
-          open={this.state.open}
-          onClose={(event) => {
-            this.handleClose(event);
-          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={this.handleClose}
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 4.5,
@@ -111,25 +96,29 @@ class DropdownMenu extends React.Component {
           {menuItems.map((menuItem, index) => (
             <MenuItem
               key={menuItem.value}
-              selected={index === this.state.selectedIndex}
-              onClick={(event) => {
-                this.handleMenuItemClick(event, index, menuItem.value);
-              }}
+              selected={index === selectedIndex}
+              onClick={this.handleMenuItemClick(index, menuItem.value)}
             >
               {menuItem.prettyName}
             </MenuItem>
           ))}
         </Menu>
-      </div>
+      </DropdownContainer>
     );
   }
 }
-
 DropdownMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
   setValue: PropTypes.func.isRequired,
+  unsetValue: PropTypes.func.isRequired,
   menuItems: PropTypes.array.isRequired,
+  label: PropTypes.string,
+  labelElement: PropTypes.element,
+  value: PropTypes.any,
+  className: PropTypes.string,
+};
+DropdownMenu.defaultProps = {
+  setValue: () => {},
+  unsetValue: () => {},
 };
 
-export default withStyles(styles, { withTheme: true })(DropdownMenu);
+export default enhance(DropdownMenu);

@@ -1,5 +1,13 @@
 import React from 'react';
-import { compose, pure, lifecycle, withState, withHandlers } from 'recompose';
+import PropTypes from 'prop-types';
+import {
+  compose,
+  lifecycle,
+  onlyUpdateForPropTypes,
+  withState,
+  withHandlers,
+} from 'recompose';
+import throttle from 'lodash/throttle';
 import Toolbar from 'material-ui/Toolbar';
 import MenuIcon from 'material-ui-icons/Menu';
 
@@ -10,6 +18,39 @@ import {
   MenuButtonContainer,
   Title,
 } from './styles';
+
+const onScroll = throttle(({ elevated, setElevated }) => {
+  if (window.pageYOffset >= 10) {
+    if (!elevated) setElevated(true);
+  } else {
+    if (elevated) setElevated(false);
+  }
+}, 100);
+
+const enhance = compose(
+  withState('elevated', 'setElevated', false),
+  withHandlers({
+    scroll: ({ elevated, setElevated }) => () =>
+      onScroll({ elevated, setElevated }),
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { scroll } = this.props;
+      document.addEventListener('scroll', scroll);
+    },
+    // shouldComponentUpdate(nextProps) {
+    //   const { scroll } = this.props;
+    //   document.removeEventListener('scroll', scroll);
+    //   document.addEventListener('scroll', nextProps.scroll);
+    //   return true;
+    // },
+    componentWillUnmount() {
+      const { scroll } = this.props;
+      document.removeEventListener('scroll', scroll);
+    },
+  }),
+  onlyUpdateForPropTypes
+);
 
 const AppLayoutPure = ({
   toolbarContent,
@@ -42,34 +83,16 @@ const AppLayoutPure = ({
     </App>
   </AppLayoutContainer>
 );
-
-const onScroll = ({ setElevated }) => () => {
-  if (document.querySelector('.app').scrollTop >= 10) {
-    setElevated(true);
-  } else {
-    setElevated(false);
-  }
+AppLayoutPure.propTypes = {
+  toolbarContent: PropTypes.element,
+  appContent: PropTypes.element,
+  title: PropTypes.string,
+  elevated: PropTypes.bool.isRequired,
+  alwaysRaised: PropTypes.bool,
+  mobileOnlyToolbar: PropTypes.bool,
 };
 
-const lifeCycleHooks = lifecycle({
-  componentDidMount() {
-    const { scroll } = this.props;
-    document.querySelector('.app').addEventListener('scroll', scroll);
-  },
-  componentWillUnmount() {
-    const { scroll } = this.props;
-    document.querySelector('.app').removeEventListener('scroll', scroll);
-  },
-});
-
-const AppLayout = compose(
-  withState('elevated', 'setElevated', false),
-  withHandlers({
-    scroll: onScroll,
-  }),
-  lifeCycleHooks,
-  pure
-)(AppLayoutPure);
+const AppLayout = enhance(AppLayoutPure);
 
 export { AppLayout };
 export default AppLayout;

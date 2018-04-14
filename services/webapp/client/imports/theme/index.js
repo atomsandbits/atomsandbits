@@ -13,6 +13,7 @@ export const colors = {
   },
   text: {
     default: '#484848', // #454545
+    secondary: 'rgba(0, 0, 0, 0.54)',
     contrast: '#000000',
     light: '#637282',
     inverse: '#FFFFFF',

@@ -14,6 +14,7 @@ const Layers = new Mongo.Collection('layers');
 const Payments = new Mongo.Collection('payments');
 const Projects = new Mongo.Collection('projects');
 const Requests = new Mongo.Collection('requests');
+const UserResults = new Mongo.Collection('user_results');
 const Servers = new Mongo.Collection('servers');
 
 const resetDatabase = () => {
@@ -25,6 +26,7 @@ const resetDatabase = () => {
   Payments.remove({});
   Projects.remove({});
   Requests.remove({});
+  UserResults.remove({});
   Servers.remove({});
   Meteor.users.remove({});
 };
@@ -38,6 +40,7 @@ export {
   Payments,
   Projects,
   Requests,
+  UserResults,
   Servers,
   resetDatabase,
 };

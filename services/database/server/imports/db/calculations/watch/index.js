@@ -1,6 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
-import { Calculations, Clusters, Requests } from '/both/imports/collections';
+import {
+  Calculations,
+  Clusters,
+  Requests,
+  UserResults,
+} from '/both/imports/collections';
 import { runCalculation } from '/server/imports/api/events/run-calculation';
 
 const timeBeforeRetry = 5 * 60 * 1000;
@@ -17,6 +22,7 @@ const calculationWatcher = {
           console.log('Request added, checking...');
           const calculation = Calculations.findOne(request.calculationId);
           calculationWatcher.checkCalculation({ calculation, request });
+          calculationWatcher.addToUserResults({ calculation, request });
         },
         // changed: newRequest => {
         //   const request = newRequest;
@@ -47,6 +53,7 @@ const calculationWatcher = {
       pendingCalculationsCursor.forEach(request => {
         const calculation = Calculations.findOne(request.calculationId);
         calculationWatcher.checkCalculation({ calculation, request });
+        calculationWatcher.addToUserResults({ calculation, request });
       });
     }, 10000);
   },
@@ -73,6 +80,22 @@ const calculationWatcher = {
         serverId,
       });
     }
+  },
+  addToUserResults: ({ calculation, request }) => {
+    calculation.users.forEach(user => {
+      const userResult = UserResults.findOne({
+        userId: user._id,
+        calculationId: calculation._id,
+      });
+      if (user.explicit && !userResult) {
+        UserResults.insert({
+          userId: user._id,
+          type: 'calculation',
+          calculationId: calculation._id,
+          createdAt: moment().valueOf(),
+        });
+      }
+    });
   },
 };
 

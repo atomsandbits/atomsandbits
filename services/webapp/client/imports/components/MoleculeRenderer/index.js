@@ -13,15 +13,13 @@ import SpeckRenderer from '/client/imports/components/SpeckRenderer';
 
 import styles from '/client/imports/pages/NewCalculation/styles';
 
-let speck,
-  lastGeometryInput,
-  md = new MobileDetect(window.navigator.userAgent);
+let lastGeometryInput;
 
-class MoleculeRenderer extends React.Component {
+class MoleculeRenderer extends React.PureComponent {
   state = {
-    geometryInput: xyzTools.normalize({ xyzString: this.props.xyz })
-  }
-  onGeometryInput = (event) => {
+    geometryInput: xyzTools.normalize({ xyzString: this.props.xyz }),
+  };
+  onGeometryInput = event => {
     let xyz = event.target.value;
     this.props.setXyz(xyz);
     xyz = xyzTools.normalize({ xyzString: xyz });
@@ -37,15 +35,19 @@ class MoleculeRenderer extends React.Component {
     return (
       <Grid container={true} spacing={0}>
         <Grid item={true} xs={12} sm={6}>
-          <div className={classes.xyzareaContainer} style={{height: '100%'}}>
-            <textarea value={this.props.xyz} onChange={this.onGeometryInput} className={classes.geometryTextarea}/>
+          <div className={classes.xyzareaContainer} style={{ height: '100%' }}>
+            <textarea
+              value={this.props.xyz}
+              onChange={this.onGeometryInput}
+              className={classes.geometryTextarea}
+            />
           </div>
         </Grid>
         <Grid item={true} xs={12} sm={6}>
           <SpeckRenderer xyz={this.state.geometryInput} />
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
@@ -53,6 +55,7 @@ MoleculeRenderer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   setXyz: PropTypes.func.isRequired,
+  xyz: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(MoleculeRenderer);

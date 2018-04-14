@@ -159,7 +159,8 @@ class Molecule {
     });
     return atomCounts;
   }
-  prettify({ positions }) {
+  prettify(options) {
+    const { positions } = options || {};
     const atomCollection = this.createAtomCollection();
     const comment = this.createComment();
 

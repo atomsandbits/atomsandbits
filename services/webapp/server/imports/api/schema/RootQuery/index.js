@@ -15,28 +15,48 @@ const RootQuery = () => [
     id: String!
   }
 
-  input ResultsInput {
-    limit: Int!
-    skip: Int!
-    sortBy: String!
-    sortOrder: Int!
-    search: String
+  enum FilterType {
+    SEARCH
+    SIMILARITY
+    MASS
   }
-  input GeometriesInput {
-    search: String!
+  input Filter {
+    type: FilterType!
+    search: String
+    minimum: Float
+    maximum: Float
+    level: Int
+  }
+
+  enum Sort {
+    CREATED
+    MASS
+  }
+  enum Direction {
+    ASC
+    DESC
+  }
+  input Ordering {
+    sort: Sort = CREATED
+    direction: Direction = ASC
+  }
+
+  input PaginationInput {
+    filters: [Filter]
+    orderBy: Ordering
+    after: String
+    first: Int
+    before: String
+    last: Int
   }
 
   type Query {
-    say: String
-
     geometry(input: GeometryInput): Geometry
     calculation(input: CalculationInput): Calculation
     project(input: ProjectInput): Project
 
-    results(input: ResultsInput): [Result]
-    resultCount: Int!
-
-    geometries(input: GeometriesInput): [Geometry]
+    userResults(input: PaginationInput): UserResultsConnection
+    allGeometries(input: PaginationInput): GeometriesConnection
   }`,
   Geometry,
   Calculation,

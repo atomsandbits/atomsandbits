@@ -7,13 +7,15 @@ import xyzTools from '/both/imports/tools/xyz';
 
 const convertGeometryToGraph = ({ geometryId, userId }) => {
   const geometry = Geometries.findOne(geometryId);
+  const { _id, atomicCoords, molecularFormula, mass, images, users } = geometry;
   return {
-    id: geometry._id,
-    atomicCoords: geometry.atomicCoords,
-    molecularFormula: geometry.molecularFormula,
-    atomCount: geometry.atomicCoords.split('\n').length,
-    mediumImage: geometry.images ? geometry.images['512'] : null,
-    tags: geometry.users[0].tags,
+    id: _id,
+    atomicCoords: atomicCoords,
+    molecularFormula: molecularFormula,
+    atomCount: atomicCoords.split('\n').length,
+    mass: mass,
+    mediumImage: images ? images['512'] : null,
+    tags: users[0].tags,
   };
 };
 

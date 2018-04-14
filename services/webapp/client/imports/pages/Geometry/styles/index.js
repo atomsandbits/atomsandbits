@@ -8,11 +8,9 @@ import _Expandable from '/client/imports/components/Expandable';
 import { colors, fonts, breakpoints } from '/client/imports/theme';
 
 export const GeometryPageContainer = styled.div`
-  height: auto;
-  min-height: 100%;
   background-color: #f7f9fa;
   @media (min-width: ${breakpoints.md}) {
-    height: 100%;
+    height: 100vh;
   }
 `;
 

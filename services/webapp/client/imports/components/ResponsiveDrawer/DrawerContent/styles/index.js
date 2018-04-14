@@ -8,11 +8,13 @@ export const DrawerContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  overflow: auto;
   width: ${sizes.drawer};
 `;
 export const HeaderLogo = styled(Link)`
   && {
     color: ${colors.secondary};
+    flex-shrink: 0;
     font-family: ${fonts.logo};
     font-size: 1.7rem;
     font-weight: 700;
@@ -39,7 +41,7 @@ export const LinkContainer = styled(Link)`
 export const Button = styled(_Button)`
   && {
     &:hover {
-      background-color: rgba(0,0,0,0.03);
+      background-color: rgba(0, 0, 0, 0.03);
     }
   }
 `;
@@ -68,7 +70,9 @@ export const aContainer = styled.a`
     width: 100%;
   }
 `;
-export const FooterContainer = styled.div``;
+export const FooterContainer = styled.div`
+  margin-top: 20px;
+`;
 
 // const styles = theme => ({
 //   drawerInner: {

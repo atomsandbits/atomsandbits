@@ -6,23 +6,38 @@ import { Calculations, Clusters, Requests } from '/both/imports/collections';
 const addUserToCalculation = ({
   calculationId = isRequired('calculationId'),
   userId = isRequired('userId'),
+  explicit,
 }) => {
   const calculationWithUser = Calculations.findOne(
     {
       _id: calculationId,
       'users._id': userId,
     },
-    { fields: { _id: 1 } },
+    { fields: { _id: 1 } }
   );
   if (calculationWithUser) {
+    if (explicit) {
+      Calculations.update(
+        { _id: calculationId, 'users._id': userId },
+        {
+          $set: {
+            'users.$.explicit': true,
+          },
+        }
+      );
+    }
     return 1;
+  }
+  const user = {
+    _id: userId,
+    createdAt: moment().valueOf(),
+  };
+  if (explicit) {
+    user.explicit = true;
   }
   return Calculations.update(calculationId, {
     $push: {
-      users: {
-        _id: userId,
-        createdAt: moment().valueOf(),
-      },
+      users: user,
     },
   });
 };
@@ -39,7 +54,7 @@ const runCalculation = ({
       userId,
       type: 'calculation',
     },
-    { fields: { _id: 1 } },
+    { fields: { _id: 1 } }
   );
   if (existingRequest) {
     return existingRequest._id;
@@ -78,7 +93,7 @@ const setCalculationRunning = ({ calculationId }) =>
   Requests.update(
     { calculationId, running: { $ne: true } },
     { $set: { startedAt: moment().valueOf(), running: true } },
-    { multi: true },
+    { multi: true }
   );
 
 const pingCalculationRunning = ({
@@ -91,7 +106,7 @@ const pingCalculationRunning = ({
         updatedAt: moment().valueOf(),
       },
     },
-    { multi: true },
+    { multi: true }
   );
 
 const stopCalculation = ({
@@ -106,7 +121,7 @@ const stopCalculation = ({
       type: 'calculation',
       completed: { $ne: true },
     },
-    { fields: { _id: 1 } },
+    { fields: { _id: 1 } }
   );
   if (!request) {
     logger.silly('stopCalculation: request not found', {
@@ -150,7 +165,7 @@ const saveCalculationResult = ({
         completedAt: moment().valueOf(),
       },
     },
-    { multi: true },
+    { multi: true }
   );
   return Calculations.update(calculationId, {
     $set: {

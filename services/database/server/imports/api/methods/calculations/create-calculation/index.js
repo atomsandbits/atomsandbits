@@ -38,6 +38,7 @@ io.on(
               xyzs,
               parameters,
               userId,
+              explicit: true,
             });
             if (run) {
               runCalculation({ calculationId, userId, clusterId });
