@@ -3,7 +3,7 @@ import { Calculations, Projects, UserResults } from '/server/imports/db';
 class Results {
   constructor(options) {
     this.options = options;
-    this.limit = options.first || (options.last || 30);
+    this.options.limit = options.first || (options.last || 30);
     // console.log(this);
   }
   _fetch() {

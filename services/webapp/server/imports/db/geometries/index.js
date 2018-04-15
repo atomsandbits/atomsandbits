@@ -3,7 +3,7 @@ import { Geometries } from '/server/imports/db';
 class GeometriesMapper {
   constructor(options) {
     this.options = options;
-    this.limit = options.first || (options.last || 30);
+    this.options.limit = options.first || (options.last || 30);
     // console.log(this);
     this._setupQuery();
   }
@@ -65,6 +65,7 @@ class GeometriesMapper {
       skip = geometryIds.indexOf(after) + 1;
     }
 
+    console.log('limit', limit)
     this._cursor = Geometries.find(mongoQuery, {
       sort: mongoSort,
       limit,
