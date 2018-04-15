@@ -9,7 +9,7 @@ persistCache({
   storage: window.localStorage,
 });
 
-const client = createApolloClient({ });
+const client = createApolloClient({ cache });
 
 export { client };
 export default client;
