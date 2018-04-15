@@ -1,69 +1,101 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import puppeteer from 'puppeteer';
 import { exec } from 'child_process';
 import fs from 'fs';
-import webdriver from 'selenium-webdriver';
-import chromedriver from 'chromedriver';
+import PQueue from 'p-queue';
 
+process.setMaxListeners(100);
 console.log(process.env.ROOT_URL);
 
 // kill old chrome processes
 // TODO: handle the fact this kills real chrome processes
 exec("kill -9 `pgrep -f '\\-\\-headless'`");
-exec('killall chromedriver');
+exec('killall chromium');
+
+const concurrency = 1;
+const queue = new PQueue({ concurrency: concurrency });
 
 /* Collections */
 const Geometries = new Mongo.Collection('geometries');
 
-/* Setup Chromedriver */
-const chromeCapabilities = webdriver.Capabilities.chrome();
-chromeCapabilities.set('chromeOptions', {
-  binary: '/usr/bin/google-chrome',
-  args: [
-    '--headless',
-    '--use-gl=osmesa',
-    '--no-sandbox',
-    '--ignore-gpu-blacklist',
-    '--enable-webgl-draft-extensions',
-  ],
-});
-
-/* Get DataURL with Selenium */
-const getDataURL = ({ xyz }) => {
-  const driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .withCapabilities(chromeCapabilities)
-    .build();
-
-  // Navigate to google.com, enter a search.
-  driver.get(`${process.env.ROOT_URL}#${encodeURIComponent(xyz)}`);
-
-  const dataURLElement = driver.findElement(webdriver.By.id('data-url'));
-  driver
-    .wait(webdriver.until.elementIsVisible(dataURLElement), 5000)
-    .catch(error => {
-      driver.quit();
-      throw error;
-    });
-
-  return dataURLElement.getAttribute('innerHTML').then(dataURL => {
-    driver.quit();
-    return dataURL;
+let browser;
+(async () => {
+  browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium',
+    headless: false,
+    // args: ['--headless'],
   });
+})();
+
+let counter = 0;
+/* Get DataURL with Headless Browser */
+const getDataURL = async ({ xyz }) => {
+  if (counter > 10000) {
+    await browser.close();
+    browser = await puppeteer.launch({
+      executablePath: '/usr/bin/chromium',
+      headless: false,
+      // args: ['--headless'],
+    });
+    counter = 0;
+  }
+  const page = await browser.newPage();
+
+  // ~~~ Tests ~~~
+  // await page.goto('http://webglreport.com/');
+  // await page.screenshot({ path: 'screenshot1.png' });
+  // await page.goto('chrome://gpu');
+  // await page.screenshot({ path: 'screenshot2.png' });
+  // await page.goto('http://wwwtyro.github.io/speck/');
+  // await page.screenshot({ path: 'screenshot3.png' });
+  // dataURL = '';
+
+  const url = `${process.env.ROOT_URL}#${encodeURIComponent(xyz)}`;
+  await page.goto(url);
+  await page.waitForSelector('#data-url', { timeout: 10000 });
+  dataURL = await page.evaluate(
+    () => document.getElementById('data-url').innerHTML
+  );
+
+  await page.close();
+  counter += 1;
+
+  return dataURL;
 };
 
-Geometries.find().observe({
-  added: async geometry => {
-    if (!geometry.images || !geometry.images['512']) {
-      const xyz = `${geometry.totalAtoms}\n\n${geometry.atomicCoords}`;
-      const dataURL = await getDataURL({ xyz });
-      Geometries.update(geometry._id, {
-        $set: {
-          images: {
-            512: dataURL,
-          },
-        },
-      });
+// const geometry = Geometries.findOne();
+// getDataURL({ xyz: `${geometry.totalAtoms}\n\n${geometry.atomicCoords}` }).then(
+//   dataURL => console.log(dataURL)
+// );
+
+Meteor.setTimeout(() => {
+  Geometries.find({ 'images.512': { $exists: false } }, { limit: 100, sort: {mass: 1} }).observe(
+    {
+      added: geometry => {
+        queue.add(async () => {
+          if (!geometry.images || !geometry.images['512']) {
+            console.log('Generating image for: ', geometry._id);
+            const xyz = `${geometry.totalAtoms}\n\n${geometry.atomicCoords}`;
+            try {
+              const dataURL = await getDataURL({ xyz });
+            } catch (error) {
+              console.log(error);
+              return;
+            }
+            Geometries.update(geometry._id, {
+              $set: {
+                images: {
+                  512: dataURL,
+                },
+              },
+            });
+            // console.log(dataURL);
+            console.log('image saved!');
+          }
+          return;
+        });
+      },
     }
-  },
-});
+  );
+}, 5000);

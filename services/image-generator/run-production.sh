@@ -7,4 +7,4 @@ if [ -f ./user-variables.env ]; then
     source user-variables.env
 fi
 
-meteor run --production --port $PORT
+DISPLAY=:0 npm start -- --production --port $PORT
