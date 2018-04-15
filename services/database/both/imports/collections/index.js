@@ -17,6 +17,19 @@ const Requests = new Mongo.Collection('requests');
 const UserResults = new Mongo.Collection('user_results');
 const Servers = new Mongo.Collection('servers');
 
+Geometries._ensureIndex({
+  _id: 1,
+});
+Geometries._ensureIndex({
+  createdAt: 1,
+});
+Geometries._ensureIndex({
+  mass: 1,
+});
+Geometries._ensureIndex({
+  molecularFormula: 1,
+});
+
 const resetDatabase = () => {
   Calculations.remove({});
   Clusters.remove({});
