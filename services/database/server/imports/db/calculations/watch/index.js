@@ -17,7 +17,7 @@ const calculationWatcher = {
   start: () => {
     // observe to catch most calculations quickly
     calculationWatcher.observers.push(
-      Requests.find().observe({
+      Requests.find({}, { limit: 100, sort: { createdAt: -1 } }).observe({
         added: request => {
           console.log('Request added, checking...');
           const calculation = Calculations.findOne(request.calculationId);
@@ -55,7 +55,7 @@ const calculationWatcher = {
         calculationWatcher.checkCalculation({ calculation, request });
         calculationWatcher.addToUserResults({ calculation, request });
       });
-    }, 10000);
+    }, 60000);
   },
   stop: () => {
     calculationWatcher.observers.forEach(observer => observer.stop());
