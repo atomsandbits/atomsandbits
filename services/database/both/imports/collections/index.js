@@ -17,16 +17,19 @@ const Requests = new Mongo.Collection('requests');
 const UserResults = new Mongo.Collection('user_results');
 const Servers = new Mongo.Collection('servers');
 
-Geometries._ensureIndex({
+Geometries.rawCollection().ensureIndex({
   _id: 1,
 });
-Geometries._ensureIndex({
+Geometries.rawCollection().ensureIndex({
   createdAt: 1,
 });
-Geometries._ensureIndex({
+Geometries.rawCollection().ensureIndex({
+  atomicCoords: 'hashed',
+});
+Geometries.rawCollection().ensureIndex({
   mass: 1,
 });
-Geometries._ensureIndex({
+Geometries.rawCollection().ensureIndex({
   molecularFormula: 1,
 });
 
