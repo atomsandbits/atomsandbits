@@ -33,6 +33,7 @@ class GeometriesMapper {
         : mongoSortDirection;
     const mongoSort = {
       [mongoSortBy]: mongoSortDirection,
+      'hashes.bond': 1,
     };
 
     /* Filters */

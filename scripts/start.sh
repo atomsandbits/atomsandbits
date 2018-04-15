@@ -26,5 +26,5 @@ concurrently \
 "(cd services/tensormol && ./autoreload python3 app.py)" \
 "(source $PSI4_PATH/bin/activate && cd services/psi4 && npm start -- --port 4200)" \
 "(cd services/webapp && npm start)" \
-"(cd services/about && npm start -- --port 3100 )" \
-"(cd services/image-generator && npm start -- --port 3200 )"
+"(cd services/about && npm start -- --port 3100 )"
+# "(cd services/image-generator && npm start -- --port 3200 )"

@@ -19,6 +19,17 @@ const Servers = new Mongo.Collection('servers');
 
 /* Indexes */
 
+Calculations.rawCollection().ensureIndex({
+  geometryIds: 1,
+});
+Calculations.rawCollection().ensureIndex({
+  parameters: 1,
+});
+Calculations.rawCollection().ensureIndex({
+  'users._id': 1,
+});
+
+
 Geometries.rawCollection().ensureIndex({
   _id: 1,
 });
@@ -33,6 +44,16 @@ Geometries.rawCollection().ensureIndex({
 });
 Geometries.rawCollection().ensureIndex({
   molecularFormula: 1,
+});
+
+Requests.rawCollection().ensureIndex({
+  calculationId: 1,
+});
+Requests.rawCollection().ensureIndex({
+  userId: 1,
+});
+Requests.rawCollection().ensureIndex({
+  cluserId: 1,
 });
 
 const resetDatabase = () => {
