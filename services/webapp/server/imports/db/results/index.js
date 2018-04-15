@@ -3,15 +3,16 @@ import { Calculations, Projects, UserResults } from '/server/imports/db';
 class Results {
   constructor(options) {
     this.options = options;
-    this.options.limit = options.first || (options.last || 30);
+    // this.options.limit = options.first || (options.last || 30);
   }
   _fetch() {
-    const { first, last, orderBy, userId } = this.options;
+    const { first, last, limit, skip, orderBy, userId } = this.options;
+
+    /* Sorting */
     const { sort, direction } = orderBy || {
       sort: 'CREATED',
       direction: 'DESC',
     };
-    const limit = this.limit;
     const mongoSortBy =
       sort === 'CREATED'
         ? 'createdAt'
@@ -20,14 +21,13 @@ class Results {
     const mongoSort = {
       [mongoSortBy]: mongoSortDirection,
     };
-    const calculations = Calculations.find(
-      { 'users._id': userId },
-      { limit, sort: mongoSort, fields: { _id: 1, 'users.$': 1 } }
-    ).fetch();
+
+    /* Query */
     const results = UserResults.find(
       { userId },
-      { sort: mongoSort, limit }
+      { sort: mongoSort, limit, skip }
     ).fetch();
+
     this._results = results.map(result => this._convertResultToGraph(result));
   }
   _convertResultToGraph({ _id, createdAt, calculationId, projectId, type }) {
@@ -60,7 +60,7 @@ class Results {
     return UserResults.find({ userId }).count();
   }
   hasNextPage() {
-    return true;
+    return !(this.get().length < this.options.limit);
   }
   hasPreviousPage() {
     return false;

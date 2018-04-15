@@ -4,8 +4,6 @@ import '/server/imports/api';
 import '/server/imports/routes';
 // import { Calculations, Geometries } from '/server/imports/db';
 
-Meteor.startup(() => {});
-
 // Meteor.methods({
 //   'resetDatabase': () => {
 //     console.log("Resetting Database...")

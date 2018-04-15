@@ -3,7 +3,7 @@ import { Geometries } from '/server/imports/db';
 class GeometriesMapper {
   constructor(options) {
     this.options = options;
-    this.options.limit = options.first || (options.last || 30);
+    // this.options.limit = options.first || (options.last || 30);
     // console.log(this);
     this._setupQuery();
   }
@@ -12,13 +12,14 @@ class GeometriesMapper {
       first,
       last,
       limit,
+      skip,
       after,
       orderBy,
       filters,
       userId,
     } = this.options;
 
-    /* Limit and Sorting */
+    /* Sorting */
     const { sort, direction } = orderBy || {
       sort: 'CREATED',
       direction: 'ASC',
@@ -52,18 +53,18 @@ class GeometriesMapper {
 
     /* Skip/Pagination */
     // const comparator = mongoSortDirection === -1 ? '$lt' : '$gt';
-    let skip = 0;
-    if (after) {
-      const geometryIds = Geometries.find(mongoQuery, {
-        sort: mongoSort,
-        fields: {
-          _id: 1,
-        },
-      })
-        .fetch()
-        .map(geometry => geometry._id);
-      skip = geometryIds.indexOf(after) + 1;
-    }
+    // let skip = 0;
+    // if (after) {
+    //   const geometryIds = Geometries.find(mongoQuery, {
+    //     sort: mongoSort,
+    //     fields: {
+    //       _id: 1,
+    //     },
+    //   })
+    //     .fetch()
+    //     .map(geometry => geometry._id);
+    //   skip = geometryIds.indexOf(after) + 1;
+    // }
 
     this._cursor = Geometries.find(mongoQuery, {
       sort: mongoSort,
@@ -118,7 +119,7 @@ class GeometriesMapper {
     return this._cursor.count();
   }
   hasNextPage() {
-    return !(this.get().length < this.limit);
+    return !(this.get().length < this.options.limit);
   }
   hasPreviousPage() {
     return false;

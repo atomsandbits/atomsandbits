@@ -44,10 +44,12 @@ const RootQuery = () => [
   input PaginationInput {
     filters: [Filter]
     orderBy: Ordering
-    after: String
-    first: Int
-    before: String
-    last: Int
+    skip: Int = 0
+    limit: Int = 30
+    # after: String
+    # before: String
+    # last: Int
+    # first: Int
   }
 
   type Query {

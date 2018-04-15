@@ -8,11 +8,14 @@ import {
   mapProps,
   lifecycle,
   withHandlers,
+  withState,
   onlyUpdateForPropTypes,
 } from 'recompose';
-import { LinearProgress } from 'material-ui/Progress';
+import { LinearProgress, CircularProgress } from 'material-ui/Progress';
 import queryParser from 'query-string';
+import clone from 'lodash/clone';
 import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 
 import AppLayout from '/client/imports/components/AppLayout';
 import ResultNavigator from '/client/imports/components/ResultNavigator';
@@ -27,22 +30,6 @@ import {
   SearchDrawerToggle,
 } from './styles';
 
-const getQueryParams = ({ queryString }) => {
-  return queryParser.parse(queryString);
-};
-const setQueryParams = debounce(
-  ({ locationPathname, queryString, queryParams, replaceState }) => {
-    const query = queryParser.parse(queryString);
-    const newQuery = { ...query, ...queryParams };
-    const newQueryString = `?${queryParser.stringify(newQuery)}`;
-    if (queryString !== newQueryString) {
-      replaceState(`${locationPathname}${newQueryString}`);
-    }
-  },
-  300,
-  { maxWait: 2000 }
-);
-
 const Loading = props => (
   <AppLayout
     mobileOnlyToolbar
@@ -55,16 +42,25 @@ const Loading = props => (
   />
 );
 
-const displayLoadingState = branch(
-  ({ data }) => data.loading && !data.allGeometries,
-  renderComponent(Loading)
-);
+const displayLoadingState = branch(({ data }) => {
+  // console.log('test', JSON.stringify(data.variables));
+  return data.loading && !data.allGeometries;
+}, renderComponent(Loading));
+
+const throttled = throttle(fetchNext => {
+  fetchNext();
+}, 2000);
 
 const onScroll = debounce(
-  ({ locationPathname, queryString, replaceState }) => {
+  ({ setPosition, fetchNext }) => {
     const scrollPosition = window.pageYOffset;
+    const bodyFullHeight = document.body.scrollHeight;
+    const bodyVisibleHeight = document.body.offsetHeight;
+    const distanceToBottom =
+      bodyFullHeight - bodyVisibleHeight - scrollPosition;
     let topElement = -1;
-    document.querySelectorAll('.geometry').forEach((resultElement, index) => {
+    let geometryElements = document.querySelectorAll('.geometry');
+    geometryElements.forEach((resultElement, index) => {
       if (topElement === -1) {
         if (resultElement.offsetTop + 100 > scrollPosition) {
           topElement = index;
@@ -72,36 +68,79 @@ const onScroll = debounce(
       }
     });
     topElement = topElement === 0 ? 0 : topElement + 1;
-    setQueryParams({
-      locationPathname,
-      queryString,
-      replaceState,
-      queryParams: { geometry: topElement },
-    });
+    setPosition(topElement);
+    // setQueryParams({
+    //   locationPathname,
+    //   queryString,
+    //   replaceState,
+    //   queryParams: { geometry: topElement },
+    // });
+    if (distanceToBottom < 200) {
+      throttled(fetchNext);
+    }
   },
   100,
-  { maxWait: 2000 }
+  { maxWait: 500 }
 );
 
 const enhance = compose(
   withRouter,
   withGeometries,
   displayLoadingState,
-  mapProps(({ data, location, history }) => ({
-    geometries: data.allGeometries.geometries,
-    totalCount: data.allGeometries.totalCount,
-    locationPathname: location.pathname,
-    queryString: location.search,
-    queryParams: getQueryParams({ queryString: location.search }),
-    replaceState: history.replace,
-  })),
-  // withState('sortBy', 'setSortBy', 'createdAt'),
-  // withState('sortDirection', 'setSortDirection', -1),
-  // withState('tag', 'setTag', ''),
-  // withState('search', 'setSearch', ''),
   withHandlers({
-    scroll: ({ locationPathname, queryString, replaceState }) => () =>
-      onScroll({ locationPathname, queryString, replaceState }),
+    fetchNext: ({
+      data: {
+        allGeometries: { loading, pageInfo },
+        skip,
+        limit,
+        variables,
+        fetchMore,
+      },
+    }) => () => {
+      if (!pageInfo.hasNextPage) return;
+      if (loading) return;
+      const pageInput = clone(variables.pageInput);
+      pageInput.skip = pageInfo.skip + pageInfo.limit;
+      fetchMore({
+        variables: {
+          pageInput: pageInput,
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          const previousGeometries = previousResult.allGeometries;
+          const newGeometries = fetchMoreResult.allGeometries;
+          newGeometries.geometries = [
+            ...previousGeometries.geometries,
+            ...newGeometries.geometries,
+          ];
+          return {
+            // By returning `cursor` here, we update the `fetchMore` function
+            // to the new cursor.
+            // cursor: newCursor,
+            skip: skip,
+            limit: limit,
+            allGeometries: newGeometries,
+          };
+        },
+      });
+    },
+  }),
+  mapProps(({ data, location, history, fetchNext }) => ({
+    fetchNext,
+    geometries: data.allGeometries.geometries,
+    locationPathname: location.pathname,
+    mutationVariables: data.variables,
+    queryString: location.search,
+    replaceState: history.replace,
+    totalCount: data.allGeometries.totalCount,
+    loadingGeometries: data.loading,
+  })),
+  withState('position', 'setPosition', 0),
+  withHandlers({
+    scroll: ({ setPosition, fetchNext }) => () =>
+      onScroll({
+        setPosition,
+        fetchNext,
+      }),
     openSearchDrawer: () => () => {
       return window.toggleSearchDrawer ? window.toggleSearchDrawer() : null;
     },
@@ -115,7 +154,7 @@ const enhance = compose(
     componentWillUnmount() {
       const { scroll } = this.props;
       document.removeEventListener('scroll', scroll);
-      setQueryParams.cancel();
+      onScroll.cancel();
     },
   }),
   onlyUpdateForPropTypes
@@ -125,7 +164,8 @@ const GeometrySearchPure = ({
   geometries,
   totalCount,
   openSearchDrawer,
-  queryParams,
+  loadingGeometries,
+  position,
 }) => (
   <AppLayout
     mobileOnlyToolbar
@@ -136,7 +176,7 @@ const GeometrySearchPure = ({
         <GeometrySearchContent>
           {geometries.length === 0 ? (
             <h2 style={{ fontFamily: 'Space Mono, monospace' }}>
-              No geometries found :'(
+              {`No geometries found :'(`}
             </h2>
           ) : null}
           {geometries.map(geometry => (
@@ -146,11 +186,16 @@ const GeometrySearchPure = ({
               geometry={geometry}
             />
           ))}
+          <div style={{ display: 'block', height: 45, marginBottom: 20 }}>
+            {loadingGeometries ? (
+              <CircularProgress color="secondary" thickness={5} />
+            ) : null}
+          </div>
         </GeometrySearchContent>
         <SearchDrawer key="search-drawer" />
         <ResultNavigator
           hasDrawer
-          currentResult={Number(queryParams.geometry) || 0}
+          currentResult={position}
           resultCount={totalCount}
         />
       </GeometrySearchContainer>
@@ -158,10 +203,11 @@ const GeometrySearchPure = ({
   />
 );
 GeometrySearchPure.propTypes = {
-  queryParams: PropTypes.object.isRequired,
   totalCount: PropTypes.number.isRequired,
   openSearchDrawer: PropTypes.func.isRequired,
   geometries: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loadingGeometries: PropTypes.bool.isRequired,
+  position: PropTypes.number.isRequired,
 };
 
 const GeometrySearch = enhance(GeometrySearchPure);

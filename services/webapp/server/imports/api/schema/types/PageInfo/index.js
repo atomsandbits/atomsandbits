@@ -4,6 +4,8 @@ const PageInfo = () => [
     hasPreviousPage: Boolean!
     startCursor: String
     endCursor: String
+    skip: Int
+    limit: Int
   }`,
 ];
 

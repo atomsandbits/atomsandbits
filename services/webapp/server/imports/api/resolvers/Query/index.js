@@ -19,11 +19,14 @@ const Query = {
   project: (root, args, context) => {},
   allGeometries: (root, args, context) => {
     const { userId } = context;
-    const { first, after, last, before, orderBy, filters } = args.input || {};
+    const { skip, limit, first, after, last, before, orderBy, filters } =
+      args.input || {};
     const geometry = new Geometries({
       userId,
       first,
       after,
+      skip,
+      limit,
       last,
       before,
       orderBy,
@@ -35,6 +38,8 @@ const Query = {
         hasPreviousPage: geometry.hasPreviousPage(),
         startCursor: geometry.first().id,
         endCursor: geometry.last().id,
+        skip,
+        limit,
       },
       edges: geometry.get().map(geometry => ({
         node: geometry,
@@ -46,15 +51,18 @@ const Query = {
   },
   userResults: (root, args, context) => {
     const { userId } = context;
-    const { first, after, last, before, orderBy, filters } = args.input || {};
+    const { skip, limit, first, after, last, before, orderBy, filters } =
+      args.input || {};
     const userResults = new Results({
-      userId,
-      first,
       after,
-      last,
       before,
-      orderBy,
       filters,
+      first,
+      last,
+      limit,
+      orderBy,
+      skip,
+      userId,
     });
     return {
       pageInfo: {
@@ -62,6 +70,8 @@ const Query = {
         hasPreviousPage: userResults.hasPreviousPage(),
         startCursor: userResults.first().id,
         endCursor: userResults.last().id,
+        skip,
+        limit,
       },
       edges: userResults.get().map(userResult => ({
         node: userResult,

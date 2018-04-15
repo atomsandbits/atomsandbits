@@ -10,7 +10,7 @@ import {
 import memoize from 'lodash/memoize';
 import filter from 'lodash/filter';
 
-import { withContext } from '../../context';
+import { ContextProvider, ContextConsumer, withContext } from '../../context';
 import Layer from './Layer';
 import allLayerTypes from './types';
 
@@ -80,6 +80,15 @@ LayersPure.propTypes = {
 };
 
 const Layers = enhance(LayersPure);
+
+// const Layers = () => (
+//   <ContextProvider>
+//     <ContextConsumer>
+//       {context => <WrappedComponent {...props} context={context} />}
+//     </ContextConsumer>
+//   </ContextProvider>
+// )
+
 
 export { Layers };
 export default Layers;

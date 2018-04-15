@@ -9,6 +9,7 @@ import {
   onlyUpdateForPropTypes,
   renderComponent,
   withHandlers,
+  withState,
 } from 'recompose';
 import queryParser from 'query-string';
 import debounce from 'lodash/debounce';
@@ -24,22 +25,6 @@ import ResultNavigator from '/client/imports/components/ResultNavigator';
 import CalculationCard from './components/CalculationCard';
 import { withResults } from './withResults';
 import { ResultsFeedContainer, ResultsFeedContent } from './styles';
-
-const getQueryParams = ({ queryString }) => {
-  return queryParser.parse(queryString);
-};
-const setQueryParams = debounce(
-  ({ locationPathname, queryString, queryParams, replaceState }) => {
-    const query = queryParser.parse(queryString);
-    const newQuery = { ...query, ...queryParams };
-    const newQueryString = `?${queryParser.stringify(newQuery)}`;
-    if (queryString !== newQueryString) {
-      replaceState(`${locationPathname}${newQueryString}`);
-    }
-  },
-  100,
-  { maxWait: 3000 }
-);
 
 const Loading = props => (
   <AppLayout
@@ -64,7 +49,7 @@ const redirectWithNoResults = branch(
 );
 
 const onScroll = debounce(
-  ({ locationPathname, queryString, replaceState }) => {
+  ({ setPosition }) => {
     const scrollPosition = window.pageYOffset;
     let topElement = -1;
     document.querySelectorAll('.result').forEach((resultElement, index) => {
@@ -75,15 +60,16 @@ const onScroll = debounce(
       }
     });
     topElement = topElement === 0 ? 0 : topElement + 1;
-    setQueryParams({
-      locationPathname,
-      queryString,
-      replaceState,
-      queryParams: { result: topElement },
-    });
+    setPosition(topElement);
+    // setQueryParams({
+    //   locationPathname,
+    //   queryString,
+    //   replaceState,
+    //   queryParams: { result: topElement },
+    // });
   },
-  300,
-  { maxWait: 2000 }
+  100,
+  { maxWait: 500 }
 );
 
 const enhance = compose(
@@ -96,16 +82,15 @@ const enhance = compose(
     totalCount: data.userResults.totalCount,
     locationPathname: location.pathname,
     queryString: location.search,
-    queryParams: getQueryParams({ queryString: location.search }),
     replaceState: history.replace,
   })),
   // withState('sortBy', 'setSortBy', 'createdAt'),
   // withState('sortDirection', 'setSortDirection', -1),
   // withState('tag', 'setTag', ''),
   // withState('search', 'setSearch', ''),
+  withState('position', 'setPosition', 0),
   withHandlers({
-    scroll: ({ locationPathname, queryString, replaceState }) => () =>
-      onScroll({ locationPathname, queryString, replaceState }),
+    scroll: ({ setPosition }) => () => onScroll({ setPosition }),
   }),
   lifecycle({
     componentDidMount() {
@@ -116,13 +101,13 @@ const enhance = compose(
     componentWillUnmount() {
       const { scroll } = this.props;
       document.removeEventListener('scroll', scroll);
-      setQueryParams.cancel();
+      onScroll.cancel();
     },
   }),
   onlyUpdateForPropTypes
 );
 
-const ResultsFeedPure = ({ results, totalCount, queryParams }) => (
+const ResultsFeedPure = ({ results, position, totalCount, queryParams }) => (
   <AppLayout
     mobileOnlyToolbar
     title="Results Feed"
@@ -139,16 +124,13 @@ const ResultsFeedPure = ({ results, totalCount, queryParams }) => (
             />
           ))}
         </ResultsFeedContent>
-        <ResultNavigator
-          currentResult={Number(queryParams.result) || 0}
-          resultCount={totalCount}
-        />
+        <ResultNavigator currentResult={position} resultCount={totalCount} />
       </ResultsFeedContainer>
     }
   />
 );
 ResultsFeedPure.propTypes = {
-  queryParams: PropTypes.object.isRequired,
+  position: PropTypes.number.isRequired,
   totalCount: PropTypes.number.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

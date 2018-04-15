@@ -10,6 +10,11 @@ import apolloClient from '/client/imports/apollo-client';
 const dataQuery = gql`
   query($pageInput: PaginationInput!) {
     allGeometries(input: $pageInput) {
+      pageInfo {
+        hasNextPage
+        skip
+        limit
+      }
       geometries {
         id
         molecularFormula
@@ -52,7 +57,8 @@ const withGeometries = graphql(dataQuery, {
       variables: {
         pageInput: { orderBy, filters },
       },
-      pollInterval: 10000,
+      notifyOnNetworkStatusChange: true,
+      fetchPolicy: 'cache-and-network',
     };
   },
 });
