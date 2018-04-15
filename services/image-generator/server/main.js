@@ -70,7 +70,7 @@ const getDataURL = async ({ xyz }) => {
 // );
 
 Meteor.setTimeout(() => {
-  Geometries.find({ 'images.512': { $exists: false } }, { limit: 100, sort: {mass: 1} }).observe(
+  Geometries.find({ 'images.512': { $exists: false } }, { limit: 100, sort: {createdAt: -1} }).observe(
     {
       added: geometry => {
         queue.add(async () => {
