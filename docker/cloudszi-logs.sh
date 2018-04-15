@@ -6,4 +6,4 @@ if [ -f ./user-variables.env ]; then
 fi
 
 # Run Docker Compose
-docker-compose up
+docker-compose logs --follow --tail 100
