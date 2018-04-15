@@ -94,7 +94,7 @@ class GeometriesMapper {
       atomCount: atomicCoords.split('\n').length,
       mass: mass,
       mediumImage: images ? images['512'] : null,
-      tags: users[0].tags,
+      tags: users[0] ? users[0].tags : [],
       createdAt: createdAt,
     };
   }
