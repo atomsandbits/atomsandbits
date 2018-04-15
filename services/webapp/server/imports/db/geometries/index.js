@@ -65,7 +65,6 @@ class GeometriesMapper {
       skip = geometryIds.indexOf(after) + 1;
     }
 
-    console.log('limit', limit)
     this._cursor = Geometries.find(mongoQuery, {
       sort: mongoSort,
       limit,
