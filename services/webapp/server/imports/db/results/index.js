@@ -4,7 +4,6 @@ class Results {
   constructor(options) {
     this.options = options;
     this.options.limit = options.first || (options.last || 30);
-    // console.log(this);
   }
   _fetch() {
     const { first, last, orderBy, userId } = this.options;
