@@ -44,6 +44,11 @@ const calculationWatcher = {
           },
           {
             updatedAt: {
+              $exists: false,
+            },
+          },
+          {
+            updatedAt: {
               $lt: moment().valueOf() - timeBeforeRetry,
             },
           },
@@ -68,6 +73,7 @@ const calculationWatcher = {
     if (
       !request.completed &&
       (!request.running ||
+        !request.updatedAt ||
         request.updatedAt < moment().valueOf() - timeBeforeRetry)
     ) {
       const { serverId } = Clusters.findOne(request.clusterId);

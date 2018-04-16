@@ -58,7 +58,7 @@ const withGeometries = graphql(dataQuery, {
         pageInput: { orderBy, filters },
       },
       notifyOnNetworkStatusChange: true,
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'network-only',
     };
   },
 });
