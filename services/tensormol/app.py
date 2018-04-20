@@ -64,7 +64,8 @@ def main():
 
                 def stop_pinging():
                     nonlocal ping_timer
-                    ping_timer.cancel()
+                    if ping_timer:
+                        ping_timer.cancel()
 
                 try:
                     socket_result = {}
