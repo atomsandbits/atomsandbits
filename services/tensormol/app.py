@@ -15,11 +15,14 @@ from calculations import (conformer_search, energy_and_force, harmonic_spectra,
 # TODO: start tensorflow session so GPU resources get allocated
 
 
+calculation_running = False
+ping_timer = None
+
+
 def main():
     """Entry point."""
     while True:
         try:
-            calculation_running = False
             tensormol01_network = tensormol01.main()
 
             # SocketIO is threaded.
@@ -30,9 +33,11 @@ def main():
             #       for some reason (maybe it creates a new tf session)
             def on_run_calculation(options):
                 """Run when a calculation is submitted."""
-                nonlocal calculation_running
+                print('Tensormol received ' + options.get('calculation').get('_id'))
+                global calculation_running
                 if calculation_running:
                     return
+                calculation_running = True
                 calculation = options.get('calculation')
                 calculation_id = calculation.get('_id')
                 calculation_type = calculation.get('type')
@@ -40,13 +45,12 @@ def main():
                 charge = calculation.get('charge')
                 multiplicity = calculation.get('multiplicity')
                 network_name = calculation.get('network')
-                ping_timer = None
                 print('Calculation Received: ', calculation_id)
 
                 # print(calculation)
 
                 def ping_calculation_running(calculation):
-                    nonlocal ping_timer
+                    global ping_timer
 
                     def socket_callback(error='', result=''):
                         if error:
@@ -63,7 +67,7 @@ def main():
                     ping_timer.start()
 
                 def stop_pinging():
-                    nonlocal ping_timer
+                    global ping_timer
                     if ping_timer:
                         ping_timer.cancel()
 
@@ -71,7 +75,6 @@ def main():
                     socket_result = {}
 
                     def socket_callback(error='', result=''):
-                        nonlocal calculation_running
                         nonlocal socket_result
                         if error:
                             print(error)
@@ -84,8 +87,8 @@ def main():
                     socket_io.wait_for_callbacks()
                     if not socket_result.get('updated'):
                         # calculation not started, exit
+                        calculation_running = False
                         return
-                    calculation_running = True
                     print('Calculation Started: ', calculation_id)
                     ping_calculation_running(calculation)
 

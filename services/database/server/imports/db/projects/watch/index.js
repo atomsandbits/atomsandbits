@@ -41,7 +41,8 @@ const projectWatcher = {
             Requests.update(request._id, { $set: updates });
           }
           // Watch layers for changes
-          const layerWatcher = Requests.find({
+          let layerWatcher;
+          layerWatcher = Requests.find({
             layerId: { $in: project.layerIds },
             type: 'layer',
           }).observe({
@@ -55,7 +56,7 @@ const projectWatcher = {
                 }).count() === project.layerIds.length
               ) {
                 markProjectCompleted({ projectId: project._id });
-                layerWatcher.stop();
+                setTimeout(() => layerWatcher.stop(), 100);
               }
             },
             changed: (newRequest, oldRequest) => {
@@ -81,7 +82,7 @@ const projectWatcher = {
                 }).count() === project.layerIds.length
               ) {
                 markProjectCompleted({ projectId: project._id });
-                layerWatcher.stop();
+                setTimeout(() => layerWatcher.stop(), 100);
               }
             },
           });
