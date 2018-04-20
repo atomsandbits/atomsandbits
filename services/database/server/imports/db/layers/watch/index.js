@@ -187,7 +187,8 @@ const runLayer = ({ request, layer }) => {
       const calculationIds = updatedLayer.output.calculationId
         ? [updatedLayer.output.calculationId]
         : updatedLayer.output['[calculationId]'];
-      const calculationWatcher = Requests.find({
+      let calculationWatcher;
+      calculationWatcher = Requests.find({
         calculationId: { $in: calculationIds },
       }).observe({
         added: calculationRequest => {
@@ -201,7 +202,7 @@ const runLayer = ({ request, layer }) => {
             console.log('All calculations finished for layer...');
             saveCalculationResultsToLayer({ request, layer: updatedLayer });
             markLayerCompleted({ layerId: updatedLayer._id });
-            calculationWatcher.stop();
+            setTimeout(() => calculationWatcher.stop(), 100);
           }
         },
         changed: (newCalculationRequest, oldCalculationRequest) => {
@@ -223,7 +224,7 @@ const runLayer = ({ request, layer }) => {
               layer: updatedLayer,
             });
             markLayerCompleted({ layerId: updatedLayer._id });
-            calculationWatcher.stop();
+            setTimeout(() => calculationWatcher.stop(), 100);
           }
         },
       });

@@ -8,7 +8,9 @@ import {
   withHandlers,
 } from 'recompose';
 import throttle from 'lodash/throttle';
+import uniq from 'lodash/uniq';
 
+import { Molecule } from '/both/imports/tools/Molecule';
 import MoleculeRenderer from '/client/imports/components/MoleculeRenderer';
 
 import Layers from './components/Layers';
@@ -44,6 +46,36 @@ const enhance = compose(
             submitLayer.parameters = { calculation: submitLayer.parameters };
           return submitLayer;
         });
+        /* Some sanity check */
+        if (!xyz) {
+          window.alert('No elements in xyz.');
+          return;
+        }
+        const { atomCollection } = new Molecule({
+          xyz,
+        });
+        if (atomCollection.length === 0) {
+          window.alert('No elements in xyz.');
+          return;
+        }
+        let unsupportedElementFound;
+        layers.forEach(layer => {
+          if (layer.parameters.method === 'machineLearning') {
+            let elements = uniq(
+              atomCollection.map(atomDocument => atomDocument.element)
+            );
+            let supportElements = ['C', 'N', 'O', 'H'];
+            elements.forEach(element => {
+              if (supportElements.indexOf(element) === -1) {
+                window.alert(
+                  `Only ${supportElements} elements are supported for this network.`
+                );
+                unsupportedElementFound = true;
+              }
+            });
+          }
+        });
+        if (unsupportedElementFound) return;
         console.log('Submit', submitLayers);
         runProjectMutation({
           input: {
