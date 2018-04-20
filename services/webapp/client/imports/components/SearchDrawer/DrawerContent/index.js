@@ -131,7 +131,7 @@ const enhance = compose(
       }),
   }),
   lifecycle({
-    componentDidMount() {
+    componentWillMount() {
       const { setQueryParams } = this.props;
       setQueryParams();
     },
