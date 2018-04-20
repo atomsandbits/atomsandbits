@@ -39,8 +39,8 @@ const typeDefs = gql`
     energy: Float
     energy_: [Float]
     energy__: [Float]
-    force: [Float]
-    force_: [[Float]]
+    force: [[Float]]
+    force_: [[[Float]]]
     freeEnergy: Float
     freeEnergy_: [Float]
     frequency_: [Float]

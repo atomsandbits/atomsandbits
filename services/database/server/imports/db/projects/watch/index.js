@@ -45,6 +45,19 @@ const projectWatcher = {
             layerId: { $in: project.layerIds },
             type: 'layer',
           }).observe({
+            added: request => {
+              // If all layers completed, mark project as completed
+              if (
+                request.completed &&
+                Requests.find({
+                  layerId: { $in: project.layerIds },
+                  completed: true,
+                }).count() === project.layerIds.length
+              ) {
+                markProjectCompleted({ projectId: project._id });
+                layerWatcher.stop();
+              }
+            },
             changed: (newRequest, oldRequest) => {
               // If a layer is updated, mark the project as updated
               if (newRequest.updatedAt !== oldRequest.updatedAt) {
