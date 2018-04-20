@@ -78,7 +78,7 @@ class SplashPage extends React.Component {
               </div>
               <div className={classes.loginButtons}>
                 <Button
-                  raised
+                  variant="raised"
                   onClick={this.loginWithGoogle}
                   className={classes.loginWithGoogle}
                 >

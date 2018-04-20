@@ -46,12 +46,12 @@ const DrawerContentPure = ({ closeDrawer, logout }) => (
         </LinkIcon>
         <LinkText>New Calculation</LinkText>
       </Button>
-      {/* <Button component={LinkContainer} onClick={closeDrawer} to="/new-project">
+      <Button component={LinkContainer} onClick={closeDrawer} to="/new-project">
         <LinkIcon>
           <AddOutlineIcon />
         </LinkIcon>
         <LinkText>New Project</LinkText>
-      </Button> */}
+      </Button>
       <Button onClick={closeDrawer} component={LinkContainer} to="/">
         <LinkIcon>
           <ListIcon />

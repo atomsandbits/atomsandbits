@@ -30,6 +30,39 @@ import {
   SpeckRenderer,
 } from './styles';
 
+const LIMIT = 30;
+
+const Loading = props => (
+  <AppLayout
+    mobileOnlyToolbar
+    alwaysRaised
+    title="Geometry"
+    appContent={<LinearProgress />}
+  />
+);
+
+const displayLoadingState = branch(
+  props => props.data.loading && !props.data.geometry,
+  renderComponent(Loading)
+);
+
+const mapDataProps = mapProps(({ match, data, ...otherProps }) => {
+  return {
+    calculationId: match.params.calculationId,
+    geometry: data.geometry,
+    energies: data.geometry.energies,
+    forces: data.geometry.forces,
+    freeEnergies: data.geometry.freeEnergies,
+    geometryOptimizations: data.geometry.optimizations,
+    conformerSearches: data.geometry.conformerSearches,
+    harmonicSpectra: data.geometry.harmonicSpectra,
+    refetch: data.refetch,
+    ...otherProps,
+  };
+});
+
+const enhance = compose(withData, displayLoadingState, mapDataProps);
+
 const GeometryPure = ({
   geometry,
   energies,
@@ -86,33 +119,7 @@ const GeometryPure = ({
   />
 );
 
-const LIMIT = 30;
-
-const Loading = props => <LinearProgress />;
-
-const displayLoadingState = branch(
-  props => props.data.loading,
-  renderComponent(Loading)
-);
-
-const mapDataProps = mapProps(({ match, data, ...otherProps }) => {
-  return {
-    calculationId: match.params.calculationId,
-    geometry: data.geometry,
-    energies: data.geometry.energies,
-    forces: data.geometry.forces,
-    freeEnergies: data.geometry.freeEnergies,
-    geometryOptimizations: data.geometry.optimizations,
-    conformerSearches: data.geometry.conformerSearches,
-    harmonicSpectra: data.geometry.harmonicSpectra,
-    refetch: data.refetch,
-    ...otherProps,
-  };
-});
-
-const Geometry = compose(withData, displayLoadingState, mapDataProps)(
-  GeometryPure
-);
+const Geometry = enhance(GeometryPure);
 
 export { Geometry };
 export default Geometry;

@@ -91,5 +91,5 @@ const HarmonicSpectrumCard = compose(
   singleHarmonicSpectrumBranch
 )(HarmonicSpectrumCardPure);
 
-export { HarmonicSpectrumCard };
+export { HarmonicSpectrumCard, HarmonicSpectrumRowPure };
 export default HarmonicSpectrumCard;

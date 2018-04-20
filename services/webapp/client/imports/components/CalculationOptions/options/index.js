@@ -54,45 +54,17 @@ const functionals = [
     prettyName: 'wB97X-D',
   },
 ];
-const multiplicities = [
-  {
-    value: 1,
-    prettyName: 'Singlet',
-  },
-  {
-    value: 2,
-    prettyName: 'Doublet',
-  },
-  {
-    value: 3,
-    prettyName: 'Triplet',
-  },
-  {
-    value: 4,
-    prettyName: 'Quartet',
-  },
-  {
-    value: 5,
-    prettyName: 'Quintet',
-  },
-  {
-    value: 6,
-    prettyName: 'Sextet',
-  },
-  {
-    value: 7,
-    prettyName: 'Septet',
-  },
-  {
-    value: 8,
-    prettyName: 'Octet',
-  },
-];
 const networks = [
   {
     value: 'tensormol01',
     prettyName: 'TensorMol 0.1',
     supportedElements: ['C', 'N', 'O', 'H'],
+  },
+];
+const conformerSearchTypes = [
+  {
+    value: 'exhaustive',
+    prettyName: 'Exhaustive',
   },
 ];
 const types = [
@@ -101,10 +73,10 @@ const types = [
     prettyName: 'Ground State',
     supportedInputTypes: {
       geometry: {
-        outputTypes: ['energy', 'force'],
+        outputTypes: ['energy', 'force', 'geometry'],
       },
       '[geometry]': {
-        outputTypes: ['[energy]', '[force]'],
+        outputTypes: ['[energy]', '[force]', '[geometry]'],
       },
     },
     methods: [
@@ -273,6 +245,7 @@ const types = [
         value: 'machineLearning',
         prettyName: 'Machine Learning',
         networks,
+        // conformerSearchTypes,
         numberOfConformers: true,
       },
     ],
@@ -282,10 +255,15 @@ const types = [
     prettyName: 'Harmonic Spectra',
     supportedInputTypes: {
       geometry: {
-        outputTypes: ['[frequency]', '[intensity]'],
+        outputTypes: ['freeEnergy', '[frequency]', '[intensity]', 'geometry'],
       },
       '[geometry]': {
-        outputTypes: ['[[frequency]]', '[[intensity]]'],
+        outputTypes: [
+          '[freeEnergy]',
+          '[[frequency]]',
+          '[[intensity]]',
+          '[geometry]',
+        ],
       },
     },
     methods: [
@@ -297,8 +275,8 @@ const types = [
     ],
   },
   // {
-  //   value: 'electronicSpectra',
-  //   prettyName: 'Electronic Spectra',
+  //   value: 'opticalSpectra',
+  //   prettyName: 'Optical Spectra',
   //   supportedInputTypes: {
   //     geometry: {
   //       outputTypes: ['[frequency]', '[intensity]'],

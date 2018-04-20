@@ -17,7 +17,10 @@ const calculationWatcher = {
   start: () => {
     // observe to catch most calculations quickly
     calculationWatcher.observers.push(
-      Requests.find({}, { limit: 100, sort: { createdAt: -1 } }).observe({
+      Requests.find(
+        { type: 'calculation' },
+        { limit: 100, sort: { createdAt: -1 } }
+      ).observe({
         added: request => {
           console.log('Request added, checking...');
           const calculation = Calculations.findOne(request.calculationId);
@@ -34,6 +37,7 @@ const calculationWatcher = {
     // poll for calculations that don't go through
     calculationWatcher.watchInterval = Meteor.setInterval(() => {
       const pendingCalculationsCursor = Requests.find({
+        type: 'calculation',
         completedAt: { $exists: false },
         $or: [
           {
@@ -43,9 +47,7 @@ const calculationWatcher = {
             running: false,
           },
           {
-            updatedAt: {
-              $exists: false,
-            },
+            updatedAt: null,
           },
           {
             updatedAt: {
@@ -60,7 +62,7 @@ const calculationWatcher = {
         calculationWatcher.checkCalculation({ calculation, request });
         calculationWatcher.addToUserResults({ calculation, request });
       });
-    }, 60000);
+    }, 30000);
   },
   stop: () => {
     calculationWatcher.observers.forEach(observer => observer.stop());

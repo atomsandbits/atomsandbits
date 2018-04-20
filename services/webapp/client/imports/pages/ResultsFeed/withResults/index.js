@@ -29,22 +29,53 @@ const dataQuery = gql`
             molecularFormula
           }
         }
+        project {
+          id
+          createdAt
+          completed
+          geometries {
+            id
+            molecularFormula
+          }
+          layers {
+            type
+            parameters {
+              calculation {
+                type
+                method
+              }
+            }
+          }
+        }
       }
       totalCount
     }
   }
 `;
 
-const withResults = graphql(dataQuery);
+const countQuery = gql`
+  query {
+    userResults {
+      totalCount
+    }
+  }
+`;
+
+const withResults = graphql(dataQuery, {
+  options: {
+    fetchPolicy: 'cache-and-network',
+    pollInterval: 6000,
+  },
+});
 
 const queryWatcher = apolloClient.watchQuery({
-  query: dataQuery,
+  query: countQuery,
   fetchPolicy: 'network-only',
 });
 Meteor.startup(() => {
   Tracker.autorun(() => {
     if (Meteor.userId()) {
-      queryWatcher.startPolling(6000);
+      queryWatcher.startPolling(3000);
     } else {
       queryWatcher.stopPolling();
     }

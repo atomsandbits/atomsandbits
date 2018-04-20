@@ -38,7 +38,7 @@ const enhance = compose(
   branch(
     ({ numberOfConformers }) => typeof numberOfConformers === 'undefined',
     renderComponent(({ setNumberOfConformers }) => {
-      setNumberOfConformers(20);
+      setNumberOfConformers(10);
       return null;
     })
   ),

@@ -91,7 +91,7 @@ const runCalculation = ({
 
 const setCalculationRunning = ({ calculationId }) =>
   Requests.update(
-    { calculationId, running: { $ne: true } },
+    { calculationId, completed: { $ne: true }, running: { $ne: true } },
     { $set: { startedAt: moment().valueOf(), running: true } },
     { multi: true }
   );

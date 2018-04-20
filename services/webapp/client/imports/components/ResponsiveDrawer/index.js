@@ -76,7 +76,7 @@ const ResponsiveDrawerPure = ({
         <Fragment>
           <Hidden lgUp>
             <Drawer
-              type="temporary"
+              variant="temporary"
               anchor="left"
               open={drawerOpen}
               onClose={closeDrawer}
@@ -91,7 +91,7 @@ const ResponsiveDrawerPure = ({
             </Drawer>
           </Hidden>
           <Hidden mdDown implementation="css">
-            <Drawer type="permanent">
+            <Drawer variant="permanent">
               <DrawerContent
                 openDrawer={openDrawer}
                 closeDrawer={closeDrawer}

@@ -25,6 +25,7 @@ fi
 ./scripts/build-image.sh database
 ./scripts/build-image.sh tensormol
 ./scripts/build-image.sh psi4
+./scripts/build-image.sh pyscf
 ./scripts/build-image.sh image-generator
 docker-compose build mongo
 docker-compose build elasticsearch

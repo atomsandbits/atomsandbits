@@ -139,12 +139,16 @@ class _CalculationOptions extends React.Component {
   };
   setParameter = memoize(parameterType => value => {
     const { setParameters } = this.props;
+    if (this.unmounting) return;
+    console.log('setParameter', parameterType);
     const parameters = this.clonedParameters;
     parameters[parameterType] = value;
     setParameters(parameters);
   });
   unsetParameter = memoize(parameterType => () => {
     const { setParameters } = this.props;
+    if (this.unmounting) return;
+    console.log('unsetParameter', parameterType);
     delete this.clonedParameters[parameterType];
     setParameters(this.clonedParameters);
   });
@@ -156,17 +160,17 @@ class _CalculationOptions extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { parameters } = nextProps;
     this.clonedParameters = clone(parameters);
-    // console.log('~~~ Diff ~~~');
-    // Object.keys(nextProps).forEach(key => {
-    //   if (nextProps[key] !== this.props[key]) {
-    //     console.log(
-    //       key,
-    //       JSON.stringify(this.props[key]),
-    //       JSON.stringify(nextProps[key])
-    //     );
-    //   }
-    // });
-    // console.log('~~~~~~');
+    console.log('~~~ Diff ~~~');
+    Object.keys(nextProps).forEach(key => {
+      if (nextProps[key] !== this.props[key]) {
+        console.log(
+          key,
+          JSON.stringify(this.props[key]),
+          JSON.stringify(nextProps[key])
+        );
+      }
+    });
+    console.log('~~~~~~');
     return true;
   }
   componentDidUpdate() {
@@ -174,8 +178,10 @@ class _CalculationOptions extends React.Component {
     this.clonedParameters = clone(parameters);
     this.updateOutputTypes();
   }
+  componentWillUnmount() {
+    this.unmounting = true;
+  }
   render() {
-    console.log(this);
     return (
       <CalculationOptionsPure
         {...this.props}

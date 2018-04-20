@@ -42,7 +42,7 @@ const SearchDrawerPure = ({ drawerOpen, closeDrawer }) => (
   <Fragment>
     <Hidden mdUp>
       <Drawer
-        type="temporary"
+        variant="temporary"
         anchor="right"
         open={drawerOpen}
         onClose={closeDrawer}
@@ -54,7 +54,7 @@ const SearchDrawerPure = ({ drawerOpen, closeDrawer }) => (
       </Drawer>
     </Hidden>
     <Hidden smDown implementation="css">
-      <Drawer type="permanent" anchor="right">
+      <Drawer variant="permanent" anchor="right">
         <DrawerContent closeDrawer={closeDrawer} />
       </Drawer>
     </Hidden>

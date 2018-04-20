@@ -69,7 +69,7 @@ export const SliderInputsContainer = styled.div`
   display: flex;
 `;
 export const SliderInput = styled.input`
-  width: 100%;
+  width: 50%;
 `;
 
 export const MassSliderContainer = styled.div`

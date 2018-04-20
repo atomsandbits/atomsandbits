@@ -55,13 +55,13 @@ const withData = compose(
     `,
     {
       options: ({ match }) => {
-        const { geometryId } = match.params;
-        const { calculationId } = match.params;
+        const { geometryId, calculationId } = match.params;
         return {
           variables: {
             geometryInput: { id: geometryId, calculationId },
           },
-          pollInterval: 2000,
+          fetchPolicy: 'cache-and-network',
+          pollInterval: 3000,
         };
       },
     }

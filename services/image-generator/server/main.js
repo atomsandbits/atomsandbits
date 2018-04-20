@@ -1,8 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import puppeteer from 'puppeteer';
-import { exec } from 'child_process';
-import fs from 'fs';
 import PQueue from 'p-queue';
 
 process.setMaxListeners(100);
@@ -10,8 +8,8 @@ console.log(process.env.ROOT_URL);
 
 // kill old chrome processes
 // TODO: handle the fact this kills real chrome processes
-exec("kill -9 `pgrep -f '\\-\\-headless'`");
-exec('killall chromium');
+// exec("kill -9 `pgrep -f '\\-\\-headless'`");
+// exec('killall chromium');
 
 const concurrency = 1;
 const queue = new PQueue({ concurrency: concurrency });
@@ -24,7 +22,7 @@ let browser;
   browser = await puppeteer.launch({
     executablePath: '/usr/bin/chromium',
     headless: false,
-    // args: ['--headless'],
+    args: ['--window-size=300,200'],
   });
 })();
 
@@ -70,32 +68,33 @@ const getDataURL = async ({ xyz }) => {
 // );
 
 Meteor.setTimeout(() => {
-  Geometries.find({ 'images.512': { $exists: false } }, { limit: 100, sort: {createdAt: -1} }).observe(
-    {
-      added: geometry => {
-        queue.add(async () => {
-          if (!geometry.images || !geometry.images['512']) {
-            console.log('Generating image for: ', geometry._id);
-            const xyz = `${geometry.totalAtoms}\n\n${geometry.atomicCoords}`;
-            try {
-              const dataURL = await getDataURL({ xyz });
-            } catch (error) {
-              console.log(error);
-              return;
-            }
-            Geometries.update(geometry._id, {
-              $set: {
-                images: {
-                  512: dataURL,
-                },
-              },
-            });
-            // console.log(dataURL);
-            console.log('image saved!');
+  Geometries.find(
+    { 'images.512': { $exists: false } },
+    { limit: 100, sort: { createdAt: -1 } }
+  ).observe({
+    added: geometry => {
+      queue.add(async () => {
+        if (!geometry.images || !geometry.images['512']) {
+          console.log('Generating image for: ', geometry._id);
+          const xyz = `${geometry.totalAtoms}\n\n${geometry.atomicCoords}`;
+          try {
+            const dataURL = await getDataURL({ xyz });
+          } catch (error) {
+            console.log(error);
+            return;
           }
-          return;
-        });
-      },
-    }
-  );
+          Geometries.update(geometry._id, {
+            $set: {
+              images: {
+                512: dataURL,
+              },
+            },
+          });
+          // console.log(dataURL);
+          console.log('image saved!');
+        }
+        return;
+      });
+    },
+  });
 }, 5000);

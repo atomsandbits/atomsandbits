@@ -7,11 +7,13 @@ import {
   onlyUpdateForPropTypes,
   withHandlers,
 } from 'recompose';
+import throttle from 'lodash/throttle';
 
 import MoleculeRenderer from '/client/imports/components/MoleculeRenderer';
 
 import Layers from './components/Layers';
-import { withContext } from './context';
+import { withRunProjectMutation } from './withRunProjectMutation';
+import { withProvider, withContext } from './context';
 import {
   ProjectContainer,
   ProjectContent,
@@ -20,16 +22,36 @@ import {
 } from './styles';
 
 const enhance = compose(
+  withRunProjectMutation,
+  withProvider,
   withContext,
-  mapProps(({ context }) => ({
+  mapProps(({ context, runProjectMutation }) => ({
     xyz: context.state.xyz,
     setXyz: context.setXyz,
     addLayer: context.addLayer,
+    layers: context.state.layers,
+    runProjectMutation,
   })),
   withHandlers({
-    submitProject: props => () => {
-      console.log('test');
-    },
+    submitProject: ({ layers, xyz, runProjectMutation }) =>
+      throttle(() => {
+        const submitLayers = layers.map(({ type, parameters }) => {
+          const submitLayer = {
+            type: type.toUpperCase(),
+            parameters,
+          };
+          if (type === 'calculation')
+            submitLayer.parameters = { calculation: submitLayer.parameters };
+          return submitLayer;
+        });
+        console.log('Submit', submitLayers);
+        runProjectMutation({
+          input: {
+            layers: submitLayers,
+            xyzs: [xyz],
+          },
+        });
+      }, 5000),
   }),
   lifecycle({
     componentDidMount() {
@@ -44,10 +66,10 @@ const NewProjectPure = ({ xyz, setXyz, addLayer, submitProject }) => (
     <ProjectContent>
       <MoleculeRenderer xyz={xyz} setXyz={setXyz} />
       <Layers />
-      <AddLayerButton raised onClick={addLayer} color="secondary">
+      <AddLayerButton variant="raised" onClick={addLayer} color="secondary">
         + layer
       </AddLayerButton>
-      <StartButton raised onClick={submitProject} color="primary">
+      <StartButton variant="raised" onClick={submitProject} color="primary">
         Start
       </StartButton>
     </ProjectContent>

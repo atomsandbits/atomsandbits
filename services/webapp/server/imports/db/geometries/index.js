@@ -71,6 +71,14 @@ class GeometriesMapper {
       sort: mongoSort,
       limit,
       skip,
+      fields: {
+        _id: 1,
+        atomicCoords: 1,
+        molecularFormula: 1,
+        mass: 1,
+        users: 1,
+        createdAt: 1,
+      },
     });
   }
   _fetch() {
@@ -89,14 +97,14 @@ class GeometriesMapper {
     users,
     createdAt,
   }) {
+    const user = users.find(user => this.options.userId === user._id);
     return {
       id: _id,
       atomicCoords: atomicCoords,
       molecularFormula: molecularFormula,
       atomCount: atomicCoords.split('\n').length,
       mass: mass,
-      mediumImage: images ? images['512'] : null,
-      tags: users[0] ? users[0].tags : [],
+      tags: user ? user.tags : users[0] ? users[0].tags : [],
       createdAt: createdAt,
     };
   }

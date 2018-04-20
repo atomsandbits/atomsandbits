@@ -23,6 +23,7 @@ import ResultNavigator from '/client/imports/components/ResultNavigator';
 
 // import Header from './components/Header';
 import CalculationCard from './components/CalculationCard';
+import ProjectCard from './components/ProjectCard';
 import { withResults } from './withResults';
 import { ResultsFeedContainer, ResultsFeedContent } from './styles';
 
@@ -44,7 +45,7 @@ const displayLoadingState = branch(
 );
 
 const redirectWithNoResults = branch(
-  ({ data }) => data.userResults.length === 0,
+  ({ data }) => data.userResults.totalCount === 0,
   renderComponent(() => <Redirect to="/new-calculation" />)
 );
 
@@ -115,14 +116,24 @@ const ResultsFeedPure = ({ results, position, totalCount, queryParams }) => (
       <ResultsFeedContainer>
         <ResultsFeedContent>
           {/* {logger.info('Results', results)} */}
-          {results.map((result, index) => (
-            <CalculationCard
-              calculation={result.calculation}
-              index={index}
-              className="result"
-              key={result.id}
-            />
-          ))}
+          {results.map(
+            (result, index) =>
+              result.type === 'CALCULATION' ? (
+                <CalculationCard
+                  calculation={result.calculation}
+                  index={index}
+                  className="result"
+                  key={result.id}
+                />
+              ) : (
+                <ProjectCard
+                  project={result.project}
+                  index={index}
+                  className="result"
+                  key={result.id}
+                />
+              )
+          )}
         </ResultsFeedContent>
         <ResultNavigator currentResult={position} resultCount={totalCount} />
       </ResultsFeedContainer>

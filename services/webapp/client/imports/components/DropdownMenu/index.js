@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, onlyUpdateForPropTypes } from 'recompose';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import isEqual from 'lodash/isEqual';
 
 import {
   DropdownContainer,
@@ -24,24 +25,33 @@ class DropdownMenu extends React.Component {
     open: false,
     anchorEl: null,
   };
-  componentWillMount() {
-    if (this.props.value === undefined) {
-      const { value } = this.props.menuItems[0];
-      this.setState({ selectedIndex: 0 });
-      this.props.setValue(value);
+  resetValue = () => {
+    const { value } = this.props.menuItems[0];
+    // this.setState({ selectedIndex: 0 });
+    this.props.setValue(value);
+  };
+  getSelectedIndexFromValue = () => {
+    const newIndex = this.props.menuItems
+      .map(menuItem => {
+        return menuItem.value;
+      })
+      .indexOf(this.props.value);
+    if (newIndex !== this.state.selectedIndex) {
+      this.setState({
+        selectedIndex: newIndex,
+      });
     }
+    if (newIndex === -1) {
+      this.resetValue();
+    }
+  };
+  componentWillMount() {
+    if (this.props.value === undefined) this.resetValue();
   }
   componentDidUpdate(prevProps, prevState) {
     // Update State and Value if index no longer exists in menuItems or
     // the menuItems have changed
-    if (
-      typeof this.props.menuItems[this.state.selectedIndex] === 'undefined' ||
-      prevProps.menuItems !== this.props.menuItems
-    ) {
-      const { value } = this.props.menuItems[0];
-      this.setState({ selectedIndex: 0 });
-      this.props.setValue(value);
-    }
+    this.getSelectedIndexFromValue();
   }
   componentWillUnmount() {
     this.props.unsetValue();

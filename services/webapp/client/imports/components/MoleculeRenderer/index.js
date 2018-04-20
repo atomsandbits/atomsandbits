@@ -31,12 +31,13 @@ class MoleculeRenderer extends React.PureComponent {
     }
   };
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, disabled } = this.props;
     return (
       <Grid container={true} spacing={0}>
         <Grid item={true} xs={12} sm={6}>
           <div className={classes.xyzareaContainer} style={{ height: '100%' }}>
             <textarea
+              disabled={disabled}
               value={this.props.xyz}
               onChange={this.onGeometryInput}
               className={classes.geometryTextarea}
@@ -56,6 +57,10 @@ MoleculeRenderer.propTypes = {
   theme: PropTypes.object.isRequired,
   setXyz: PropTypes.func.isRequired,
   xyz: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+};
+MoleculeRenderer.defaultProps = {
+  setXyz: () => {},
 };
 
 export default withStyles(styles, { withTheme: true })(MoleculeRenderer);

@@ -62,7 +62,7 @@ const enhance = compose(
   withState('xyz', 'setXyz', () => Session.get('xyz')),
   withState('parameters', 'setParameters', () => Session.get('parameters')),
   withHandlers({
-    submitCalculation: ({ xyz, parameters, submitCalculationMutation }) =>
+    submitCalculation: ({ xyz, parameters, runCalculationMutation }) =>
       throttle(() => {
         // Create client-side checks system here
         // ----------
@@ -94,7 +94,7 @@ const enhance = compose(
           parameters: parameters,
         };
         logger.info('Submitting Calculation', input);
-        submitCalculationMutation({
+        runCalculationMutation({
           input,
         });
       }, 5000),
@@ -131,7 +131,7 @@ const NewCalculationPure = ({
           inputTypes={inputTypes}
           setParameters={setParameters}
         />
-        <StartButton raised color="primary" onClick={submitCalculation}>
+        <StartButton variant="raised" color="primary" onClick={submitCalculation}>
           Start
         </StartButton>
       </NewCalculationContainer>

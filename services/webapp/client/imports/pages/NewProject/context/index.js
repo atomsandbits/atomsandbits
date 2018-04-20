@@ -1,29 +1,27 @@
 import React, { createContext, Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
+import { Session } from 'meteor/session';
 import memoize from 'lodash/memoize';
+import isEqual from 'lodash/isEqual';
 import clone from 'lodash/clone';
 
-const xyz = `\
-He 0 0 0
-Ne 1 0 0
-`;
+import xyzSample from './molecule';
 
 const Context = createContext();
 
 class ContextProvider extends Component {
   state = {
-    layers: [
+    layers: Session.get('project_layers') || [
       {
         type: 'calculation',
       },
     ],
-    xyz,
+    xyz: Session.get('project_xyz') || xyzSample,
   };
   componentDidUpdate() {
     // Check Layers
     const { layers } = this.state;
-    console.log('layers', layers);
     layers.forEach((layer, index) => {
       // don't allow 2 sort or limit layers in a row
       if (layer.type === 'limit' || layer.type === 'sort') {
@@ -37,6 +35,11 @@ class ContextProvider extends Component {
       }
     });
   }
+  componentWillUnmount() {
+    const { xyz, layers } = this.state;
+    Session.set('project_xyz', xyz);
+    Session.set('project_layers', layers);
+  }
   /* ~~~ Handlers ~~~ */
   setXyz = memoize(xyz => {
     this.setState({
@@ -45,52 +48,61 @@ class ContextProvider extends Component {
   });
   setLayerType = memoize(index => {
     return type => {
-      const layers = this.state.layers;
-      if (layers[index].type !== type) {
-        const newLayers = update(layers, { [index]: { type: { $set: type } } });
-        this.setState({
-          layers: newLayers,
-        });
-      }
+      this.setState(({ layers }) => {
+        if (layers[index].type !== type) {
+          const newLayers = update(layers, {
+            [index]: { type: { $set: type } },
+          });
+          return {
+            layers: newLayers,
+          };
+        }
+      });
     };
   });
   setOutputTypes = memoize(index => {
     return outputTypes => {
-      const layers = this.state.layers;
-      const newLayers = update(layers, {
-        [index]: { outputTypes: { $set: outputTypes } },
-      });
-      this.setState({
-        layers: newLayers,
+      console.log('setOutputTypes', JSON.stringify(outputTypes));
+      this.setState(({ layers }) => {
+        const newLayers = update(layers, {
+          [index]: { outputTypes: { $set: outputTypes } },
+        });
+        return {
+          layers: newLayers,
+        };
       });
     };
   });
   setParameters = memoize(index => {
     return parameters => {
-      const layers = this.state.layers;
       console.log('setParameters', JSON.stringify(parameters));
-      const newLayers = update(layers, {
-        [index]: { parameters: { $set: clone(parameters) } },
-      });
-      this.setState({
-        layers: newLayers,
+      this.setState(({ layers }) => {
+        if (isEqual(layers[index].parameters, parameters)) return;
+        const newLayers = update(layers, {
+          [index]: { parameters: { $set: parameters } },
+        });
+        return {
+          layers: newLayers,
+        };
       });
     };
   });
   addLayer = () => {
-    const layers = this.state.layers;
-    const newLayers = update(layers, {
-      $push: [{}],
-    });
-    this.setState({
-      layers: newLayers,
+    this.setState(({ layers }) => {
+      const newLayers = update(layers, {
+        $push: [{}],
+      });
+      return {
+        layers: newLayers,
+      };
     });
   };
   deleteLayer = index => {
-    const layers = this.state.layers;
-    const newLayers = update(layers, { $splice: [[index, 1]] });
-    this.setState({
-      layers: newLayers,
+    this.setState(({ layers }) => {
+      const newLayers = update(layers, { $splice: [[index, 1]] });
+      return {
+        layers: newLayers,
+      };
     });
   };
   render() {
@@ -103,7 +115,6 @@ class ContextProvider extends Component {
       addLayer: this.addLayer,
       deleteLayer: this.deleteLayer,
     };
-    console.log('value', value);
     return (
       <Context.Provider value={value}>{this.props.children}</Context.Provider>
     );
@@ -115,17 +126,25 @@ ContextProvider.propTypes = {
 
 const ContextConsumer = Context.Consumer;
 
-const withContext = WrappedComponent => {
-  const withContextWrapper = props => (
+const withProvider = WrappedComponent => {
+  const withProviderWrapper = props => (
     <ContextProvider>
-      <ContextConsumer>
-        {context => <WrappedComponent {...props} context={context} />}
-      </ContextConsumer>
+      <WrappedComponent {...props} />
     </ContextProvider>
   );
-  withContextWrapper.displayName = withContext;
+  withProviderWrapper.displayName = 'withProvider';
+  return withProviderWrapper;
+};
+
+const withContext = WrappedComponent => {
+  const withContextWrapper = props => (
+    <ContextConsumer>
+      {context => <WrappedComponent {...props} context={context} />}
+    </ContextConsumer>
+  );
+  withContextWrapper.displayName = 'withContext';
   return withContextWrapper;
 };
 
-export { Context, ContextProvider, ContextConsumer, withContext };
+export { Context, ContextProvider, ContextConsumer, withContext, withProvider };
 export default Context;

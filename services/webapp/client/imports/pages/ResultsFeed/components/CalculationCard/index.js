@@ -16,7 +16,7 @@ import {
   LoadIndicator,
   SystemImage,
   TimeInformation,
-} from './styles';
+} from '../styles';
 
 const convertToLabel = ({ type, method }) =>
   `${type.charAt(0).toUpperCase()}${

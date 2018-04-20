@@ -3,3 +3,5 @@ import './ping-calculation-running';
 import './save-calculation-result';
 import './save-intermediate-calculation-result';
 import './set-calculation-running';
+
+import './create-project';

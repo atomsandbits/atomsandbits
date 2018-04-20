@@ -16,7 +16,7 @@ const runCalculation = gql`
 
 const withRunCalculationMutation = graphql(runCalculation, {
   props: ({ ownProps, mutate }) => ({
-    submitCalculationMutation: ({ input }) =>
+    runCalculationMutation: ({ input }) =>
       mutate({ variables: { input } })
         .then(({ data }) => {
           console.log(data);

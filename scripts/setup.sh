@@ -10,6 +10,9 @@ echo "Installing packages for database-service..."
 echo "Installing packages for psi4-service..."
 (cd services/psi4 && meteor npm install)
 
+echo "Installing packages for pyscf-service..."
+(cd services/pyscf && meteor npm install)
+
 echo "Installing packages for webapp-service..."
 (cd services/webapp && meteor npm install)
 

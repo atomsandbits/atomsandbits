@@ -47,8 +47,8 @@ const displayLoadingState = branch(({ data }) => {
   return data.loading && !data.allGeometries;
 }, renderComponent(Loading));
 
-const throttled = throttle(fetchNext => {
-  fetchNext();
+const throttled = throttle(myFxn => {
+  myFxn();
 }, 2000);
 
 const onScroll = debounce(
@@ -132,6 +132,7 @@ const enhance = compose(
     queryString: location.search,
     replaceState: history.replace,
     totalCount: data.allGeometries.totalCount,
+    hasNextPage: data.allGeometries.pageInfo.hasNextPage,
     loadingGeometries: data.loading,
   })),
   withState('position', 'setPosition', 0),
@@ -163,6 +164,7 @@ const enhance = compose(
 const GeometrySearchPure = ({
   geometries,
   totalCount,
+  hasNextPage,
   openSearchDrawer,
   loadingGeometries,
   position,
@@ -187,7 +189,7 @@ const GeometrySearchPure = ({
             />
           ))}
           <div style={{ display: 'block', height: 45, marginBottom: 20 }}>
-            {loadingGeometries ? (
+            {hasNextPage ? (
               <CircularProgress color="secondary" thickness={5} />
             ) : null}
           </div>

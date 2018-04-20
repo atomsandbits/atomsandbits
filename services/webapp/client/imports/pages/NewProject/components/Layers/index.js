@@ -10,7 +10,7 @@ import {
 import memoize from 'lodash/memoize';
 import filter from 'lodash/filter';
 
-import { ContextProvider, ContextConsumer, withContext } from '../../context';
+import { withContext } from '../../context';
 import Layer from './Layer';
 import allLayerTypes from './types';
 
@@ -57,7 +57,7 @@ const LayersPure = ({
     {console.log('Layers\n' + JSON.stringify(layers))}
     {layers.map((layer, index) => (
       <Layer
-        key={`layer-${layer.type}-${index}`}
+        key={index}
         index={index}
         inputTypes={
           layers[index - 1]
@@ -80,15 +80,6 @@ LayersPure.propTypes = {
 };
 
 const Layers = enhance(LayersPure);
-
-// const Layers = () => (
-//   <ContextProvider>
-//     <ContextConsumer>
-//       {context => <WrappedComponent {...props} context={context} />}
-//     </ContextConsumer>
-//   </ContextProvider>
-// )
-
 
 export { Layers };
 export default Layers;
