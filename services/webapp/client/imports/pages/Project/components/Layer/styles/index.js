@@ -24,7 +24,8 @@ export const Parameters = styled.div`
   font-size: 16px;
 `;
 export const LeftSide = styled.div`
- width: 256px;
+  min-width: 256px;
+  width: 256px;
 `;
 export const RightSide = styled.div`
   min-width: 300px;
@@ -48,7 +49,7 @@ export const TopLeft = styled.div`
   left: 0;
   padding: 12px 16px;
   div:nth-of-type(1) {
-    color: rgba(0,0,0,0.54);
+    color: rgba(0, 0, 0, 0.54);
     font-size: 12px;
   }
   div:nth-of-type(2) {

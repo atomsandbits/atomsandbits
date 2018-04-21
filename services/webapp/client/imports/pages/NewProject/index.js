@@ -11,6 +11,7 @@ import throttle from 'lodash/throttle';
 import uniq from 'lodash/uniq';
 
 import { Molecule } from '/both/imports/tools/Molecule';
+import AppLayout from '/client/imports/components/AppLayout';
 import MoleculeRenderer from '/client/imports/components/MoleculeRenderer';
 
 import Layers from './components/Layers';
@@ -94,18 +95,24 @@ const enhance = compose(
 );
 
 const NewProjectPure = ({ xyz, setXyz, addLayer, submitProject }) => (
-  <ProjectContainer>
-    <ProjectContent>
-      <MoleculeRenderer xyz={xyz} setXyz={setXyz} />
-      <Layers />
-      <AddLayerButton variant="raised" onClick={addLayer} color="secondary">
-        + layer
-      </AddLayerButton>
-      <StartButton variant="raised" onClick={submitProject} color="primary">
-        Start
-      </StartButton>
-    </ProjectContent>
-  </ProjectContainer>
+  <AppLayout
+    mobileOnlyToolbar
+    title="New Project"
+    appContent={
+      <ProjectContainer>
+        <ProjectContent>
+          <MoleculeRenderer xyz={xyz} setXyz={setXyz} />
+          <Layers />
+          <AddLayerButton variant="raised" onClick={addLayer} color="secondary">
+            + layer
+          </AddLayerButton>
+          <StartButton variant="raised" onClick={submitProject} color="primary">
+            Start
+          </StartButton>
+        </ProjectContent>
+      </ProjectContainer>
+    }
+  />
 );
 NewProjectPure.propTypes = {
   xyz: PropTypes.string.isRequired,

@@ -52,6 +52,7 @@ const enhance = compose(
       onLocationChange(() => {
         window.ga('set', 'page', locationPathname);
         window.ga('send', 'pageview');
+        window.scrollTo(0, 0);
       });
     },
     componentWillUnmount() {
