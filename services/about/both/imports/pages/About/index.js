@@ -129,10 +129,10 @@ const AboutPure = () => (
             </Methods>
           </MethodContainer>
           <MethodContainer>
-            <MethodType>Electronic Spectra</MethodType>
+            <MethodType>Relaxed Scan</MethodType>
             <Methods>
               <Method>
-                DFT<sub>Psi4</sub>
+                ML<sub>TM</sub>
               </Method>
             </Methods>
           </MethodContainer>
