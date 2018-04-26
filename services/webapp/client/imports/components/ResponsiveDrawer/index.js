@@ -14,7 +14,7 @@ import { Tracker } from 'meteor/tracker';
 
 import Hidden from 'material-ui/Hidden';
 import DrawerContent from './DrawerContent';
-import { Content, AppFrame, Drawer } from './styles';
+import { Content, AppFrame, Drawer, ContactLink } from './styles';
 
 const enhance = compose(
   withRouter,
@@ -99,6 +99,7 @@ const ResponsiveDrawerPure = ({
               />
             </Drawer>
           </Hidden>
+          <ContactLink href="mailto:support@cloudszi.com">alpha | feedback</ContactLink>
         </Fragment>
       ) : null}
       {needsRedirect ? <Redirect to="/" /> : <Content>{content}</Content>}
