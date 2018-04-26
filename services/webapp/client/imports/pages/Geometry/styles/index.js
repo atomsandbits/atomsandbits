@@ -106,7 +106,7 @@ export const CardProperty = styled.div`
   max-height: ${props => (props.tall ? '400px' : '300px')};
   margin: 0 auto;
   overflow: auto;
-  user-select: all;
+  user-select: ${({ autoselect }) => (autoselect ? 'all' : 'default')};
   white-space: pre;
 `;
 

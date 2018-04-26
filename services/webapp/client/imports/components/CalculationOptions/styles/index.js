@@ -9,6 +9,9 @@ export const OptionsContainer = styled.div`
 
 export const OptionContainer = styled.div`
   flex-grow: 1;
+  label {
+    white-space: nowrap;
+  }
 `;
 
 export const TextField = styled(_TextField)`

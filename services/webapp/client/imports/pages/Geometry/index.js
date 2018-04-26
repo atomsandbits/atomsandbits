@@ -14,6 +14,7 @@ import { FreeEnergyCard } from './Cards/FreeEnergy';
 import { GeometryOptimizationCard } from './Cards/GeometryOptimization';
 import { ConformerSearchCard } from './Cards/ConformerSearch';
 import { HarmonicSpectrumCard } from './Cards/HarmonicSpectrum';
+import { RelaxedScanCard } from './Cards/RelaxedScan';
 import { Tags } from './Tags';
 
 import { Molecule } from '/both/imports/tools/Molecule';
@@ -56,6 +57,7 @@ const mapDataProps = mapProps(({ match, data, ...otherProps }) => {
     geometryOptimizations: data.geometry.optimizations,
     conformerSearches: data.geometry.conformerSearches,
     harmonicSpectra: data.geometry.harmonicSpectra,
+    relaxedScans: data.geometry.relaxedScans,
     refetch: data.refetch,
     ...otherProps,
   };
@@ -71,6 +73,7 @@ const GeometryPure = ({
   geometryOptimizations,
   conformerSearches,
   harmonicSpectra,
+  relaxedScans,
   refetch,
 }) => (
   <AppLayout
@@ -91,6 +94,7 @@ const GeometryPure = ({
               />
               <HarmonicSpectrumCard harmonicSpectra={harmonicSpectra} />
               <ConformerSearchCard conformerSearches={conformerSearches} />
+              <RelaxedScanCard relaxedScans={relaxedScans} />
             </ColumnContent>
           </GeometryCalculationColumn>
           <GeometryInformationColumn>

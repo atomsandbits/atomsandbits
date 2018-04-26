@@ -1,8 +1,8 @@
 from TensorMol import PARAMS
 from TensorMol import GeomOptimizer, MSet, Mol, PARAMS
-from TensorMol.Simulations import ScannedOptimization, TopologyMetaOpt, ConfSearch
+from TensorMol.Simulations import RelaxedScan
 
-def main(manager, molecule, on_conformer_found, n_conf=20):
+def main(manager, molecule, on_step, steps=20, atom_one=1, atom_two=1, final_distance=10):
     """main."""
 
     def EnAndForce(x_, DoForce=True):
@@ -22,8 +22,8 @@ def main(manager, molecule, on_conformer_found, n_conf=20):
     # Perform geometry optimization
     PARAMS["OptMaxCycles"] = 2000
     PARAMS["OptThresh"] = 0.001
-    Opt = ConfSearch(EnAndForce, molecule, StopAfter_=n_conf)
-    return Opt.Search(molecule, callback=on_conformer_found)
+    scanner = RelaxedScan(EnAndForce, molecule,at1=atom_one - 1,at2=atom_two - 1,nstep_=steps)
+    return scanner.Scan(molecule, maxr=final_distance, callback=on_step)
 
 if __name__ == "__main__":
     import os
@@ -32,10 +32,20 @@ if __name__ == "__main__":
     from networks import tensormol01
     from TensorMol import Mol
     molecule = Mol()
-    molecule.FromXYZString("""4
+    def on_step(mol_hist):
+        return
+    molecule.FromXYZString("""12
 
-    C 1. 0. 0.
-    H 0. 1. 0.
-    N 0. 0. 1.
-    O 1. 1. 0.""")
-    print(main(tensormol01.main(), molecule))
+    C     0.00000     1.40272      0
+    H     0.00000     2.49029      0
+    C    -1.21479     0.70136      0
+    H    -2.15666     1.24515      0
+    C    -1.21479    -0.70136      0
+    H    -2.15666    -1.24515      0
+    C     0.00000    -1.40272      0
+    H     0.00000    -2.49029      0
+    C     1.21479    -0.70136      0
+    H     2.15666    -1.24515      0
+    C     1.21479     0.70136      0
+    H     2.15666     1.24515      0""")
+    print(main(tensormol01.main(), molecule, on_step))

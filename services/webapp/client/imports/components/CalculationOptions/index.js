@@ -23,6 +23,10 @@ import NetworkDropdown from './components/NetworkDropdown';
 import BasisSetDropdown from './components/BasisSetDropdown';
 import FunctionalDropdown from './components/FunctionalDropdown';
 import NumberOfConformersInput from './components/NumberOfConformersInput';
+import AtomOneInput from './components/AtomOneInput';
+import AtomTwoInput from './components/AtomTwoInput';
+import FinalDistanceInput from './components/FinalDistanceInput';
+import NumberOfStepsInput from './components/NumberOfStepsInput';
 import ChargeInput from './components/ChargeInput';
 import MultiplicityDropdown from './components/MultiplicityDropdown';
 import { OptionsContainer } from './styles';
@@ -107,6 +111,34 @@ const CalculationOptionsPure = ({
       numberOfConformers={parameters.numberOfConformers}
       setNumberOfConformers={setParameter('numberOfConformers')}
       unsetNumberOfConformers={unsetParameter('numberOfConformers')}
+    />
+    <AtomOneInput
+      type={parameters.type}
+      method={parameters.method}
+      atomOne={parameters.atomOne}
+      setAtomOne={setParameter('atomOne')}
+      unsetAtomOne={unsetParameter('atomOne')}
+    />
+    <AtomTwoInput
+      type={parameters.type}
+      method={parameters.method}
+      atomTwo={parameters.atomTwo}
+      setAtomTwo={setParameter('atomTwo')}
+      unsetAtomTwo={unsetParameter('atomTwo')}
+    />
+    <FinalDistanceInput
+      type={parameters.type}
+      method={parameters.method}
+      finalDistance={parameters.finalDistance}
+      setFinalDistance={setParameter('finalDistance')}
+      unsetFinalDistance={unsetParameter('finalDistance')}
+    />
+    <NumberOfStepsInput
+      type={parameters.type}
+      method={parameters.method}
+      numberOfSteps={parameters.numberOfSteps}
+      setNumberOfSteps={setParameter('numberOfSteps')}
+      unsetNumberOfSteps={unsetParameter('numberOfSteps')}
     />
   </OptionsContainer>
 );

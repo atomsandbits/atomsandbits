@@ -8,7 +8,7 @@ import {
 } from 'recompose';
 
 import { Stepper } from '/client/imports/components/Stepper';
-import { HarmonicSpectrumRowPure } from '/client/imports/pages/Geometry/Cards/HarmonicSpectrum';
+import Chart from '/client/imports/pages/Geometry/Cards/HarmonicSpectrum/Chart';
 import {
   LayerContainer,
   LayerContent,
@@ -92,13 +92,10 @@ const LayerPure = ({
             </GeometryLink>
           </LeftSide>
           <RightSide>
-            {energy ? `energy: ${energy}` : null}
-            {freeEnergy ? `freeEnergy: ${freeEnergy}` : null}
+            {energy ? `Energy: ${energy}` : null}
+            {freeEnergy ? `Free Energy (STP): ${freeEnergy}` : null}
             {frequency_ ? (
-              <HarmonicSpectrumRowPure
-                frequencies={frequency_}
-                intensities={intensity_}
-              />
+              <Chart frequencies={frequency_} intensities={intensity_} />
             ) : null}
           </RightSide>
         </Fragment>
@@ -115,13 +112,16 @@ const LayerPure = ({
               activeStep={activeStep}
               setStep={setActiveStep}
               steps={geometry_.length}
+              speed={frequency__ ? 600 : 300}
             />
           </LeftSide>
           <RightSide>
-            {energy_ ? `energy: ${energy_[activeStep]}` : null}
-            {freeEnergy_ ? `freeEnergy: ${freeEnergy_[activeStep]}` : null}
+            {energy_ ? `Energy: ${energy_[activeStep]}` : null}
+            {freeEnergy_
+              ? `Free Energy (STP): ${freeEnergy_[activeStep]}`
+              : null}
             {frequency__ ? (
-              <HarmonicSpectrumRowPure
+              <Chart
                 frequencies={frequency__[activeStep]}
                 intensities={intensity__[activeStep]}
               />

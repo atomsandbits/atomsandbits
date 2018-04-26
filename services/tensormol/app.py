@@ -10,7 +10,7 @@ from socketIO_client import SocketIO
 from TensorMol import Mol
 from networks import tensormol01
 from calculations import (conformer_search, energy_and_force, harmonic_spectra,
-                          geometry_optimization, nudged_elastic_band)
+                          geometry_optimization, nudged_elastic_band, relaxed_scan)
 
 # TODO: start tensorflow session so GPU resources get allocated
 
@@ -202,6 +202,58 @@ def main():
                                     ],
                                     'energies':
                                     [m.properties['energy'] for m in mol_hist]
+                                }
+                            })
+                    elif calculation_type == 'relaxedScan':
+                        # TODO: add parameters. (window etc.)
+                        atoms = calculation.get('atoms')
+                        final_distance = calculation.get('finalDistance')
+                        steps = calculation.get('steps')
+                        if steps == None:
+                            print("Bad steps number: ", steps)
+                            steps = 20
+
+                        def on_step(mol_hist):
+                            socket_io.emit(
+                                'saveIntermediateCalculationResult', {
+                                    'calculationId': calculation_id,
+                                    'properties': {
+                                        'geometries': [
+                                            '\n'.join(str(m).split('\n')[2:])
+                                            for m in mol_hist
+                                        ],
+                                        'energies': [
+                                            m.properties['energy']
+                                            for m in mol_hist
+                                        ],
+                                        'distances':
+                                        [
+                                            m.properties['rs_r']
+                                            for m in mol_hist
+                                        ]
+                                    }
+                                })
+
+                        mol_hist = relaxed_scan.main(
+                            network,
+                            molecule,
+                            on_step,
+                            steps=steps,
+                            final_distance=final_distance,
+                            atom_one=atoms[0],
+                            atom_two=atoms[1])
+                        socket_io.emit(
+                            'saveCalculationResult', {
+                                'calculationId': calculation_id,
+                                'properties': {
+                                    'geometries': [
+                                        '\n'.join(str(m).split('\n')[2:])
+                                        for m in mol_hist
+                                    ],
+                                    'energies':
+                                    [m.properties['energy'] for m in mol_hist],
+                                    'distances':
+                                    [m.properties['rs_r'] for m in mol_hist]
                                 }
                             })
                     else:

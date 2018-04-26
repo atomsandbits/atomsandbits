@@ -92,7 +92,7 @@ const ForceRowError = ({ label }) => (
 const ForceRowPure = ({ force, label }) => (
   <CardPropertyRow key={`${label}-${force}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
-    <CardProperty small>{prettyPrint(force)}</CardProperty>
+    <CardProperty autoselect small>{prettyPrint(force)}</CardProperty>
   </CardPropertyRow>
 );
 

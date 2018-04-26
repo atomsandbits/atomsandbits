@@ -50,6 +50,14 @@ const withData = compose(
             running
             error
           }
+          relaxedScans {
+            geometries
+            energies
+            distances
+            label
+            running
+            error
+          }
         }
       }
     `,

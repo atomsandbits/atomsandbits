@@ -86,6 +86,16 @@ const typeDefs = gql`
     calculation: Calculation!
   }
 
+  type RelaxedScanProperty {
+    geometries: [String]
+    energies: [Float]
+    distances: [Float]
+    label: String!
+    error: String
+    running: Boolean!
+    calculation: Calculation!
+  }
+
   type Geometry implements Node {
     id: ID!
     atomicCoords: String!
@@ -101,6 +111,7 @@ const typeDefs = gql`
     optimizations: [OptimizationProperty]!
     conformerSearches: [ConformerSearchProperty]!
     harmonicSpectra: [HarmonicSpectrumProperty]!
+    relaxedScans: [RelaxedScanProperty]!
   }
 
   type GeometriesEdge {

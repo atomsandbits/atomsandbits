@@ -19,6 +19,7 @@ export const RendererRow = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
+  user-select: all;
   @media (min-width: ${breakpoints.md}) {
     flex-direction: column-reverse;
   }

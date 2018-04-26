@@ -38,6 +38,10 @@ const typeDefs = gql`
     periodicType: String
     latticeVectors: [[Float]]
     kPoints: [Int]
+    atomOne: Int
+    atomTwo: Int
+    finalDistance: Float
+    numberOfSteps: Int
   }
 
   type CalculationParameters {
@@ -56,6 +60,10 @@ const typeDefs = gql`
     periodicType: String
     latticeVectors: [[Float]]
     kPoints: [Int]
+    atomOne: Int
+    atomTwo: Int
+    finalDistance: Float
+    numberOfSteps: Int
   }
 
   type CalculationProperties {

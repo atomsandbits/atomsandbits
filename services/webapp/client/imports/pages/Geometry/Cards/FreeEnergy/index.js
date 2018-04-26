@@ -32,7 +32,7 @@ const FreeEnergyRowError = ({ label }) => (
 const FreeEnergyRowPure = ({ freeEnergy, label }) => (
   <CardPropertyRow key={`${label}-${freeEnergy}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
-    <CardProperty>{freeEnergy}</CardProperty>
+    <CardProperty>{freeEnergy} Ha</CardProperty>
   </CardPropertyRow>
 );
 

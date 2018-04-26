@@ -58,8 +58,6 @@ const ChargeInputPure = ({ onInput, charge }) => (
 ChargeInputPure.propTypes = {
   setCharge: PropTypes.func.isRequired,
   unsetCharge: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
-  method: PropTypes.string.isRequired,
   charge: PropTypes.number.isRequired,
   onInput: PropTypes.func.isRequired,
 };

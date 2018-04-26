@@ -28,6 +28,9 @@ const runCalculation = Meteor.bindEnvironment(
       basisSet: calculation.parameters.basisSet,
       functional: calculation.parameters.functional,
       numberOfConformers: calculation.parameters.numberOfConformers,
+      atoms: [calculation.parameters.atomOne, calculation.parameters.atomTwo],
+      finalDistance: calculation.parameters.finalDistance,
+      steps: calculation.parameters.numberOfSteps,
     };
     logger.info(`Emitting: Calculation #${calculation._id} to ${serverId}-${program}...`);
     io

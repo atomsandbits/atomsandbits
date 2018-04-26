@@ -2,15 +2,39 @@ import { getCalculations } from '/server/imports/db/calculations/read';
 
 // TODO: Clean this up...
 import { Calculations } from '/server/imports/db';
-const prettyPropertyLabel = ({ parameters }) => {
-  switch (parameters.method) {
+const prettyPropertyLabel = ({
+  parameters: {
+    network,
+    type,
+    method,
+    basisSet,
+    functional,
+    atomOne,
+    atomTwo,
+    finalDistance,
+    numberOfSteps,
+    numberOfConformers,
+  },
+}) => {
+  let label = '';
+  switch (method) {
     case 'machineLearning':
-      return `${parameters.network}`;
+      label += `${network}`;
+      break;
     default:
-      return `${parameters.method} ${parameters.basisSet} ${
-        parameters.functional ? parameters.functional : ''
-      }`;
+      label += `${method} ${basisSet} ${functional ? functional : ''}`;
   }
+  switch (type) {
+    case 'relaxedScan':
+      label += ` - ${atomOne}, ${atomTwo} -> ${finalDistance} : ${numberOfSteps}`;
+      break;
+    case 'conformerSearch':
+      label += ` - ${numberOfConformers}`;
+      break;
+    default:
+      break;
+  }
+  return label;
 };
 
 const Geometry = {
@@ -160,6 +184,35 @@ const Geometry = {
           : null,
         optimizedGeometry: calculation.properties
           ? calculation.properties.optimizedGeometry
+          : null,
+        label: prettyPropertyLabel({ parameters: calculation.parameters }),
+        error: calculation.errorMessage,
+        running: !calculation.completed,
+        calculation: calculation,
+      };
+    });
+  },
+  relaxedScans(geometry, args, context, self) {
+    const calculationIds = Calculations.find(
+      {
+        geometryIds: geometry.id,
+        'parameters.type': 'relaxedScan',
+      },
+      { fields: { _id: 1 } }
+    )
+      .fetch()
+      .map(calculation => calculation._id);
+    const calculations = getCalculations({ calculationIds });
+    return calculations.map(calculation => {
+      return {
+        geometries: calculation.properties
+          ? calculation.properties.geometries
+          : null,
+        energies: calculation.properties
+          ? calculation.properties.energies
+          : null,
+        distances: calculation.properties
+          ? calculation.properties.distances
           : null,
         label: prettyPropertyLabel({ parameters: calculation.parameters }),
         error: calculation.errorMessage,

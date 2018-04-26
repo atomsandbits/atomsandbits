@@ -15,6 +15,17 @@ class ContextProvider extends Component {
     layers: Session.get('project_layers') || [
       {
         type: 'calculation',
+        parameters: {
+          type: 'conformerSearch',
+          method: 'machineLearning',
+        },
+      },
+      {
+        type: 'calculation',
+        parameters: {
+          type: 'harmonicSpectra',
+          method: 'machineLearning',
+        },
       },
     ],
     xyz: Session.get('project_xyz') || xyzSample,
@@ -88,6 +99,10 @@ class ContextProvider extends Component {
     };
   });
   addLayer = () => {
+    if (this.state.layers.length === 6) {
+      window.alert('Maximum of 6 layers for now...');
+      return;
+    }
     this.setState(({ layers }) => {
       const newLayers = update(layers, {
         $push: [{}],

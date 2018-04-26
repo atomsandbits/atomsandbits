@@ -10,25 +10,31 @@ export const LayerContainer = styled.div`
     position: relative;
     box-shadow: none;
     border: 1px solid gainsboro;
+    box-sizing: border-box;
   }
 `;
 
 export const LayerContent = styled.div`
   padding: 0 25px;
-  flex-wrap: wrap;
-  justify-content: space-around;
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 export const Parameters = styled.div`
   font-size: 16px;
 `;
 export const LeftSide = styled.div`
+  display: inline-block;
   min-width: 256px;
-  width: 256px;
+  flex-grow: 1;
 `;
 export const RightSide = styled.div`
+  display: inline-block;
   min-width: 300px;
+  flex-grow: 1;
 `;
 
 export const GeometryLink = styled(Link)``;

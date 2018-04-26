@@ -33,7 +33,7 @@ const EnergyRowError = ({ label }) => (
 const EnergyRowPure = ({ energy, label }) => (
   <CardPropertyRow key={`${label}-${energy}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
-    <CardProperty>{energy}</CardProperty>
+    <CardProperty autoselect>{energy} Ha</CardProperty>
   </CardPropertyRow>
 );
 

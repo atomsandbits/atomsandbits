@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, withStateHandlers, lifecycle } from 'recompose';
+import { compose, withState, withHandlers, lifecycle } from 'recompose';
 
 import Button from 'material-ui/Button';
 import MobileStepper from 'material-ui/MobileStepper';
@@ -9,6 +9,7 @@ import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import SpeckRenderer from '/client/imports/components/SpeckRenderer';
 import { Molecule } from '/both/imports/tools/Molecule';
 import xyzTools from '/both/imports/tools/xyz';
+import Stepper from '/client/imports/components/Stepper';
 
 import {
   RendererContainer,
@@ -22,13 +23,13 @@ const GeometryOptimizationRendererPure = ({
   geometries,
   energies,
   selectedGeometryIndex,
-  increment,
-  decrement,
+  setSelectedGeometryIndex,
+  autoplay,
 }) => (
   <RendererContainer>
     <RendererRow>
       <Geometry>
-        {`Energy: ${energies[selectedGeometryIndex]}\n`}
+        {`    Energy: ${energies[selectedGeometryIndex]} Ha\n`}
         {new Molecule({ xyz: geometries[selectedGeometryIndex] })
           .prettify({ positions: true })
           .xyz.split('\n')
@@ -44,57 +45,26 @@ const GeometryOptimizationRendererPure = ({
       </SpeckContainer>
     </RendererRow>
     {geometries.length > 1 ? (
-      <MobileStepper
-        type="dots"
+      <Stepper
+        autoplay={autoplay || false}
         steps={geometries.length}
-        position="static"
+        setStep={setSelectedGeometryIndex}
         activeStep={selectedGeometryIndex}
-        nextButton={
-          <Button
-            dense
-            onClick={increment}
-            disabled={selectedGeometryIndex === geometries.length - 1}
-          >
-            Next
-            <KeyboardArrowRight />
-          </Button>
-        }
-        backButton={
-          <Button
-            dense
-            onClick={decrement}
-            disabled={selectedGeometryIndex === 0}
-          >
-            <KeyboardArrowLeft />
-            Back
-          </Button>
-        }
       />
     ) : null}
   </RendererContainer>
 );
 
 const GeometryOptimizationRenderer = compose(
-  withStateHandlers(
-    ({ geometries }) => ({
-      selectedGeometryIndex: geometries.length - 1,
-    }),
-    {
-      increment: ({ selectedGeometryIndex }, { geometries }) => () => ({
-        selectedGeometryIndex:
-          selectedGeometryIndex < geometries.length - 1
-            ? selectedGeometryIndex + 1
-            : selectedGeometryIndex,
-      }),
-      decrement: ({ selectedGeometryIndex }) => () => ({
-        selectedGeometryIndex:
-          selectedGeometryIndex > 0 ? selectedGeometryIndex - 1 : 0,
-      }),
-      setLast: ({ selectedGeometryIndex }, { geometries }) => () => ({
-        selectedGeometryIndex: geometries.length - 1,
-      }),
-    }
+  withState(
+    'selectedGeometryIndex',
+    'setSelectedGeometryIndex',
+    ({ geometries }) => geometries.length - 1
   ),
+  withHandlers({
+    setLast: ({ setSelectedGeometryIndex, geometries }) => () =>
+      setSelectedGeometryIndex(geometries.length - 1),
+  }),
   lifecycle({
     componentWillReceiveProps(nextProps) {
       // make sure to reset if geometries array gets shorter than previously
