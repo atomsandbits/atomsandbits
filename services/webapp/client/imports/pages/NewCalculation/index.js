@@ -73,6 +73,10 @@ const enhance = compose(
           window.alert('No elements in xyz.');
           return;
         }
+        if (parameters.atomOne && parameters.atomOne === parameters.atomTwo) {
+          window.alert('Atom1 cannot equal Atom2.');
+          return;
+        }
         if (parameters.method === 'machineLearning') {
           let elements = uniq(
             map(atomCollection, atomDocument => atomDocument.element)

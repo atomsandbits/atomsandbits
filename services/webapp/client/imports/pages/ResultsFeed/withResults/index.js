@@ -63,7 +63,7 @@ const countQuery = gql`
 
 const withResults = graphql(dataQuery, {
   options: {
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
     pollInterval: 6000,
   },
 });

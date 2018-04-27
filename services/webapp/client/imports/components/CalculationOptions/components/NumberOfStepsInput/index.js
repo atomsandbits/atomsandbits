@@ -23,6 +23,7 @@ const enhance = compose(
     onInput: event => {
       let numberOfSteps = parseInt(event.target.value);
       numberOfSteps = numberOfSteps > 1 ? numberOfSteps : 2;
+      numberOfSteps = numberOfSteps < 100 ? numberOfSteps : 100;
       setNumberOfSteps(numberOfSteps);
     },
   })),
@@ -53,7 +54,7 @@ const NumberOfStepsInputPure = ({ onInput, numberOfSteps }) => (
       inputProps={{
         step: 1,
         min: 2,
-        max: 300,
+        max: 100,
       }}
     />
   </OptionContainer>

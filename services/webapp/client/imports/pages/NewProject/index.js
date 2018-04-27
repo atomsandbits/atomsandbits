@@ -59,8 +59,15 @@ const enhance = compose(
           window.alert('No elements in xyz.');
           return;
         }
-        let unsupportedElementFound;
+        let invalidInput;
         layers.forEach(layer => {
+          if (
+            layer.parameters.atomOne &&
+            layer.parameters.atomOne === layer.parameters.atomTwo
+          ) {
+            window.alert('Atom1 cannot equal Atom2.');
+            invalidInput = true;
+          }
           if (layer.parameters.method === 'machineLearning') {
             let elements = uniq(
               atomCollection.map(atomDocument => atomDocument.element)
@@ -71,12 +78,12 @@ const enhance = compose(
                 window.alert(
                   `Only ${supportElements} elements are supported for this network.`
                 );
-                unsupportedElementFound = true;
+                invalidInput = true;
               }
             });
           }
         });
-        if (unsupportedElementFound) return;
+        if (invalidInput) return;
         console.log('Submit', submitLayers);
         runProjectMutation({
           input: {

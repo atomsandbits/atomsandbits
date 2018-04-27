@@ -22,6 +22,9 @@ const enhance = compose(
     }),
     onInput: event => {
       let atomTwo = parseInt(event.target.value);
+      if (!atomTwo) {
+        atomTwo = 1;
+      }
       setAtomTwo(atomTwo);
     },
   })),

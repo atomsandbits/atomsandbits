@@ -26,7 +26,7 @@ const LayerPure = ({
 }) => (
   <LayerContainer>
     <LayerContent>
-      {index !== 0 ? (
+      {index > 1 ? (
         <DeleteLayerIcon onClick={() => deleteLayer(index)} />
       ) : null}
       {getValidLayerTypes(inputTypes).length !== 0 ? (
