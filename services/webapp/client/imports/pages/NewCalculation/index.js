@@ -73,6 +73,10 @@ const enhance = compose(
           window.alert('No elements in xyz.');
           return;
         }
+        if (atomCollection.length > 1000) {
+          window.alert('Maximum of 1000 atoms for now.');
+          return;
+        }
         if (parameters.atomOne && parameters.atomOne === parameters.atomTwo) {
           window.alert('Atom1 cannot equal Atom2.');
           return;

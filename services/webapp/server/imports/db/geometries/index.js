@@ -1,4 +1,26 @@
+import moment from 'moment';
 import { Geometries } from '/server/imports/db';
+import memoize from 'lodash/memoize';
+
+let countedAt = {};
+let counts = {};
+
+const getCount = query => {
+  let currentTime = moment().valueOf();
+  let lastUpdate = countedAt[query];
+  let lastCount = counts[query];
+  // console.log(lastUpdate);
+  // console.log(currentTime);
+  if (!lastUpdate || currentTime - 3 * 60 * 1000 > lastUpdate) {
+    // console.log('fetching count');
+    lastCount = Geometries.find(JSON.parse(query)).count();
+    countedAt[query] = currentTime;
+  } else {
+    // console.log('returning count from cache');
+  }
+  counts[query] = lastCount;
+  return lastCount;
+};
 
 class GeometriesMapper {
   constructor(options) {
@@ -79,6 +101,7 @@ class GeometriesMapper {
         createdAt: 1,
       },
     });
+    this.count = () => getCount(JSON.stringify(mongoQuery));
   }
   _fetch() {
     /* Fetch */
@@ -123,9 +146,19 @@ class GeometriesMapper {
     const lastGeometry = geometries[geometries.length - 1] || {};
     return lastGeometry;
   }
-  count() {
-    return this._cursor.count();
-  }
+  // count() {
+  //   let currentTime = moment().valueOf();
+  //   console.log(lastUpdate);
+  //   console.log(currentTime);
+  //   if (!lastUpdate || currentTime - 3 * 60 * 1000 > lastUpdate) {
+  //     console.log('fetching count');
+  //     lastCount = this._cursor.count();
+  //     lastUpdate = currentTime;
+  //   } else {
+  //     console.log('returning count from cache');
+  //   }
+  //   return lastCount;
+  // }
   hasNextPage() {
     return !(this.get().length < this.options.limit);
   }

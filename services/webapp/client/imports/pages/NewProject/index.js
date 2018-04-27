@@ -59,6 +59,10 @@ const enhance = compose(
           window.alert('No elements in xyz.');
           return;
         }
+        if (atomCollection.length > 1000) {
+          window.alert('Maximum of 1000 atoms for now.');
+          return;
+        }
         let invalidInput;
         layers.forEach(layer => {
           if (

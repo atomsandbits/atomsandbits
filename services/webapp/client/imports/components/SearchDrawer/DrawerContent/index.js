@@ -82,12 +82,13 @@ const enhance = compose(
   withState(
     'sort',
     'setSort',
-    ({ queryParams }) => (queryParams.sort ? queryParams.sort : 'created')
+    ({ queryParams }) => (queryParams.sort ? queryParams.sort : 'mass')
   ),
   withState(
     'direction',
     'setDirection',
-    ({ queryParams }) => (queryParams.direction ? queryParams.direction : 'asc')
+    ({ queryParams }) =>
+      queryParams.direction ? queryParams.direction : 'desc'
   ),
   withState(
     'search',

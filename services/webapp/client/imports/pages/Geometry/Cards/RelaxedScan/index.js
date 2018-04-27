@@ -44,13 +44,14 @@ const RelaxedScanRowPure = ({
   energies,
   distances,
   label,
+  autoplay,
   running,
 }) => (
   <CardPropertyRow key={`${label}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
     <CardProperty small tall>
       <GeometryOptimizationRenderer
-        autoplay={true}
+        autoplay={autoplay}
         key="temp-key"
         geometries={geometries}
         energies={energies}
@@ -88,7 +89,7 @@ const RelaxedScanCardPure = ({ relaxedScans, title }) => (
       <CardTitle key="main-card-title">
         {title ? title : 'Relaxed Scan'}
       </CardTitle>,
-      <RelaxedScanRow key="main-card-optimization" {...relaxedScans[0]} />,
+      <RelaxedScanRow autoplay key="main-card-optimization" {...relaxedScans[0]} />,
     ]}
     details={relaxedScans
       .slice(1)
