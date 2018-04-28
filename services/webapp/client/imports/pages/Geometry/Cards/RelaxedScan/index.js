@@ -109,7 +109,7 @@ const SingleRelaxedScanCard = ({ relaxedScans, title }) => (
       <CardTitle key="main-card-title">
         {title ? title : 'Relaxed Scan'}
       </CardTitle>,
-      <RelaxedScanRow key="main-card-optimization" {...relaxedScans[0]} />,
+      <RelaxedScanRow key="main-card-optimization" autoplay {...relaxedScans[0]} />,
     ]}
     details=""
   >

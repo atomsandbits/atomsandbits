@@ -60,7 +60,7 @@ const setQueryParams = debounce(
 const enhance = compose(
   withRouter,
   defaultProps({
-    maxMass: 5000,
+    maxMass: 10000,
     closeDrawer: () => {},
   }),
   mapProps(({ location, history, maxMass, closeDrawer }) => ({

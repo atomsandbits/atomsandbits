@@ -6,14 +6,15 @@ import os
 import sys
 import threading
 import time
+import numpy as np
 from socketIO_client import SocketIO
 from TensorMol import Mol
 from networks import tensormol01
 from calculations import (conformer_search, energy_and_force, harmonic_spectra,
-                          geometry_optimization, nudged_elastic_band, relaxed_scan)
+                          geometry_optimization, nudged_elastic_band,
+                          relaxed_scan)
 
 # TODO: start tensorflow session so GPU resources get allocated
-
 
 calculation_running = False
 ping_timer = None
@@ -33,7 +34,8 @@ def main():
             #       for some reason (maybe it creates a new tf session)
             def on_run_calculation(options):
                 """Run when a calculation is submitted."""
-                print('Tensormol received ' + options.get('calculation').get('_id'))
+                print('Tensormol received ' +
+                      options.get('calculation').get('_id'))
                 global calculation_running
                 if calculation_running:
                     return
@@ -115,32 +117,43 @@ def main():
                         # [x]: submit intermediate geometries and energies
                         # [X]: define a function for emitting saveIntermediateResults
                         #       after each step and pass it into geomopt method
+                        firstm = None
+
                         def on_optimization_step_completed(mol_hist):
+                            nonlocal firstm
                             print("Emitting Callback")
+                            firstm = mol_hist[0]
+                            energies = [firstm.properties['energy']]
+                            geometries = [
+                                '\n'.join(str(firstm).split('\n')[2:])
+                            ]
+                            if len(mol_hist) > 1:
+                                for m in mol_hist[-10:]:
+                                    energies.append(m.properties['energy'])
+                                    geometries.append('\n'.join(
+                                        str(m).split('\n')[2:]))
                             socket_io.emit(
                                 'saveIntermediateCalculationResult', {
                                     'calculationId': calculation_id,
                                     'properties': {
-                                        'geometries': [
-                                            '\n'.join(str(m).split('\n')[2:])
-                                            for m in mol_hist
-                                        ],
-                                        'energies': [
-                                            m.properties['energy']
-                                            for m in mol_hist
-                                        ]
+                                        'geometries': geometries,
+                                        'energies': energies
                                     }
                                 })
 
                         finalm = geometry_optimization.main(
                             network, molecule, on_optimization_step_completed)
-                        xyz = '\n'.join(str(finalm).split('\n')[2:])
+                        first_xyz = '\n'.join(str(firstm).split('\n')[2:])
+                        final_xyz = '\n'.join(str(finalm).split('\n')[2:])
                         socket_io.emit(
                             'saveCalculationResult', {
                                 'calculationId': calculation_id,
                                 'properties': {
-                                    'geometries': [xyz],
-                                    'energies': [finalm.properties['energy']]
+                                    'geometries': [first_xyz, final_xyz],
+                                    'energies': [
+                                        firstm.properties['energy'],
+                                        finalm.properties['energy']
+                                    ]
                                 }
                             })
                     elif calculation_type == 'harmonicSpectra':
@@ -226,8 +239,7 @@ def main():
                                             m.properties['energy']
                                             for m in mol_hist
                                         ],
-                                        'distances':
-                                        [
+                                        'distances': [
                                             m.properties['rs_r']
                                             for m in mol_hist
                                         ]

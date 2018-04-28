@@ -61,7 +61,7 @@ const DrawerContentPure = ({ closeDrawer, logout }) => (
       <Button
         onClick={closeDrawer}
         component={LinkContainer}
-        to="/geometry-search?direction=desc&mass=0&mass=5000&search=&sort=mass"
+        to="/geometry-search?direction=desc&mass=0&mass=10000&search=&sort=mass"
       >
         <LinkIcon>
           <SearchIcon />
