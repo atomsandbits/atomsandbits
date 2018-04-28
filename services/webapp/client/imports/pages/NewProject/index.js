@@ -88,7 +88,7 @@ const enhance = compose(
           }
         });
         if (invalidInput) return;
-        console.log('Submit', submitLayers);
+        // console.log('Submit', submitLayers);
         runProjectMutation({
           input: {
             layers: submitLayers,

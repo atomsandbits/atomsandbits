@@ -19,7 +19,6 @@ const withDeleteTag = graphql(runCalculation, {
     submitCalculation: ({ input }) =>
       mutate({ variables: { input } })
         .then(({ data }) => {
-          console.log(data);
           const calculationId = data.runCalculation.calculation.id;
           const geometryId = data.runCalculation.calculation.geometries[0].id;
           ownProps.history.push(
@@ -27,7 +26,7 @@ const withDeleteTag = graphql(runCalculation, {
           );
         })
         .catch(error => {
-          console.log('there was an error sending the query', error);
+          console.error('there was an error sending the query', error);
         }),
   }),
 });

@@ -73,7 +73,7 @@ class ContextProvider extends Component {
   });
   setOutputTypes = memoize(index => {
     return outputTypes => {
-      console.log('setOutputTypes', JSON.stringify(outputTypes));
+      // console.log('setOutputTypes', JSON.stringify(outputTypes));
       this.setState(({ layers }) => {
         const newLayers = update(layers, {
           [index]: { outputTypes: { $set: outputTypes } },
@@ -86,7 +86,7 @@ class ContextProvider extends Component {
   });
   setParameters = memoize(index => {
     return parameters => {
-      console.log('setParameters', JSON.stringify(parameters));
+      // console.log('setParameters', JSON.stringify(parameters));
       this.setState(({ layers }) => {
         if (isEqual(layers[index].parameters, parameters)) return;
         const newLayers = update(layers, {

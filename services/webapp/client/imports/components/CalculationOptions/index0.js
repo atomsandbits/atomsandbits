@@ -52,7 +52,6 @@ const CalculationOptionsPure = ({
   setOutputTypes,
 }) => (
   <OptionsContainer>
-    {console.log('Parameters', JSON.stringify(parameters))}
     <TypeDropdown
       type={parameters.type}
       setType={setParameter('type')}

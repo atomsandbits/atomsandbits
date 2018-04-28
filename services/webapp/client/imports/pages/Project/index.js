@@ -61,7 +61,6 @@ const ProjectPure = ({ project: { id, geometries, layers } }) => (
               }
             />
           ) : null}
-          {console.log(layers)}
           {layers.map(layer => <Layer key={layer.id} {...layer} />)}
         </ProjectContent>
       </ProjectContainer>

@@ -68,7 +68,17 @@ class GeometriesMapper {
           };
         }
         if (filter.type === 'SEARCH') {
-          mongoQuery.molecularFormula = filter.search.toUpperCase();
+          const elements = filter.search.match(/[a-zA-Z]+/g) || [];
+          const elementCounts = filter.search.match(/\d+/g) || [];
+          const search = elements
+            .map(
+              (element, index) =>
+                `${element.charAt(0).toUpperCase() +
+                  element.slice(1).toLowerCase()}${elementCounts[index] || ''}`
+            )
+            .join('');
+          console.log('search', search);
+          mongoQuery.molecularFormula = search;
         }
       });
     }

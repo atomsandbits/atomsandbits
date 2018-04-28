@@ -128,7 +128,7 @@ def main():
                                 '\n'.join(str(firstm).split('\n')[2:])
                             ]
                             if len(mol_hist) > 1:
-                                for m in mol_hist[-10:]:
+                                for m in mol_hist[-9:]:
                                     energies.append(m.properties['energy'])
                                     geometries.append('\n'.join(
                                         str(m).split('\n')[2:]))

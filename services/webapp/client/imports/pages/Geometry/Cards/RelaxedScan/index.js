@@ -89,7 +89,11 @@ const RelaxedScanCardPure = ({ relaxedScans, title }) => (
       <CardTitle key="main-card-title">
         {title ? title : 'Relaxed Scan'}
       </CardTitle>,
-      <RelaxedScanRow autoplay key="main-card-optimization" {...relaxedScans[0]} />,
+      <RelaxedScanRow
+        autoplay
+        key="main-card-optimization"
+        {...relaxedScans[0]}
+      />,
     ]}
     details={relaxedScans
       .slice(1)
@@ -109,12 +113,14 @@ const SingleRelaxedScanCard = ({ relaxedScans, title }) => (
       <CardTitle key="main-card-title">
         {title ? title : 'Relaxed Scan'}
       </CardTitle>,
-      <RelaxedScanRow key="main-card-optimization" autoplay {...relaxedScans[0]} />,
+      <RelaxedScanRow
+        key="main-card-optimization"
+        autoplay
+        {...relaxedScans[0]}
+      />,
     ]}
     details=""
-  >
-    {console.log(relaxedScans[0])}
-  </Expandable>
+  />
 );
 
 const noOptimizationsBranch = branch(

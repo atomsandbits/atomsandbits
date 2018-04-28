@@ -111,9 +111,7 @@ const SingleGeometryOptimizationCard = ({ geometryOptimizations, title }) => (
       />,
     ]}
     details=""
-  >
-    {console.log(geometryOptimizations[0])}
-  </Expandable>
+  />
 );
 
 const noOptimizationsBranch = branch(

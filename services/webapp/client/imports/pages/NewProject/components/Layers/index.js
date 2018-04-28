@@ -54,7 +54,6 @@ const LayersPure = ({
   getValidLayerTypes,
 }) => (
   <Fragment>
-    {console.log('Layers\n' + JSON.stringify(layers))}
     {layers.map((layer, index) => (
       <Layer
         key={index}

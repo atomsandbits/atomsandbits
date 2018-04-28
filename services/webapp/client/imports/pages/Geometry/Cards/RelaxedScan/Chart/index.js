@@ -55,7 +55,6 @@ const Chart = ({ xs, ys }) => (
       datasets: [
         {
           data: xs.map((x, index) => ({ x: x, y: ys[index] })),
-          test: console.log(xs.map((x, index) => ({ x: x, y: ys[index] })))
         },
       ],
     }}
