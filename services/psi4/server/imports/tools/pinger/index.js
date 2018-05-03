@@ -11,7 +11,7 @@ const pinger = {
           if (error) throw error;
         }
       );
-    }, 1000);
+    }, 3000);
   },
   stop: () => {
     clearInterval(pinger.interval);

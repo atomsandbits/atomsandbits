@@ -11,7 +11,7 @@ io.on(
       Meteor.bindEnvironment(
         (
           { calculationId = isRequired('calculationId') },
-          callback = () => {},
+          callback = () => {}
         ) => {
           logger.silly('API setCalculationRunning...');
           try {
@@ -26,8 +26,14 @@ io.on(
             callback({ name: error.name, message: error.message });
             logger.error(`${error.name}: ${error.message}`);
           }
-        },
-      ),
+        }
+      )
     );
-  }),
+    socket.on('helloWorld', ({ text }, callback = () => {}) => {
+      logger.silly('Hello there!', text);
+      callback(null, {
+        received: true,
+      });
+    });
+  })
 );

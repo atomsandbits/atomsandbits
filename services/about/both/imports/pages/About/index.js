@@ -151,7 +151,7 @@ const AboutPure = () => (
           <PricingSection>
             <PricingSectionTitle>Compute</PricingSectionTitle>
             <PriceContainer>
-              <PriceLabel>2 Cores</PriceLabel>
+              <PriceLabel>1 Core</PriceLabel>
               <Price>FREE</Price>
             </PriceContainer>
             <PriceContainer>

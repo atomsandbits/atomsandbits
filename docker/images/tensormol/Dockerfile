@@ -27,7 +27,7 @@ COPY networks.zip /networks.zip
 RUN apt-get install unzip
 RUN unzip /networks.zip -d /TensorMol && rm /networks.zip
 RUN pip3 install -e /TensorMol
-RUN pip3 install socketIO_client
+RUN pip3 install socketIO-client-nexus
 
 # Download and Build Service
 COPY ./src src

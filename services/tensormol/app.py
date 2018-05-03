@@ -7,7 +7,7 @@ import sys
 import threading
 import time
 import numpy as np
-from socketIO_client import SocketIO
+from socketIO_client_nexus import SocketIO
 from TensorMol import Mol
 from networks import tensormol01
 from calculations import (conformer_search, energy_and_force, harmonic_spectra,
@@ -64,7 +64,7 @@ def main():
                                    {'calculationId': calculation_id},
                                    socket_callback)
                     print('Running Calculation: ', calculation_id)
-                    ping_timer = threading.Timer(1, ping_calculation_running,
+                    ping_timer = threading.Timer(3, ping_calculation_running,
                                                  [calculation])
                     ping_timer.start()
 
