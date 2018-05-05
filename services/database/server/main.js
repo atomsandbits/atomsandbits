@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import logger from '/both/imports/logger';
 import '/both/imports/globals';
-import './imports/db';
 import './imports/api';
+import './imports/db';
 
 import { Clusters, Servers } from '/both/imports/collections';
 import { createCluster } from '/server/imports/db/clusters/create';

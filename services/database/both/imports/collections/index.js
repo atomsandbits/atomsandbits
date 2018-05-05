@@ -34,7 +34,7 @@ Geometries.rawCollection().ensureIndex({
   _id: 1,
 });
 Geometries.rawCollection().ensureIndex({
-  createdAt: 1,
+  createdAt: -1,
 });
 Geometries.rawCollection().ensureIndex({
   atomicCoords: 'hashed',
@@ -54,6 +54,9 @@ Requests.rawCollection().ensureIndex({
 });
 Requests.rawCollection().ensureIndex({
   cluserId: 1,
+});
+Requests.rawCollection().ensureIndex({
+  completedAt: -1,
 });
 
 const resetDatabase = () => {
