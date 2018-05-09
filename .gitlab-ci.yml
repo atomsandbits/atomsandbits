@@ -4,58 +4,74 @@ before_script:
   # install meteor
   - curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor && rm ./meteor
 
+# ~~~ tests ~~~
 test_service_about:
+  stage: test
   script:
     - cd ./services/about
     - npm install
     - npm test
   only:
-    - master
+    - tags
 
 test_service_database:
+  stage: test
   script:
     - cd ./services/database
     - npm install
     - npm test
   only:
-    - master
+    - tags
 
 test_service_image_generator:
+  stage: test
   script:
     - cd ./services/image-generator
     - npm install
     - npm test
   only:
-    - master
+    - tags
 
 test_service_psi4:
+  stage: test
   script:
     - cd ./services/psi4
     - npm install
     - npm test
   only:
-    - master
+    - tags
 
 test_service_pyscf:
+  stage: test
   script:
     - cd ./services/pyscf
     - npm install
     - npm test
   only:
-    - master
+    - tags
 
 test_service_tensormol:
+  stage: test
   script:
     - cd ./services/tensormol
     - npm install
     - npm test
   only:
-    - master
+    - tags
 
 test_service_webapp:
+  stage: test
   script:
     - cd ./services/webapp
     - npm install
     - npm test
   only:
-    - master
+    - tags
+
+# ~~~ deploy to production ~~~
+deploy_production:
+  stage: deploy
+  script:
+  - echo "deployed!"
+  only:
+  - tags
