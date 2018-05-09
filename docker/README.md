@@ -1,4 +1,4 @@
-# cloudszi_docker
+# atoms+bits docker
 
 Docker images for [cloudszi](https://www.cloudszi.com/).
 
@@ -39,7 +39,3 @@ Check out [the wiki](https://github.com/cloudszi/cloudszi/wiki):
 ## Contributing
 
 **TODO**
-
-## License
-
-cloudszi_docker is [GPLv3 licensed](https://github.com/cloudszi/cloudszi_docker/blob/master/LICENSE).

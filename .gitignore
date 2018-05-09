@@ -1,6 +1,7 @@
 /data
 /results
 /densities
+/trainsets
 
 ####################
 # common.gitignore #

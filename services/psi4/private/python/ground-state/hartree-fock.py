@@ -44,4 +44,4 @@ properties = {
     "force": force
 }
 stringified_properties = json.dumps(properties)
-print('Cloudszi Properties:\n~{}~'.format(stringified_properties))
+print('atoms+bits properties:\n~{}~'.format(stringified_properties))

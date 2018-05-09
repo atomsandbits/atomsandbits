@@ -33,7 +33,7 @@ const enhance = compose(
 const DrawerContentPure = ({ closeDrawer, logout }) => (
   <DrawerContentContainer>
     <Button component={HeaderLogo} onClick={closeDrawer} to="/">
-      cloudszi
+      atoms+bits
     </Button>
     <LinksContainer>
       <Button
@@ -72,7 +72,7 @@ const DrawerContentPure = ({ closeDrawer, logout }) => (
     <FooterContainer>
       <Button
         component={aContainer}
-        href="https://about.cloudszi.com/"
+        href="https://about.atomsandbits.ai/"
         onClick={closeDrawer}
       >
         <LinkIcon>

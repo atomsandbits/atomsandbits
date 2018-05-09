@@ -1,5 +1,5 @@
 {
-  "name": "cloudszi",
+  "name": "atomsandbits",
   "version": "0.0.1",
   "description": "Everything.",
   "scripts": {
@@ -10,13 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cloudszi/cloudszi.git"
+    "url": "git+https://gitlab.com/atomsandbits/atomsandbits.git"
   },
   "author": "",
   "bugs": {
-    "url": "https://github.com/cloudszi/cloudszi/issues"
+    "url": "https://gitlab.com/atomsandbits/atomsandbits/issues"
   },
-  "homepage": "https://github.com/cloudszi/cloudszi#readme",
+  "homepage": "https://gitlab.com/atomsandbits/atomsandbits#readme",
   "dependencies": {
     "concurrently": "^3.5.1"
   },

@@ -99,7 +99,7 @@ const enhance = compose(
   }),
   lifecycle({
     componentDidMount() {
-      document.title = 'new project | cloudszi';
+      document.title = 'new project | atoms+bits';
     },
   }),
   onlyUpdateForPropTypes

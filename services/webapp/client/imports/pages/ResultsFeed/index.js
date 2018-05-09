@@ -96,7 +96,7 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       const { scroll } = this.props;
-      document.title = 'results | cloudszi';
+      document.title = 'results | atoms+bits';
       document.addEventListener('scroll', scroll);
     },
     componentWillUnmount() {

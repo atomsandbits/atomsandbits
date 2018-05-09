@@ -9,7 +9,7 @@ RUN npm install -g forever
 # Install Meteor
 RUN curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor && rm ./meteor
 
-# Download and Build about.cloudszi
+# Download and Build about.atomsandbits
 ARG GITHUB_TOKEN
 ADD https://$GITHUB_TOKEN@api.github.com/repos/cloudszi/about.cloudszi/compare/master...HEAD /dev/null
 RUN git clone https://$GITHUB_TOKEN@github.com/cloudszi/about.cloudszi.git

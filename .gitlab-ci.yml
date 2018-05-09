@@ -1,0 +1,61 @@
+image: node:latest
+
+before_script:
+  # install meteor
+  - curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor && rm ./meteor
+
+test_service_about:
+  script:
+    - cd ./services/about
+    - npm install
+    - npm test
+  only:
+    - master
+
+test_service_database:
+  script:
+    - cd ./services/database
+    - npm install
+    - npm test
+  only:
+    - master
+
+test_service_image_generator:
+  script:
+    - cd ./services/image-generator
+    - npm install
+    - npm test
+  only:
+    - master
+
+test_service_psi4:
+  script:
+    - cd ./services/psi4
+    - npm install
+    - npm test
+  only:
+    - master
+
+test_service_pyscf:
+  script:
+    - cd ./services/pyscf
+    - npm install
+    - npm test
+  only:
+    - master
+
+test_service_tensormol:
+  script:
+    - cd ./services/tensormol
+    - npm install
+    - npm test
+  only:
+    - master
+
+test_service_webapp:
+  script:
+    - cd ./services/webapp
+    - npm install
+    - npm test
+  only:
+    - master

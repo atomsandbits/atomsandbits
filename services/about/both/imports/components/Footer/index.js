@@ -17,7 +17,7 @@ class _Footer extends Component {
     const { pathname } = this.props.location;
     return (
       <FooterStyle height="48px">
-        <FooterLinkA href="https://www.cloudszi.com">Get Started</FooterLinkA>
+        <FooterLinkA href="https://atomsandbits.ai">Get Started</FooterLinkA>
         <DividerStyle>|</DividerStyle>
         <FooterLink to="#explore">Explore</FooterLink>
         <DividerStyle>|</DividerStyle>
@@ -25,9 +25,9 @@ class _Footer extends Component {
         <DividerStyle>|</DividerStyle>
         <FooterLink to="#pricing">Pricing</FooterLink>
         <ContactInformationContainer id="contact">
-          <FooterLinkA href="email:contact@cloudszi.com">Email</FooterLinkA>
+          <FooterLinkA href="email:contact@atomsandbits.ai">Email</FooterLinkA>
           <DividerStyle>|</DividerStyle>
-          <FooterLinkA href="https://github.com/cloudszi">GitHub</FooterLinkA>
+          <FooterLinkA href="https://gitlab.com/atomsandbits/atomsandbits">GitLab</FooterLinkA>
         </ContactInformationContainer>
       </FooterStyle>
     );

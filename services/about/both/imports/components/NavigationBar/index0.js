@@ -98,7 +98,7 @@ class _NavigationBar extends Component {
                             </MenuStyle>)
                             : null
                     }
-                    
+
                 </NavigationBarStyle>
             </div>
     )

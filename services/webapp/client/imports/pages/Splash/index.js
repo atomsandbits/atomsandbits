@@ -21,6 +21,7 @@ class SplashPage extends React.Component {
     userId: Meteor.userId(),
   };
   componentDidMount() {
+    document.title = 'atoms+bits';
     setTimeout(() => {
       this.tracker = Tracker.autorun(() => {
         this.setState({ userId: Meteor.userId() });
@@ -71,7 +72,7 @@ class SplashPage extends React.Component {
           </div>
           <div className={classes.sectionContainer}>
             <div className={classes.secondSection}>
-              <div className={classes.headerText}>cloudszi</div>
+              <div className={classes.headerText}>atoms+bits</div>
               <div className={classes.headerSubtext}>
                 molecular discovery with cloud-based quantum simulations and
                 deep learning
@@ -94,7 +95,7 @@ class SplashPage extends React.Component {
             <li className={classes.footerListItem}>
               <a
                 className={classes.footerLink}
-                href="https://about.cloudszi.com/"
+                href="https://about.atomsandbits.ai/"
               >
                 About
               </a>
@@ -102,7 +103,7 @@ class SplashPage extends React.Component {
             <li className={classes.footerListItem}>
               <a
                 className={classes.footerLink}
-                href="https://about.cloudszi.com/#explore"
+                href="https://about.atomsandbits.ai/#explore"
               >
                 Explore
               </a>
@@ -110,7 +111,7 @@ class SplashPage extends React.Component {
             <li className={classes.footerListItem}>
               <a
                 className={classes.footerLink}
-                href="https://about.cloudszi.com/#methods"
+                href="https://about.atomsandbits.ai/#methods"
               >
                 Methods
               </a>
@@ -118,7 +119,7 @@ class SplashPage extends React.Component {
             <li className={classes.footerListItem}>
               <a
                 className={classes.footerLink}
-                href="https://about.cloudszi.com/#pricing"
+                href="https://about.atomsandbits.ai/#pricing"
               >
                 Pricing
               </a>
@@ -126,7 +127,7 @@ class SplashPage extends React.Component {
             <li className={classes.footerListItem}>
               <a
                 className={classes.footerLink}
-                href="https://about.cloudszi.com/#team"
+                href="https://about.atomsandbits.ai/#team"
               >
                 Team
               </a>
@@ -134,7 +135,7 @@ class SplashPage extends React.Component {
             <li className={classes.footerListItem}>
               <a
                 className={classes.footerLink}
-                href="https://about.cloudszi.com/#contact"
+                href="https://about.atomsandbits.ai/#contact"
               >
                 Contact
               </a>

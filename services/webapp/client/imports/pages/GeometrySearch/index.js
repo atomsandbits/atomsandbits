@@ -149,7 +149,7 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       const { scroll } = this.props;
-      document.title = 'geometry search | cloudszi';
+      document.title = 'geometry search | atoms+bits';
       document.addEventListener('scroll', scroll);
     },
     componentWillUnmount() {

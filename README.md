@@ -1,6 +1,7 @@
-# cloudszi
+# [atoms+bits](https://atomsandbits.com/)
 
----
+While atoms+bits is in alpha 0.0.x expect consistent changes breaking backwards compatibility. When a beta is created 0.x.x expect the site to respect semver.
+
 ## Requirements
 
 ~~~sh
@@ -35,3 +36,7 @@ Run all services:
 ~~~sh
 npm start
 ~~~
+
+## License
+
+The current license is fairly restrictive. In the future we expect to create a community-edition (MIT License) and an enterprise-edition (open-source but proprietary license).

@@ -8,14 +8,14 @@
     },
 
     "namespaces": {
-    	"cloudszi.geometries": {
+    	"atomsandbits.geometries": {
             "includeFields": ["empiricalFormula", "users"]
         },
-        "cloudszi.calculations": {
+        "atomsandbits.calculations": {
             "includeFields": ["parameters", "users"]
         }
     },
-    
+
     "docManagers": [{
         "docManager": "elastic2_doc_manager"
     }]

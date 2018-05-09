@@ -1,5 +1,5 @@
 {
-  "name": "cloudszi",
+  "name": "atomsandbits-webapp",
   "private": true,
   "scripts": {
     "lint": "scripty",

@@ -109,7 +109,7 @@ const enhance = compose(
   }),
   lifecycle({
     componentDidMount() {
-      document.title = 'new calculation | cloudszi';
+      document.title = 'new calculation | atoms+bits';
     },
     componentWillUnmount() {
       const { xyz, parameters } = this.props;

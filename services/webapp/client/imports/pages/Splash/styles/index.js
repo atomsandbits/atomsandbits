@@ -55,9 +55,11 @@ const styles = theme => ({
     color: colors.secondary,
   },
   headerSubtext: {
+    color: colors.text.default,
+    fontFamily: fonts.header,
     fontSize: 22,
-    fontWeight: 500,
-    margin: '10px auto 30px',
+    fontWeight: 'bold',
+    margin: '5px auto 30px',
   },
   loginWithGoogle: {
     margin: '35px 0 60px auto',

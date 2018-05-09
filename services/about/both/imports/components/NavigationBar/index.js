@@ -41,7 +41,7 @@ class _NavigationBar extends Component {
     const { pathname } = this.props.location;
     return (
       <NavigationBarStyle height="64px">
-        <a href="https://www.cloudszi.com/"><Logo /></a>
+        <a href="https://atomsandbits.ai/"><Logo /></a>
         <div style={{flexGrow: 1}} />
         <MenuButton onClick={this.handleMenuClick.bind(this)}>
           <FaMenu

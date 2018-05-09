@@ -152,9 +152,9 @@ const runCalculation = ({
       onCalculationError(errorMsg);
     }
 
-    if (output.split('Cloudszi Properties:\n~')[1]) {
+    if (output.split('atoms+bits properties:\n~')[1]) {
       properties = JSON.parse(
-        output.split('Cloudszi Properties:\n~')[1].split('~')[0]
+        output.split('atoms+bits properties:\n~')[1].split('~')[0]
       );
     }
     console.log('Properties: ', properties);
