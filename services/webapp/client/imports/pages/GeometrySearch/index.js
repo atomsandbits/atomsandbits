@@ -33,7 +33,7 @@ import {
 const Loading = props => (
   <AppLayout
     mobileOnlyToolbar
-    title="Geometry Search"
+    title="Geometries"
     appContent={
       <GeometrySearchContainer>
         <LinearProgress />

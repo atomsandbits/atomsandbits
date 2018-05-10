@@ -11,7 +11,7 @@ npm install
 npm start
 ```
 
-More information is available [here](doc/development#readme).
+More developer information is available [here](doc/development#readme).
 
 ## Software stack
 
@@ -39,7 +39,10 @@ Check out our [discourse](https://discuss.atomsandbits.com/).
 
 ## Contributing
 
-atoms+bits is an open source project and we are very happy to accept community contributions. Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+atoms+bits is an open source project and we are very happy to accept community contributions.
+All development happens through  [GitLab](https://gitlab.com/atomsandbits/atomsandbits/issues).
+
+Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ## License
 
