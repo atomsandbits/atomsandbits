@@ -2,6 +2,8 @@
 
 [![Build status](https://gitlab.com/atomsandbits/atomsandbits/badges/master/build.svg)](https://gitlab.com/atomsandbits/atomsandbits/commits/master)
 
+Git history will probably be wiped at some point soon.
+
 While atoms+bits is in alpha 0.0.x expect consistent changes breaking backwards compatibility. When a beta is created 0.x.x expect the site to respect semver.
 
 ## Getting started
