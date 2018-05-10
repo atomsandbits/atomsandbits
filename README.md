@@ -1,4 +1,4 @@
-# [atoms+bits](https://atomsandbits.ai/)
+# [atoms+bits](http://atomsandbits.ai/)
 
 [![Build status](https://gitlab.com/atomsandbits/atomsandbits/badges/master/build.svg)](https://gitlab.com/atomsandbits/atomsandbits/commits/master)
 

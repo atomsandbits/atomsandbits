@@ -56,7 +56,7 @@ const AboutPure = () => (
         <SplashTextContainer>
           <Title>atoms+bits</Title>
           <Description>molecular discovery with cloud-based quantum simulations and deep learning</Description>
-          <StartLink href="https://atomsandbits.ai/">get started</StartLink>
+          <StartLink href="https://www.atomsandbits.ai/">get started</StartLink>
         </SplashTextContainer>
       </FirstSection>
       <SecondSection id="explore">

@@ -17,7 +17,7 @@ class _Footer extends Component {
     const { pathname } = this.props.location;
     return (
       <FooterStyle height="48px">
-        <FooterLinkA href="https://atomsandbits.ai">Get Started</FooterLinkA>
+        <FooterLinkA href="https://www.atomsandbits.ai">Get Started</FooterLinkA>
         <DividerStyle>|</DividerStyle>
         <FooterLink to="#explore">Explore</FooterLink>
         <DividerStyle>|</DividerStyle>
