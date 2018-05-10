@@ -13,7 +13,7 @@ PYSCF_MAX_MEMORY=4000
 
 # set custom environment variables
 if [ -f ./variables.env ]; then
-    source variables.env
+    source ./variables.env
 fi
 
 # run services

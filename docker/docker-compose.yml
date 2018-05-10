@@ -63,6 +63,8 @@ services:
       - DATABASE_URL=$DATABASE_URL
       # - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
       - DB_NAME=$DB_NAME
+      - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
       - VIRTUAL_HOST=atomsandbits.com
       - LETSENCRYPT_HOST=atomsandbits.com
       - LETSENCRYPT_EMAIL=contact@atomsandbits.com

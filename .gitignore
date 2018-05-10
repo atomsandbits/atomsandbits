@@ -2,6 +2,7 @@
 /results
 /densities
 /trainsets
+/variables.env
 
 ####################
 # common.gitignore #
