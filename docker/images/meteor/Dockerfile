@@ -9,4 +9,4 @@ RUN npm install -g forever
 # Install Meteor
 RUN curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor && rm ./meteor
 
-ENTRYPOINT ["/bin/bash"]
+CMD []

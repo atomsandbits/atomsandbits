@@ -10,10 +10,13 @@ RUN pip install flake8
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
 RUN apt-get install -y nodejs
 
+# Upgrade npm
+RUN npm i npm@latest -g
+
 # Install Forever
 RUN npm install -g forever
 
 # Install Meteor
 RUN curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor && rm ./meteor
 
-ENTRYPOINT ["/bin/bash"]
+CMD []
