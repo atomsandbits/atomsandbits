@@ -1,13 +1,13 @@
-image: node:latest
+image: atomsandbits/meteor:latest
 
 before_script:
-  # install meteor
-  - curl https://install.meteor.com/ > ./meteor && chmod +x ./meteor && ./meteor && rm ./meteor
+  - if ! type "$npm" > /dev/null; then npm install; fi
 
 # ~~~ tests ~~~
 test_service_about:
   stage: test
   script:
+    - npm install
     - cd ./services/about
     - npm install
     - npm test
@@ -51,11 +51,13 @@ test_service_pyscf:
     - tags
 
 test_service_tensormol:
+  image: python:3
+  before_script: echo ""
   stage: test
   script:
+    - pip install flake8
     - cd ./services/tensormol
-    - # npm install
-    - # npm test
+    - ./scripts/test.sh
   only:
     - tags
 
