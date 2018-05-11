@@ -12,7 +12,7 @@ test_service_about:
     - npm install
     - npm test
   only:
-    - tags
+    - master
 
 test_service_database:
   stage: test
@@ -21,7 +21,7 @@ test_service_database:
     - npm install
     - npm test
   only:
-    - tags
+    - master
 
 test_service_image_generator:
   stage: test
@@ -30,7 +30,7 @@ test_service_image_generator:
     - npm install
     - npm test
   only:
-    - tags
+    - master
 
 test_service_psi4:
   stage: test
@@ -39,7 +39,7 @@ test_service_psi4:
     - npm install
     - npm test
   only:
-    - tags
+    - master
 
 test_service_pyscf:
   stage: test
@@ -48,7 +48,7 @@ test_service_pyscf:
     - npm install
     - npm test
   only:
-    - tags
+    - master
 
 test_service_tensormol:
   before_script: echo ""
@@ -57,7 +57,7 @@ test_service_tensormol:
     - cd ./services/tensormol
     - ./scripts/test.sh
   only:
-    - tags
+    - master
 
 test_service_webapp:
   stage: test
@@ -66,7 +66,7 @@ test_service_webapp:
     - npm install
     - npm test
   only:
-    - tags
+    - master
 
 # ~~~ deploy to production ~~~
 deploy_production:
@@ -74,4 +74,4 @@ deploy_production:
   script:
   - echo "deployed!"
   only:
-  - tags
+  - master
