@@ -6,6 +6,12 @@ Git history will probably be wiped at some point soon.
 
 While atoms+bits is in alpha 0.0.x expect consistent changes breaking backwards compatibility. When a beta is created 0.x.x expect the site to respect semver.
 
+![screenshot](/img/screenshot-results.png)
+
+![screenshot](/img/screenshot-geometry.png)
+
+ ---
+
 ## Getting started
 
 ```sh
