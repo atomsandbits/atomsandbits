@@ -54,8 +54,8 @@ test_service_tensormol:
   stage: test
   script:
     - cd ./services/tensormol
-    - npm install
-    - npm test
+    - # npm install
+    - # npm test
   only:
     - tags
 

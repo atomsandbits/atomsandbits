@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import '/server/imports/config';
 import '/server/imports/api';
 import '/server/imports/routes';
