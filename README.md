@@ -1,4 +1,4 @@
-# ![icon](/img/icon-32.png) [atoms+bits](http://atomsandbits.ai/)
+# [![icon](/img/icon-32.png) atoms+bits](http://atomsandbits.ai/)
 
 [![Build status](https://gitlab.com/atomsandbits/atomsandbits/badges/master/build.svg)](https://gitlab.com/atomsandbits/atomsandbits/commits/master)
 
@@ -54,4 +54,4 @@ Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ## License
 
-The [current license](LICENSE.md) (CC-A-NC-SA-4.0) is fairly restrictive. In the future we plan to create a community-edition (MIT License) and an enterprise-edition (open-source but proprietary license).
+The [current license](LICENSE.md) ([CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)) is fairly restrictive. In the future we plan to create a community-edition (MIT License) and an enterprise-edition (open-source but proprietary license).
