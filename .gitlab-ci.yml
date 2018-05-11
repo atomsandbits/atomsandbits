@@ -1,4 +1,4 @@
-image: atomsandbits/meteor:latest
+image: atomsandbits/python-meteor-test-environment:latest
 
 before_script:
   - npm install
@@ -51,11 +51,9 @@ test_service_pyscf:
     - tags
 
 test_service_tensormol:
-  image: python:3
   before_script: echo ""
   stage: test
   script:
-    - pip install flake8
     - cd ./services/tensormol
     - ./scripts/test.sh
   only:
