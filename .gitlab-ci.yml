@@ -1,7 +1,7 @@
 image: atomsandbits/meteor:latest
 
 before_script:
-  - if ! type "$npm" > /dev/null; then npm install; fi
+  - npm install
 
 # ~~~ tests ~~~
 test_service_about:
