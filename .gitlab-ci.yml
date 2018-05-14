@@ -51,7 +51,8 @@ test_service_pyscf:
     - master
 
 test_service_tensormol:
-  before_script: echo ""
+  before_script:
+    - echo ""
   stage: test
   script:
     - cd ./services/tensormol
