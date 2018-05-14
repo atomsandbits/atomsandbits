@@ -1,12 +1,5 @@
-import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
-import {
-  Layers,
-  Calculations,
-  Clusters,
-  Requests,
-  UserResults,
-} from '/both/imports/collections';
+import { Layers, Calculations, Requests } from '/both/imports/collections';
 import { createGeometry } from '/server/imports/db/geometries/create';
 import { createCalculation } from '/server/imports/db/calculations/create';
 import { runCalculation } from '/server/imports/db/calculations/update';
@@ -15,7 +8,7 @@ import {
   markLayerCompleted,
 } from '/server/imports/db/layers/update';
 
-const timeBeforeRetry = 5 * 60 * 1000;
+// const timeBeforeRetry = 5 * 60 * 1000;
 
 const saveCalculationResultsToLayer = ({ request, layer }) => {
   if (layer.output.calculationId) {
@@ -48,7 +41,7 @@ const saveCalculationResultsToLayer = ({ request, layer }) => {
         Layers.update(layer._id, {
           $set: {
             'output.[energy]': properties.energies,
-            'output.[geometryId]': properties.geometries.map(geometry =>
+            'output.[geometryId]': properties.geometries.map((geometry) =>
               createGeometry({ xyz: geometry, userId: request.userId })
             ),
           },
@@ -69,7 +62,7 @@ const saveCalculationResultsToLayer = ({ request, layer }) => {
     const calculations = Calculations.find({
       _id: { $in: layer.output['[calculationId]'] },
     });
-    calculations.forEach(calculation => {
+    calculations.forEach((calculation) => {
       const { parameters, properties, geometryIds } = calculation;
       switch (parameters.type) {
         case 'groundState':
@@ -97,7 +90,7 @@ const saveCalculationResultsToLayer = ({ request, layer }) => {
           Layers.update(layer._id, {
             $push: {
               'output.[[energy]]': properties.energies,
-              'output.[[geometryId]]': properties.geometries.map(geometry =>
+              'output.[[geometryId]]': properties.geometries.map((geometry) =>
                 createGeometry({ xyz: geometry, userId: request.userId })
               ),
             },
@@ -165,7 +158,7 @@ const runLayer = ({ request, layer }) => {
         });
       }
       if (geometryId_) {
-        geometryId_.forEach(geometryId => {
+        geometryId_.forEach((geometryId) => {
           const calculationId = createCalculation({
             geometryIds: [geometryId],
             parameters: layer.parameters,
@@ -191,7 +184,7 @@ const runLayer = ({ request, layer }) => {
       calculationWatcher = Requests.find({
         calculationId: { $in: calculationIds },
       }).observe({
-        added: calculationRequest => {
+        added: (calculationRequest) => {
           if (
             calculationIds.length ===
             Requests.find({
@@ -256,7 +249,7 @@ const layerWatcher = {
         { type: 'layer', completed: { $ne: true } },
         { limit: 100, sort: { createdAt: -1 } }
       ).observe({
-        added: request => {
+        added: (request) => {
           // console.log('Request added, checking...');
           const layer = Layers.findOne(request.layerId);
           if (layer.input.geometryIds) {
@@ -269,7 +262,7 @@ const layerWatcher = {
               layerId: layer.input.layerId,
               completed: true,
             }).observe({
-              added: previousLayerRequest => {
+              added: (previousLayerRequest) => {
                 if (previousLayerRequest.completed) {
                   runLayer({ request, layer });
                   setTimeout(() => previousLayerWatcher.stop(), 100);
@@ -314,7 +307,7 @@ const layerWatcher = {
     );
   },
   stop: () => {
-    layerWatcher.observers.forEach(observer => observer.stop());
+    layerWatcher.observers.forEach((observer) => observer.stop());
     clearInterval(layerWatcher.watchInterval);
   },
 };

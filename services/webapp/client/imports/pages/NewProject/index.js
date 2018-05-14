@@ -64,7 +64,7 @@ const enhance = compose(
           return;
         }
         let invalidInput;
-        layers.forEach(layer => {
+        layers.forEach((layer) => {
           if (
             layer.parameters.atomOne &&
             layer.parameters.atomOne === layer.parameters.atomTwo
@@ -74,10 +74,10 @@ const enhance = compose(
           }
           if (layer.parameters.method === 'machineLearning') {
             let elements = uniq(
-              atomCollection.map(atomDocument => atomDocument.element)
+              atomCollection.map((atomDocument) => atomDocument.element)
             );
             let supportElements = ['C', 'N', 'O', 'H'];
-            elements.forEach(element => {
+            elements.forEach((element) => {
               if (supportElements.indexOf(element) === -1) {
                 window.alert(
                   `Only ${supportElements} elements are supported for this network.`

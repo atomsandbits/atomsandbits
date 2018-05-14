@@ -52,7 +52,7 @@ const getDataURL = async ({ xyz }) => {
   const url = `${process.env.ROOT_URL}#${encodeURIComponent(xyz)}`;
   await page.goto(url);
   await page.waitForSelector('#data-url', { timeout: 10000 });
-  dataURL = await page.evaluate(
+  const dataURL = await page.evaluate(
     () => document.getElementById('data-url').innerHTML
   );
 
@@ -72,13 +72,14 @@ Meteor.setTimeout(() => {
     { 'images.512': { $exists: false } },
     { limit: 100, sort: { createdAt: -1 } }
   ).observe({
-    added: geometry => {
+    added: (geometry) => {
       queue.add(async () => {
         if (!geometry.images || !geometry.images['512']) {
           console.log('Generating image for: ', geometry._id);
           const xyz = `${geometry.totalAtoms}\n\n${geometry.atomicCoords}`;
+          let dataURL;
           try {
-            const dataURL = await getDataURL({ xyz });
+            dataURL = await getDataURL({ xyz });
           } catch (error) {
             console.log(error);
             return;
@@ -93,7 +94,6 @@ Meteor.setTimeout(() => {
           // console.log(dataURL);
           console.log('image saved!');
         }
-        return;
       });
     },
   });

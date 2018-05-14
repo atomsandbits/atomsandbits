@@ -25,7 +25,7 @@ const withDeleteTag = graphql(runCalculation, {
             `/geometry/${geometryId}/calculation/${calculationId}`
           );
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('there was an error sending the query', error);
         }),
   }),

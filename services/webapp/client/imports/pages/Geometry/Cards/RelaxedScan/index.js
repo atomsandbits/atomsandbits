@@ -59,7 +59,7 @@ const RelaxedScanRowPure = ({
       {distances ? (
         <Chart
           xs={distances}
-          ys={energies.map(energy => (energy - energies[0]) * 27.2114)}
+          ys={energies.map((energy) => (energy - energies[0]) * 27.2114)}
         />
       ) : null}
     </CardProperty>
@@ -97,7 +97,7 @@ const RelaxedScanCardPure = ({ relaxedScans, title }) => (
     ]}
     details={relaxedScans
       .slice(1)
-      .map(geometryOptimization => (
+      .map((geometryOptimization) => (
         <RelaxedScanRow
           key={`${geometryOptimization.label}-row`}
           {...geometryOptimization}

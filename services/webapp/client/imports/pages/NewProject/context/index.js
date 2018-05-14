@@ -52,13 +52,13 @@ class ContextProvider extends Component {
     Session.set('project_layers', layers);
   }
   /* ~~~ Handlers ~~~ */
-  setXyz = memoize(xyz => {
+  setXyz = memoize((xyz) => {
     this.setState({
       xyz,
     });
   });
-  setLayerType = memoize(index => {
-    return type => {
+  setLayerType = memoize((index) => {
+    return (type) => {
       this.setState(({ layers }) => {
         if (layers[index].type !== type) {
           const newLayers = update(layers, {
@@ -71,8 +71,8 @@ class ContextProvider extends Component {
       });
     };
   });
-  setOutputTypes = memoize(index => {
-    return outputTypes => {
+  setOutputTypes = memoize((index) => {
+    return (outputTypes) => {
       // console.log('setOutputTypes', JSON.stringify(outputTypes));
       this.setState(({ layers }) => {
         const newLayers = update(layers, {
@@ -84,8 +84,8 @@ class ContextProvider extends Component {
       });
     };
   });
-  setParameters = memoize(index => {
-    return parameters => {
+  setParameters = memoize((index) => {
+    return (parameters) => {
       // console.log('setParameters', JSON.stringify(parameters));
       this.setState(({ layers }) => {
         if (isEqual(layers[index].parameters, parameters)) return;
@@ -112,7 +112,7 @@ class ContextProvider extends Component {
       };
     });
   };
-  deleteLayer = index => {
+  deleteLayer = (index) => {
     this.setState(({ layers }) => {
       const newLayers = update(layers, { $splice: [[index, 1]] });
       return {
@@ -141,8 +141,8 @@ ContextProvider.propTypes = {
 
 const ContextConsumer = Context.Consumer;
 
-const withProvider = WrappedComponent => {
-  const withProviderWrapper = props => (
+const withProvider = (WrappedComponent) => {
+  const withProviderWrapper = (props) => (
     <ContextProvider>
       <WrappedComponent {...props} />
     </ContextProvider>
@@ -151,10 +151,10 @@ const withProvider = WrappedComponent => {
   return withProviderWrapper;
 };
 
-const withContext = WrappedComponent => {
-  const withContextWrapper = props => (
+const withContext = (WrappedComponent) => {
+  const withContextWrapper = (props) => (
     <ContextConsumer>
-      {context => <WrappedComponent {...props} context={context} />}
+      {(context) => <WrappedComponent {...props} context={context} />}
     </ContextConsumer>
   );
   withContextWrapper.displayName = 'withContext';

@@ -74,7 +74,7 @@ describe('database', () => {
       setCalculationRunning({ calculationId });
       pingCalculationRunning({ calculationId });
       const request = Requests.findOne(requestId);
-      expect(request.updatedAt).to.exist;
+      return expect(request.updatedAt).to.exist;
     });
     it('expect stopCalculation to remove request', () => {
       const { calculationId, userId } = createTestData();

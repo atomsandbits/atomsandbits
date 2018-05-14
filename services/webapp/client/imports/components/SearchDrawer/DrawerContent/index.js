@@ -76,7 +76,7 @@ const enhance = compose(
     'setMassRange',
     ({ queryParams, maxMass }) =>
       queryParams.mass
-        ? queryParams.mass.map(value => Number(value))
+        ? queryParams.mass.map((value) => Number(value))
         : [0, maxMass]
   ),
   withState(
@@ -96,15 +96,15 @@ const enhance = compose(
     ({ queryParams }) => (queryParams.search ? queryParams.search : '')
   ),
   withHandlers({
-    onSearchInput: ({ setSearch }) => event => setSearch(event.target.value),
+    onSearchInput: ({ setSearch }) => (event) => setSearch(event.target.value),
     toggleDirection: ({ direction, setDirection }) => () =>
       direction === 'asc' ? setDirection('desc') : setDirection('asc'),
-    setMassMin: ({ massRange, setMassRange }) => event => {
+    setMassMin: ({ massRange, setMassRange }) => (event) => {
       const minimum = event.target.value > 0 ? event.target.value : 0;
       const maximum = massRange[1] > minimum ? massRange[1] : minimum;
       setMassRange([minimum, maximum]);
     },
-    setMassMax: ({ massRange, setMassRange, maxMass }) => event => {
+    setMassMax: ({ massRange, setMassRange, maxMass }) => (event) => {
       const maximum =
         event.target.value < maxMass ? event.target.value : maxMass;
       const minimum = massRange[0] < maximum ? massRange[0] : maximum;
@@ -182,8 +182,8 @@ const DrawerContentPure = ({
       <Range
         min={0}
         max={maxMass}
-        value={massRange.map(massValue => Number(massValue))}
-        defaultValue={massRange.map(massValue => Number(massValue))}
+        value={massRange.map((massValue) => Number(massValue))}
+        defaultValue={massRange.map((massValue) => Number(massValue))}
         onChange={setMassRange}
         pushable={true}
       />

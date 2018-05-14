@@ -35,7 +35,7 @@ class SplashPage extends React.Component {
   }
   tracker = null;
   loginWithGoogle = () => {
-    Meteor.loginWithGoogle({}, err => {
+    Meteor.loginWithGoogle({}, (err) => {
       if (err) {
         // Login Error
       } else {

@@ -7,11 +7,13 @@ const getOptionsForParameter = ({ type, method, parameter }) => {
     );
   }
   const options = calculationOptions
-    .find(option => option.value === type)
-    .methods.find(methodOption => methodOption.value === method)
+    .find((option) => option.value === type)
+    .methods.find((methodOption) => methodOption.value === method)
     ? calculationOptions
-        .find(option => option.value === type)
-        .methods.find(methodOption => methodOption.value === method)[parameter]
+        .find((option) => option.value === type)
+        .methods.find((methodOption) => methodOption.value === method)[
+        parameter
+      ]
     : null;
   return options;
 };

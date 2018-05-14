@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 import 'mocha';
 import { expect } from 'chai';
-import { Meteor } from 'meteor/meteor';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
 import '/both/imports/globals';
 import { createTestData } from '/test/imports/create-data';

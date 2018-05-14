@@ -1,4 +1,4 @@
-from TensorMol import GeomOptimizer, MSet, Mol, PARAMS
+from TensorMol import GeomOptimizer, Mol, PARAMS
 
 
 def main(manager, molecule, emit_callback):
@@ -32,7 +32,6 @@ if __name__ == "__main__":
     import sys
     sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
     from networks import tensormol01
-    from TensorMol import Mol
     molecule = Mol()
     molecule.FromXYZString("""3
         water

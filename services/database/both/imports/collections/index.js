@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import logger from '/both/imports/logger';
-import { createCalculation } from '/server/imports/db/calculations/create';
-import { runCalculation } from '/server/imports/db/calculations/update';
+// import { createCalculation } from '/server/imports/db/calculations/create';
+// import { runCalculation } from '/server/imports/db/calculations/update';
 
 logger.info('Creating collections...');
 
@@ -28,7 +28,6 @@ Calculations.rawCollection().ensureIndex({
 Calculations.rawCollection().ensureIndex({
   'users._id': 1,
 });
-
 
 Geometries.rawCollection().ensureIndex({
   _id: 1,

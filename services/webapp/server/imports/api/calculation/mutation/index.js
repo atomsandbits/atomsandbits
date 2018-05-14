@@ -19,7 +19,7 @@ const Mutation = {
       return new Promise();
     }
     return new Promise(
-      Meteor.bindEnvironment(resolve => {
+      Meteor.bindEnvironment((resolve) => {
         socket.emit(
           'createCalculation',
           {

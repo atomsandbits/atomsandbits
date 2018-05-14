@@ -1,7 +1,6 @@
 import React from 'react';
 import { compose, branch, renderComponent, renderNothing } from 'recompose';
 
-
 import {
   CardProperty,
   CardPropertyLabel,
@@ -50,7 +49,7 @@ const EnergyCardPure = ({ energies }) => (
     ]}
     details={energies
       .slice(1)
-      .map(energyDocument => (
+      .map((energyDocument) => (
         <EnergyRow key={`${energyDocument.label}-row`} {...energyDocument} />
       ))}
   />

@@ -12,5 +12,5 @@ const socket = socketIOClient(DATABASE_URL, {
   },
 });
 
-export { socket }
+export { socket };
 export default socket;

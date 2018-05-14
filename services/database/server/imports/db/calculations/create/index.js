@@ -1,5 +1,5 @@
 import moment from 'moment';
-import logger from '/both/imports/logger';
+// import logger from '/both/imports/logger';
 import _ from 'lodash';
 import { Calculations, Geometries } from '/both/imports/collections';
 import { createGeometry } from '/server/imports/db/geometries/create';
@@ -19,14 +19,14 @@ const createCalculation = ({
   let geometries = [];
   if (geometryIds) {
     geometries = Geometries.find({ _id: { $in: geometryIds } }).fetch();
-    if (!_.isEqual(geometries.map(geometry => geometry._id), geometryIds)) {
+    if (!_.isEqual(geometries.map((geometry) => geometry._id), geometryIds)) {
       throw new Error('createCalculation: geometry not found for geometryIds');
     }
-    geometries.forEach(geometry => {
+    geometries.forEach((geometry) => {
       addUserToGeometry({ userId, geometryId: geometry._id });
     });
   } else {
-    xyzs.forEach(xyz => {
+    xyzs.forEach((xyz) => {
       geometries.push(Geometries.findOne(createGeometry({ xyz, userId })));
     });
   }
@@ -35,7 +35,7 @@ const createCalculation = ({
   }
   // TODO: Add Param Validation
   const calculation = {
-    geometryIds: geometries.map(geometry => geometry._id),
+    geometryIds: geometries.map((geometry) => geometry._id),
     parameters,
   };
   // Check to make sure calculation doesn't exist already

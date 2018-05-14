@@ -51,7 +51,7 @@ Expandable.defaultProps = {
   details: '',
   expanded: false,
   expandable: true,
-  expandIcon: <ExpandMoreIcon />
+  expandIcon: <ExpandMoreIcon />,
 };
 
 export default enhance(Expandable);

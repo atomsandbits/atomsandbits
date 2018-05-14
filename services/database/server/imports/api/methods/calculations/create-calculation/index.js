@@ -6,7 +6,7 @@ import { runCalculation } from '/server/imports/db/calculations/update';
 
 io.on(
   'connection',
-  Meteor.bindEnvironment(socket => {
+  Meteor.bindEnvironment((socket) => {
     socket.on(
       'createCalculation',
       Meteor.bindEnvironment(
@@ -18,7 +18,7 @@ io.on(
             run,
             clusterId,
           },
-          callback = () => {},
+          callback = () => {}
         ) => {
           // TODO: REALLY NEED PARAMETER CHECKING HERE!!!
           logger.silly('API Creating Calculation...', {
@@ -30,7 +30,7 @@ io.on(
           });
           if (run && !clusterId) {
             logger.warn(
-              `createCalculation: run is ${run} and clusterId is ${clusterId}...`,
+              `createCalculation: run is ${run} and clusterId is ${clusterId}...`
             );
           }
           try {
@@ -49,11 +49,11 @@ io.on(
               result: calculationId,
             });
           } catch (error) {
-            callback({ name: error.name, message: error.message });
+            callback(new Error(error.message));
             logger.error(`${error.name}: ${error.message}`);
           }
-        },
-      ),
+        }
+      )
     );
-  }),
+  })
 );

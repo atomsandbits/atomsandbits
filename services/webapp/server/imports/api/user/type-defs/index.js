@@ -1,4 +1,4 @@
-const gql = value => value[0];
+const gql = (value) => value[0];
 
 const typeDefs = gql`
   type User {

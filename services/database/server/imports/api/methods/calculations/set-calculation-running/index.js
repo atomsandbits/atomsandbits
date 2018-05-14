@@ -5,7 +5,7 @@ import { setCalculationRunning } from '/server/imports/db/calculations/update';
 
 io.on(
   'connection',
-  Meteor.bindEnvironment(socket => {
+  Meteor.bindEnvironment((socket) => {
     socket.on(
       'setCalculationRunning',
       Meteor.bindEnvironment(
@@ -23,7 +23,7 @@ io.on(
               result: calculationUpdated,
             });
           } catch (error) {
-            callback({ name: error.name, message: error.message });
+            callback(new Error(error.message));
             logger.error(`${error.name}: ${error.message}`);
           }
         }

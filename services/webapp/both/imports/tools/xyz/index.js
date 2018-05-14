@@ -3,7 +3,7 @@ import { sprintf } from 'sprintf-js';
 
 import { elements } from './data.json';
 
-const countDecimals = number => {
+const countDecimals = (number) => {
   if (Math.floor(number.valueOf()) === number.valueOf()) return 0;
   if (number.toString().indexOf('e-') !== -1) {
     return parseInt(number.toString().split('e-')[1], 10);
@@ -11,7 +11,7 @@ const countDecimals = number => {
   return number.toString().split('.')[1].length || 0;
 };
 
-const capitalize = string => {
+const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
 
@@ -57,7 +57,7 @@ const convertToCollection = ({ xyzString }) => {
     }
     xyzRows[i] = xyzRows[i].join(' ');
   }
-  let xyzCollection = _.map(dataRows, dataRow => {
+  let xyzCollection = _.map(dataRows, (dataRow) => {
     return {
       atom: capitalize(String(dataRow[0])),
       x: Number(dataRow[1]),
@@ -83,7 +83,7 @@ const getEmpiricalFormula = ({ xyzString, xyzCollection }) => {
     xyzCollection = xyzCollection.collection;
   }
   let atomCounts = {};
-  _.forEach(xyzCollection, xyzDocument => {
+  _.forEach(xyzCollection, (xyzDocument) => {
     if (atomCounts[xyzDocument.atom]) {
       atomCounts[xyzDocument.atom] += 1;
     } else {
@@ -93,7 +93,7 @@ const getEmpiricalFormula = ({ xyzString, xyzCollection }) => {
   let formula = '';
   Object.keys(atomCounts)
     .sort()
-    .forEach(key => {
+    .forEach((key) => {
       formula += key;
       formula += atomCounts[key] > 1 ? atomCounts[key] : '';
     });
@@ -111,14 +111,14 @@ const normalize = ({ xyzString }) => {
       y: xyzCollection[0].y,
       z: xyzCollection[0].z,
     };
-    xyzCollection = _.map(xyzCollection, xyzDocument => {
+    xyzCollection = _.map(xyzCollection, (xyzDocument) => {
       xyzDocument.x = Number((xyzDocument.x - firstAtom.x).toFixed(12));
       xyzDocument.y = Number((xyzDocument.y - firstAtom.y).toFixed(12));
       xyzDocument.z = Number((xyzDocument.z - firstAtom.z).toFixed(12));
       return xyzDocument;
     });
     let normalizedXyz = _.join(
-      _.map(xyzCollection, xyzDocument => {
+      _.map(xyzCollection, (xyzDocument) => {
         return `${xyzDocument.atom} ${xyzDocument.x} ${xyzDocument.y} ${
           xyzDocument.z
         }`;
@@ -147,7 +147,7 @@ const prettyFormat = ({ xyzString, geometryName }) => {
   let xDecimalsMax = 0;
   let yDecimalsMax = 0;
   let zDecimalsMax = 0;
-  _.forEach(xyzCollection, xyzDocument => {
+  _.forEach(xyzCollection, (xyzDocument) => {
     if (xDecimalsMax < countDecimals(xyzDocument.x)) {
       xDecimalsMax = countDecimals(xyzDocument.x);
     }
@@ -159,7 +159,7 @@ const prettyFormat = ({ xyzString, geometryName }) => {
     }
   });
   const prettyStringArray = [xyzCollection.length, geometryName];
-  _.forEach(xyzCollection, xyzDocument => {
+  _.forEach(xyzCollection, (xyzDocument) => {
     let spacingAfterAtom;
     if (xyzDocument.atom.length === 1) {
       spacingAfterAtom = 6;

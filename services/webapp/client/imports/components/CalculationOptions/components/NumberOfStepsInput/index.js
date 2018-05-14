@@ -20,7 +20,7 @@ const enhance = compose(
       method,
       parameter: 'numberOfSteps',
     }),
-    onInput: event => {
+    onInput: (event) => {
       let numberOfSteps = parseInt(event.target.value);
       numberOfSteps = numberOfSteps > 1 ? numberOfSteps : 2;
       numberOfSteps = numberOfSteps < 100 ? numberOfSteps : 100;

@@ -30,7 +30,7 @@ import {
   SearchDrawerToggle,
 } from './styles';
 
-const Loading = props => (
+const Loading = (props) => (
   <AppLayout
     mobileOnlyToolbar
     title="Geometries"
@@ -47,7 +47,7 @@ const displayLoadingState = branch(({ data }) => {
   return data.loading && !data.allGeometries;
 }, renderComponent(Loading));
 
-const throttled = throttle(myFxn => {
+const throttled = throttle((myFxn) => {
   myFxn();
 }, 2000);
 
@@ -181,7 +181,7 @@ const GeometrySearchPure = ({
               {`No geometries found :'(`}
             </h2>
           ) : null}
-          {geometries.map(geometry => (
+          {geometries.map((geometry) => (
             <GeometryCard
               className="geometry"
               key={geometry.id}

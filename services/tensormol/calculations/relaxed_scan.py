@@ -1,8 +1,14 @@
-from TensorMol import PARAMS
-from TensorMol import GeomOptimizer, MSet, Mol, PARAMS
+from TensorMol import Mol, PARAMS
 from TensorMol.Simulations import RelaxedScan
 
-def main(manager, molecule, on_step, steps=20, atom_one=1, atom_two=1, final_distance=10):
+
+def main(manager,
+         molecule,
+         on_step,
+         steps=20,
+         atom_one=1,
+         atom_two=1,
+         final_distance=10):
     """main."""
 
     def EnAndForce(x_, DoForce=True):
@@ -22,18 +28,21 @@ def main(manager, molecule, on_step, steps=20, atom_one=1, atom_two=1, final_dis
     # Perform geometry optimization
     PARAMS["OptMaxCycles"] = 2000
     PARAMS["OptThresh"] = 0.001
-    scanner = RelaxedScan(EnAndForce, molecule,at1=atom_one - 1,at2=atom_two - 1,nstep_=steps)
+    scanner = RelaxedScan(
+        EnAndForce, molecule, at1=atom_one - 1, at2=atom_two - 1, nstep_=steps)
     return scanner.Scan(molecule, maxr=final_distance, callback=on_step)
+
 
 if __name__ == "__main__":
     import os
     import sys
     sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
     from networks import tensormol01
-    from TensorMol import Mol
     molecule = Mol()
+
     def on_step(mol_hist):
         return
+
     molecule.FromXYZString("""12
 
     C     0.00000     1.40272      0

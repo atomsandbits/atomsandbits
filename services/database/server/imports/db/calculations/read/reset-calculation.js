@@ -1,5 +1,3 @@
-import { Meteor } from 'meteor/meteor';
-
 import { Calculations } from '/server/imports/db';
 
 const resetCalculation = ({ calculationId }) => {

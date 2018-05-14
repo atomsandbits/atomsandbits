@@ -19,7 +19,7 @@ class MoleculeRenderer extends React.PureComponent {
   state = {
     geometryInput: xyzTools.normalize({ xyzString: this.props.xyz }),
   };
-  onGeometryInput = event => {
+  onGeometryInput = (event) => {
     let xyz = event.target.value;
     this.props.setXyz(xyz);
     xyz = xyzTools.normalize({ xyzString: xyz });

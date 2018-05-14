@@ -1,6 +1,14 @@
 /* eslint-env mocha */
 import chai from 'chai';
-import { Calculations, Clusters, Geometries, Groups, Payments, Projects, Servers } from './index';
+import {
+  Calculations,
+  Clusters,
+  Geometries,
+  Groups,
+  Payments,
+  Projects,
+  Servers,
+} from './index';
 
 describe('create collections', () => {
   it('collections should exist', () => {

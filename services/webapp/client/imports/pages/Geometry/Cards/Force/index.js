@@ -12,7 +12,7 @@ import {
   LoadIndicator,
 } from '../../styles';
 
-const countDecimals = number => {
+const countDecimals = (number) => {
   if (Math.floor(number.valueOf()) === number.valueOf()) return 0;
   if (number.toString().indexOf('e-') !== -1) {
     return parseInt(number.toString().split('e-')[1], 10);
@@ -20,7 +20,7 @@ const countDecimals = number => {
   return number.toString().split('.')[1].length || 0;
 };
 
-const prettyPrint = matrix => {
+const prettyPrint = (matrix) => {
   const prettyStringArray = [];
   const decimals = 8;
   const prespacing = 5; // allows up to 99999 atoms
@@ -31,10 +31,10 @@ const prettyPrint = matrix => {
   let yLargestInt = 0;
   let zLargestInt = 0;
 
-  const impreciseMatrix = matrix.map(matrixRow =>
-    matrixRow.map(item => item.toFixed(decimals))
+  const impreciseMatrix = matrix.map((matrixRow) =>
+    matrixRow.map((item) => item.toFixed(decimals))
   );
-  impreciseMatrix.forEach(atomForce => {
+  impreciseMatrix.forEach((atomForce) => {
     const xIntCount = Number(atomForce[0])
       .toFixed()
       .toString().length;
@@ -92,7 +92,9 @@ const ForceRowError = ({ label }) => (
 const ForceRowPure = ({ force, label }) => (
   <CardPropertyRow key={`${label}-${force}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
-    <CardProperty autoselect small>{prettyPrint(force)}</CardProperty>
+    <CardProperty autoselect small>
+      {prettyPrint(force)}
+    </CardProperty>
   </CardPropertyRow>
 );
 
@@ -109,7 +111,7 @@ const ForceCardPure = ({ forces }) => (
     ]}
     details={forces
       .slice(1)
-      .map(forceDocument => (
+      .map((forceDocument) => (
         <ForceRow key={`${forceDocument.label}-row`} {...forceDocument} />
       ))}
   />

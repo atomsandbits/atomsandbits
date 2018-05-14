@@ -33,7 +33,7 @@ import {
 
 const LIMIT = 30;
 
-const Loading = props => (
+const Loading = (props) => (
   <AppLayout
     mobileOnlyToolbar
     alwaysRaised
@@ -43,7 +43,7 @@ const Loading = props => (
 );
 
 const displayLoadingState = branch(
-  props => props.data.loading && !props.data.geometry,
+  (props) => props.data.loading && !props.data.geometry,
   renderComponent(Loading)
 );
 

@@ -13,11 +13,13 @@ import {
 const convertXyzToStructure = (xyzs) => {
   const xyzStrings = xyzs.map((xyz, index) => {
     const { collection } = xyzTools.convertToCollection({ xyzString: xyz });
-    return (collection.map((xyzDocument) => {
-      return `${xyzDocument.atom} ${xyzDocument.x + (index * 10 )} ${xyzDocument.y} ${
-        xyzDocument.z
-      }`;
-    })).join('\n');
+    return collection
+      .map((xyzDocument) => {
+        return `${xyzDocument.atom} ${xyzDocument.x + index * 10} ${
+          xyzDocument.y
+        } ${xyzDocument.z}`;
+      })
+      .join('\n');
   });
   return xyzStrings.join('\n');
 };

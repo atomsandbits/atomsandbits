@@ -16,7 +16,9 @@ class Results {
     const mongoSortBy =
       sort === 'CREATED'
         ? 'createdAt'
-        : sort === 'MASS' ? 'geometry.mass' : 'createdAt';
+        : sort === 'MASS'
+          ? 'geometry.mass'
+          : 'createdAt';
     const mongoSortDirection = direction === 'DESC' ? -1 : 1;
     const mongoSort = {
       [mongoSortBy]: mongoSortDirection,
@@ -28,7 +30,7 @@ class Results {
       { sort: mongoSort, limit, skip }
     ).fetch();
 
-    this._results = results.map(result => this._convertResultToGraph(result));
+    this._results = results.map((result) => this._convertResultToGraph(result));
   }
   _convertResultToGraph({ _id, createdAt, calculationId, projectId, type }) {
     return {

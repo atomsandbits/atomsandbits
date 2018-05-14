@@ -1,29 +1,36 @@
 const multiplicities = [
   {
     value: 1,
-    prettyName: "Singlet"
-  }, {
+    prettyName: 'Singlet',
+  },
+  {
     value: 2,
-    prettyName: "Doublet"
-  }, {
+    prettyName: 'Doublet',
+  },
+  {
     value: 3,
-    prettyName: "Triplet"
-  }, {
+    prettyName: 'Triplet',
+  },
+  {
     value: 4,
-    prettyName: "Quartet"
-  }, {
+    prettyName: 'Quartet',
+  },
+  {
     value: 5,
-    prettyName: "Quintet"
-  }, {
+    prettyName: 'Quintet',
+  },
+  {
     value: 6,
-    prettyName: "Sextet"
-  }, {
+    prettyName: 'Sextet',
+  },
+  {
     value: 7,
-    prettyName: "Septet"
-  }, {
+    prettyName: 'Septet',
+  },
+  {
     value: 8,
-    prettyName: "Octet"
-  }
-]
+    prettyName: 'Octet',
+  },
+];
 
-export {multiplicities}
+export { multiplicities };

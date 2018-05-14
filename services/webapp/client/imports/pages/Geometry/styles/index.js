@@ -102,8 +102,8 @@ export const ErrorIcon = styled(_ErrorIcon)`
 `;
 export const CardProperty = styled.div`
   font-family: ${fonts.monospace};
-  font-size: ${props => (props.small ? '0.8rem' : '1.2rem')};
-  max-height: ${props => (props.tall ? '400px' : '300px')};
+  font-size: ${(props) => (props.small ? '0.8rem' : '1.2rem')};
+  max-height: ${(props) => (props.tall ? '400px' : '300px')};
   margin: 0 auto;
   overflow: auto;
   user-select: ${({ autoselect }) => (autoselect ? 'all' : 'default')};

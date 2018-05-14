@@ -20,7 +20,7 @@ const enhance = compose(
       method,
       parameter: 'finalDistance',
     }),
-    onInput: event => {
+    onInput: (event) => {
       const finalDistance = Number(event.target.value);
       setFinalDistance(finalDistance);
     },

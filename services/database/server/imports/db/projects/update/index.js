@@ -1,12 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
-import logger from '/both/imports/logger';
-import {
-  Calculations,
-  Clusters,
-  Requests,
-  Projects,
-} from '/both/imports/collections';
+// import logger from '/both/imports/logger';
+import { Clusters, Requests, Projects } from '/both/imports/collections';
 import { runLayer } from '/server/imports/db/layers/update';
 
 const runProject = ({
@@ -60,7 +55,7 @@ const runProject = ({
     running: false,
     createdAt: moment().valueOf(),
   });
-  project.layerIds.forEach(layerId =>
+  project.layerIds.forEach((layerId) =>
     runLayer({ layerId, clusterId: cluster._id, userId })
   );
 

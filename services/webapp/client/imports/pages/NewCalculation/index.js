@@ -83,11 +83,11 @@ const enhance = compose(
         }
         if (parameters.method === 'machineLearning') {
           let elements = uniq(
-            map(atomCollection, atomDocument => atomDocument.element)
+            map(atomCollection, (atomDocument) => atomDocument.element)
           );
           let supportElements = ['C', 'N', 'O', 'H'];
           let unsupportedElementFound = false;
-          elements.forEach(element => {
+          elements.forEach((element) => {
             if (supportElements.indexOf(element) === -1) {
               window.alert(
                 `Only ${supportElements} elements are supported for this network.`
@@ -139,7 +139,11 @@ const NewCalculationPure = ({
           inputTypes={inputTypes}
           setParameters={setParameters}
         />
-        <StartButton variant="raised" color="primary" onClick={submitCalculation}>
+        <StartButton
+          variant="raised"
+          color="primary"
+          onClick={submitCalculation}
+        >
           Start
         </StartButton>
       </NewCalculationContainer>

@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
-import { Calculations, Geometries, Requests } from '/both/imports/db';
+import { Calculations } from '/both/imports/db';
 import { resetCalculation } from '/server/imports/tools/reset-calculation';
 
 // TODO:
@@ -26,13 +26,13 @@ const calculationMaintainer = {
       });
       // Run Pending Calculations
       unprocessedCalculations.forEach((calculation) => {
-        console.log(`Unprocessed: Calculation ${calculationId}...`);
+        console.log(`Unprocessed: Calculation ${calculation._id}...`);
         const runs = calculation.runs.length;
         const submittedAt = moment(calculation.runs[runs - 1].submittedAt);
         const currentTime = moment();
         const timeDiff = currentTime.diff(submittedAt, 'ms');
         if (timeDiff > 5 * 60 * 1000) {
-          resetCalculation(calculationId);
+          resetCalculation(calculation._id);
         }
       });
     }, 60 * 1000);

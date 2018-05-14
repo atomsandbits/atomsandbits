@@ -30,11 +30,13 @@ const createGeometry = ({
     totalAtoms: molecule.totalAtoms,
     createdAt,
     creatorId: userId,
-    users: [{
-      _id: userId,
-      tags,
-      createdAt,
-    }],
+    users: [
+      {
+        _id: userId,
+        tags,
+        createdAt,
+      },
+    ],
   });
   return geometryId;
 };

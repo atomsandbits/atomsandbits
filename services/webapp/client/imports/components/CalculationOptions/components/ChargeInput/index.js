@@ -20,7 +20,7 @@ const enhance = compose(
       method,
       parameter: 'charge',
     }),
-    onInput: event => {
+    onInput: (event) => {
       const charge = Number(event.target.value);
       setCharge(charge);
     },

@@ -49,7 +49,7 @@ const getProjects = ({ geometryId, projectIds, userId }) => {
   } else if (geometryId) {
     projects = Projects.find({ geometryIds: geometryId }).fetch();
   }
-  return projects.map(project => {
+  return projects.map((project) => {
     return convertProjectToGraph({ project, userId });
   });
 };

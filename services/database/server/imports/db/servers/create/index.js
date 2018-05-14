@@ -1,4 +1,4 @@
-import logger from '/both/imports/logger';
+// import logger from '/both/imports/logger';
 import { Servers } from '/both/imports/collections';
 
 const createServer = ({

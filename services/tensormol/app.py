@@ -3,15 +3,15 @@
 # logging.getLogger('requests').setLevel(logging.WARNING)
 # logging.basicConfig(level=logging.DEBUG)
 import os
-import sys
+# import sys
 import threading
 import time
-import numpy as np
+# import numpy as np
 from socketIO_client_nexus import SocketIO
 from TensorMol import Mol
 from networks import tensormol01
 from calculations import (conformer_search, energy_and_force, harmonic_spectra,
-                          geometry_optimization, nudged_elastic_band,
+                          geometry_optimization,
                           relaxed_scan)
 
 # TODO: start tensorflow session so GPU resources get allocated
@@ -26,12 +26,7 @@ def main():
         try:
             tensormol01_network = tensormol01.main()
 
-            # SocketIO is threaded.
-            # Don't run more than 1 calculation at a time at the moment.
-            # TODO: handle race condition between emitting calculationRunning and
-            #       receiving a new calculation
-            # TODO: geomopt and energy calculations are restarting GPU resources
-            #       for some reason (maybe it creates a new tf session)
+            # FYI: SocketIO is threaded.
             def on_run_calculation(options):
                 """Run when a calculation is submitted."""
                 print('Tensormol received ' +
@@ -44,9 +39,9 @@ def main():
                 calculation_id = calculation.get('_id')
                 calculation_type = calculation.get('type')
                 geometries = calculation.get('geometries')
-                charge = calculation.get('charge')
-                multiplicity = calculation.get('multiplicity')
-                network_name = calculation.get('network')
+                # charge = calculation.get('charge')
+                # multiplicity = calculation.get('multiplicity')
+                # network_name = calculation.get('network')
                 print('Calculation Received: ', calculation_id)
 
                 # print(calculation)
@@ -98,7 +93,8 @@ def main():
                     molecule.FromXYZString(
                         str(len(geometries[0].split('\n'))) + '\n\n' +
                         geometries[0])
-                    network = tensormol01_network  # add switch based on network_name
+                    # add switch based on network name
+                    network = tensormol01_network
                     # TODO: Attempt to run saveCalculationResult a few times on
                     #       error in callback
                     if calculation_type == 'groundState':
@@ -113,10 +109,6 @@ def main():
                                 }
                             })
                     elif calculation_type == 'geometryOptimization':
-                        # [X]: make geomopt method return intermediate geoms and energies
-                        # [x]: submit intermediate geometries and energies
-                        # [X]: define a function for emitting saveIntermediateResults
-                        #       after each step and pass it into geomopt method
                         firstm = None
 
                         def on_optimization_step_completed(mol_hist):
@@ -175,12 +167,13 @@ def main():
                             })
                     elif calculation_type == 'nudgedElasticBand':
                         # run neb
-                        # values = nudged_elastic_band.main(network, [mol1, mol2])
+                        # values = nudged_elastic_band.main(
+                        #     network, [mol1, mol2])
                         pass
                     elif calculation_type == 'conformerSearch':
                         # TODO: add parameters. (window etc.)
                         nConf = calculation.get('numberOfConformers')
-                        if nConf == None:
+                        if nConf is None:
                             print("Bad Conformer number: ", nConf)
                             nConf = 20
 
@@ -222,7 +215,7 @@ def main():
                         atoms = calculation.get('atoms')
                         final_distance = calculation.get('finalDistance')
                         steps = calculation.get('steps')
-                        if steps == None:
+                        if steps is None:
                             print("Bad steps number: ", steps)
                             steps = 20
 

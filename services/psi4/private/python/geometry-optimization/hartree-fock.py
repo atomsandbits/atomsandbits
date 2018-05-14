@@ -1,7 +1,12 @@
+import sys
+import argparse
+import os
+import psi4
+import json
+
 # -----------------------
 #     Argument Parser
 # -----------------------
-import sys, argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--atomic-coords', help='atomic coordinates')
@@ -24,9 +29,6 @@ sys.argv = [sys.argv[0]]
 #     Psi4
 # -----------------------
 
-import os
-import psi4
-import json
 psi4.set_memory(os.environ.get('PSI4_MAX_MEMORY') + " MB")
 psi4.core.set_num_threads(int(os.environ.get('OMP_NUM_THREADS')))
 
@@ -40,6 +42,7 @@ units angstrom
 final_energy, wfn = psi4.optimize(
     'hf/{}'.format(basis_set), molecule=molecule, return_wfn=True)
 final_geometry = wfn.molecule()
+
 
 def get_xyz(geometry):
     xyz = ""

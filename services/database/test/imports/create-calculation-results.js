@@ -1,7 +1,7 @@
-import faker from 'faker';
+// import faker from 'faker';
 
 const createCalculationResults = () => {
-  console.log("test: Creating calculation results...");
+  console.log('test: Creating calculation results...');
 };
 
 export { createCalculationResults };

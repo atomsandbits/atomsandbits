@@ -50,9 +50,9 @@ const Geometry = {
       { fields: { _id: 1 } }
     )
       .fetch()
-      .map(calculation => calculation._id);
+      .map((calculation) => calculation._id);
     const calculations = getCalculations({ calculationIds });
-    return calculations.map(calculation => {
+    return calculations.map((calculation) => {
       return {
         energy: calculation.properties ? calculation.properties.energy : null,
         label: prettyPropertyLabel({ parameters: calculation.parameters }),
@@ -72,9 +72,9 @@ const Geometry = {
       { fields: { _id: 1 } }
     )
       .fetch()
-      .map(calculation => calculation._id);
+      .map((calculation) => calculation._id);
     const calculations = getCalculations({ calculationIds });
-    return calculations.map(calculation => {
+    return calculations.map((calculation) => {
       return {
         force: calculation.properties ? calculation.properties.force : null,
         label: prettyPropertyLabel({ parameters: calculation.parameters }),
@@ -94,9 +94,9 @@ const Geometry = {
       { fields: { _id: 1 } }
     )
       .fetch()
-      .map(calculation => calculation._id);
+      .map((calculation) => calculation._id);
     const calculations = getCalculations({ calculationIds });
-    return calculations.map(calculation => {
+    return calculations.map((calculation) => {
       return {
         freeEnergy:
           calculation.properties && calculation.properties.freeEnergy
@@ -120,9 +120,9 @@ const Geometry = {
       { fields: { _id: 1 } }
     )
       .fetch()
-      .map(calculation => calculation._id);
+      .map((calculation) => calculation._id);
     const calculations = getCalculations({ calculationIds });
-    return calculations.map(calculation => {
+    return calculations.map((calculation) => {
       return {
         geometries: calculation.properties
           ? calculation.properties.geometries
@@ -146,9 +146,9 @@ const Geometry = {
       { fields: { _id: 1 } }
     )
       .fetch()
-      .map(calculation => calculation._id);
+      .map((calculation) => calculation._id);
     const calculations = getCalculations({ calculationIds });
-    return calculations.map(calculation => {
+    return calculations.map((calculation) => {
       return {
         geometries: calculation.properties
           ? calculation.properties.geometries
@@ -172,9 +172,9 @@ const Geometry = {
       { fields: { _id: 1 } }
     )
       .fetch()
-      .map(calculation => calculation._id);
+      .map((calculation) => calculation._id);
     const calculations = getCalculations({ calculationIds });
-    return calculations.map(calculation => {
+    return calculations.map((calculation) => {
       return {
         frequencies: calculation.properties
           ? calculation.properties.frequencies
@@ -201,9 +201,9 @@ const Geometry = {
       { fields: { _id: 1 } }
     )
       .fetch()
-      .map(calculation => calculation._id);
+      .map((calculation) => calculation._id);
     const calculations = getCalculations({ calculationIds });
-    return calculations.map(calculation => {
+    return calculations.map((calculation) => {
       return {
         geometries: calculation.properties
           ? calculation.properties.geometries

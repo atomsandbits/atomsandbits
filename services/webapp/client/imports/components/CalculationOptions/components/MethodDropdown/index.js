@@ -14,7 +14,7 @@ import { OptionContainer } from '../../styles';
 
 const enhance = compose(
   withProps(({ type, method }) => ({
-    options: calculationOptions.find(option => option.value === type).methods,
+    options: calculationOptions.find((option) => option.value === type).methods,
   })),
   onlyUpdateForPropTypes
 );

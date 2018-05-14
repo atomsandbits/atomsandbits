@@ -15,10 +15,10 @@ describe('api', () => {
     resetDatabase();
   });
   describe('events', () => {
-    it('expect runCalculation to emit calculations', done => {
+    it('expect runCalculation to emit calculations', (done) => {
       const { calculationId, serverId } = createTestData();
       const { program, method, type, network } = Calculations.findOne(
-        calculationId,
+        calculationId
       ).parameters;
       const socket = socketIOClient(`${ROOT_URL}:${PORT}`, {
         transports: ['websocket', 'polling'],

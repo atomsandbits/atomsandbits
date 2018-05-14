@@ -13,7 +13,7 @@ const PORT = 8080;
 const ROOT_URL = 'http://localhost';
 
 // TODO: add neb and conformer search tests
-// TODO: What will the input for Neb look like? 
+// TODO: What will the input for Neb look like?
 describe('integration', () => {
   beforeEach(() => {
     resetDatabase();
@@ -24,7 +24,7 @@ describe('integration', () => {
   describe('calculations', () => {
     if (process.env.TENSORMOL_SERVICE) {
       describe('tensormol', () => {
-        it('expect energy and force', done => {
+        it('expect energy and force', (done) => {
           calculationWatcher.start();
           const {
             calculationId,
@@ -51,23 +51,24 @@ describe('integration', () => {
               userId,
             },
             Meteor.bindEnvironment((error, data) => {
+              if (error) console.throw(error);
               const newCalculationId = data.calculationId;
               Requests.find({
                 calculationId: newCalculationId,
                 completedAt: { $exists: true },
               }).observe({
-                added: request => {
+                added: (request) => {
                   console.log(request);
                   console.log(
                     'Calculation Time: ',
                     request.completedAt - request.startedAt,
-                    'ms',
+                    'ms'
                   );
                   const calculation = Calculations.findOne(newCalculationId);
                   socket.disconnect();
                   try {
                     expect(calculation.properties.energy).to.equal(
-                      -0.06803810242176071,
+                      -0.06803810242176071
                     );
                     done();
                   } catch (err) {
@@ -75,10 +76,10 @@ describe('integration', () => {
                   }
                 },
               });
-            }),
+            })
           );
         }).timeout(TIMEOUT);
-        it('expect optimized geometry', done => {
+        it('expect optimized geometry', (done) => {
           // return done();
           calculationWatcher.start();
           const {
@@ -107,22 +108,23 @@ describe('integration', () => {
               userId,
             },
             Meteor.bindEnvironment((error, data) => {
+              if (error) console.throw(error);
               const newCalculationId = data.calculationId;
               Requests.find({
                 calculationId: newCalculationId,
                 completedAt: { $exists: true },
               }).observe({
-                added: request => {
+                added: (request) => {
                   console.log(request);
                   console.log(
                     'Calculation Time: ',
-                    request.completedAt - request.startedAt,
+                    request.completedAt - request.startedAt
                   );
                   const calculation = Calculations.findOne(newCalculationId);
                   socket.disconnect();
                   try {
                     expect(calculation.properties.geometries[0]).to.equal(
-                      'H   0.0  0.0  0.1251959239468133\nH   0.0  0.0  0.8748040760531867',
+                      'H   0.0  0.0  0.1251959239468133\nH   0.0  0.0  0.8748040760531867'
                     );
                     done();
                   } catch (err) {
@@ -130,7 +132,7 @@ describe('integration', () => {
                   }
                 },
               });
-            }),
+            })
           );
         }).timeout(TIMEOUT);
       });

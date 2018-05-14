@@ -24,7 +24,9 @@ const getGeometry = ({ geometryId, userId }) => {
 };
 
 const getGeometries = ({ geometryIds }) => {
-  return geometryIds.map(geometryId => convertGeometryToGraph({ geometryId }));
+  return geometryIds.map((geometryId) =>
+    convertGeometryToGraph({ geometryId })
+  );
 };
 
 export { convertGeometryToGraph, getGeometry, getGeometries };

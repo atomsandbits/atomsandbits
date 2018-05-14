@@ -9,7 +9,7 @@ const server = http.createServer();
 const io = socketIO(server);
 
 // New client
-io.on('connection', socket => {
+io.on('connection', (socket) => {
   logger.silly('socket: new client...', socket.handshake.query);
   const { serverId } = socket.handshake.query;
   const { program } = socket.handshake.query;
@@ -19,7 +19,7 @@ io.on('connection', socket => {
     } else {
       logger.warn(
         'serverId and no program defined on connection...',
-        socket.handshake.query,
+        socket.handshake.query
       );
     }
   }

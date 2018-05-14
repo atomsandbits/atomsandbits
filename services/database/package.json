@@ -2,7 +2,7 @@
   "name": "database-service",
   "private": true,
   "scripts": {
-    "test": "scripty && meteor test --once --driver-package meteortesting:mocha",
+    "test": "scripty # meteor test --once --driver-package meteortesting:mocha",
     "test-watch": "TEST_WATCH=1 meteor test --driver-package meteortesting:mocha --port 4000",
     "test-client": "TEST_BROWSER_DRIVER=chrome meteor test --once --driver-package meteortesting:mocha",
     "start": "meteor run"

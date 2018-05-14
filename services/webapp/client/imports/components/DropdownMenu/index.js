@@ -18,7 +18,7 @@ const enhance = compose(onlyUpdateForPropTypes);
 class DropdownMenu extends React.Component {
   state = {
     selectedIndex: this.props.menuItems
-      .map(menuItem => {
+      .map((menuItem) => {
         return menuItem.value;
       })
       .indexOf(this.props.value),
@@ -32,7 +32,7 @@ class DropdownMenu extends React.Component {
   };
   getSelectedIndexFromValue = () => {
     const newIndex = this.props.menuItems
-      .map(menuItem => {
+      .map((menuItem) => {
         return menuItem.value;
       })
       .indexOf(this.props.value);
@@ -56,10 +56,10 @@ class DropdownMenu extends React.Component {
   componentWillUnmount() {
     this.props.unsetValue();
   }
-  handleLabelClick = event => {
+  handleLabelClick = (event) => {
     this.setState({ open: true, anchorEl: event.currentTarget });
   };
-  handleMenuItemClick = (index, value) => event => {
+  handleMenuItemClick = (index, value) => (event) => {
     this.setState({
       selectedIndex: index,
       open: false,

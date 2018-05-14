@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 import 'mocha';
 import { expect } from 'chai';
 

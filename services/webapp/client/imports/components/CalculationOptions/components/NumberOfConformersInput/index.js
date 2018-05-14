@@ -20,7 +20,7 @@ const enhance = compose(
       method,
       parameter: 'numberOfConformers',
     }),
-    onInput: event => {
+    onInput: (event) => {
       let numberOfConformers = Number(event.target.value);
       if (numberOfConformers > 100) {
         numberOfConformers = 100;

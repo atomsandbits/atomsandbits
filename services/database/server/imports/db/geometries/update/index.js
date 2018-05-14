@@ -1,5 +1,5 @@
 import moment from 'moment';
-import logger from '/both/imports/logger';
+// import logger from '/both/imports/logger';
 import { Geometries } from '/both/imports/collections';
 
 const addUserToGeometry = ({
@@ -12,7 +12,7 @@ const addUserToGeometry = ({
       _id: geometryId,
       'users._id': userId,
     },
-    { fields: { _id: 1 } },
+    { fields: { _id: 1 } }
   );
   if (geometryWithUser) {
     // TODO: Make sure tags are added to user's object

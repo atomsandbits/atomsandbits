@@ -21,30 +21,30 @@ const enhance = compose(
   }),
   withState('playing', 'setPlaying', ({ autoplay }) => autoplay),
   withHandlers({
-    stopPlaying: ({ setPlaying }) => event => {
+    stopPlaying: ({ setPlaying }) => (event) => {
       if (event) event.stopPropagation();
       setPlaying(false);
     },
-    startPlaying: ({ setPlaying }) => event => {
+    startPlaying: ({ setPlaying }) => (event) => {
       if (event) event.stopPropagation();
       setPlaying(true);
     },
   }),
   withHandlers({
-    handleBack: ({ activeStep, setStep, stopPlaying }) => event => {
+    handleBack: ({ activeStep, setStep, stopPlaying }) => (event) => {
       event.stopPropagation();
       stopPlaying();
       setStep(activeStep - 1);
     },
-    handleNext: ({ activeStep, setStep, stopPlaying }) => event => {
+    handleNext: ({ activeStep, setStep, stopPlaying }) => (event) => {
       event.stopPropagation();
       stopPlaying();
       setStep(activeStep + 1);
     },
-    handleClick: () => event => {
+    handleClick: () => (event) => {
       event.stopPropagation();
     },
-    handleText: ({ steps, setStep, stopPlaying }) => event => {
+    handleText: ({ steps, setStep, stopPlaying }) => (event) => {
       stopPlaying();
       let value = parseInt(event.target.value) - 1 || 0;
       if (value < 0) value = 0;

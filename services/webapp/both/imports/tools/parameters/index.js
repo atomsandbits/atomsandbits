@@ -1,4 +1,4 @@
-getPossibleParameters = currentParameters => {
+getPossibleParameters = (currentParameters) => {
   let possibleParameters = [];
   possibleParameters.push('calculationType');
   possibleParameters.push('calculationMethod');
@@ -123,7 +123,7 @@ getParameterOptions = (xyz, currentParameters, parameter) => {
       break;
   }
 };
-validateParameters = parameters => {
+validateParameters = (parameters) => {
   // TODO: validateParameters :P
 };
 

@@ -56,7 +56,7 @@ const HarmonicSpectrumCardPure = ({ harmonicSpectra }) => (
     ]}
     details={harmonicSpectra
       .slice(1)
-      .map(harmonicDocument => (
+      .map((harmonicDocument) => (
         <HarmonicSpectrumRow
           key={`${harmonicDocument.label}-row`}
           {...harmonicDocument}

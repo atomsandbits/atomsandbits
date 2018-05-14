@@ -23,7 +23,9 @@ const CalculationLayerPure = ({
   index,
   setOutputTypes,
   setParameters,
-  context: { state: { layers } },
+  context: {
+    state: { layers },
+  },
 }) => (
   <Fragment>
     <CalculationOptions
@@ -39,9 +41,9 @@ const CalculationLayerPure = ({
 
 const EnhancedCalculationLayer = enhance(CalculationLayerPure);
 
-const CalculationLayer = props => (
+const CalculationLayer = (props) => (
   <ContextConsumer>
-    {context => <EnhancedCalculationLayer {...props} context={context} />}
+    {(context) => <EnhancedCalculationLayer {...props} context={context} />}
   </ContextConsumer>
 );
 

@@ -120,9 +120,9 @@ class _CalculationOptions extends React.Component {
   updateOutputTypes = () => {
     const { setOutputTypes, inputTypes, parameters } = this.props;
     let outputTypes = [];
-    inputTypes.forEach(inputType => {
+    inputTypes.forEach((inputType) => {
       const { supportedInputTypes } = calculationOptions.find(
-        option => option.value === parameters.type
+        (option) => option.value === parameters.type
       );
       if (supportedInputTypes) {
         if (supportedInputTypes[inputType]) {
@@ -134,13 +134,13 @@ class _CalculationOptions extends React.Component {
     });
     setOutputTypes(outputTypes);
   };
-  setParameter = parameterType => value => {
+  setParameter = (parameterType) => (value) => {
     const { setParameters } = this.props;
     const parameters = this.clonedParameters;
     parameters[parameterType] = value;
     setParameters(parameters);
   };
-  unsetParameter = parameterType => () => {
+  unsetParameter = (parameterType) => () => {
     const { setParameters } = this.props;
     delete this.clonedParameters[parameterType];
     setParameters(this.clonedParameters);

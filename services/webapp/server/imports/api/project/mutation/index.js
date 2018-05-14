@@ -10,7 +10,7 @@ const Mutation = {
     const { userId } = context;
     let { xyzs, layers } = args.input;
     // Restructure parameters for calculation type
-    layers = layers.map(layer => ({
+    layers = layers.map((layer) => ({
       ...layer,
       type: layer.type.toLowerCase(),
       parameters:
@@ -19,7 +19,7 @@ const Mutation = {
           : layer.parameters,
     }));
     // Add Program to Layer
-    layers = layers.map(layer => {
+    layers = layers.map((layer) => {
       if (layer.type === 'calculation') {
         const { program } = _.filter(calculationMethods, {
           value: layer.parameters.method,
@@ -32,14 +32,14 @@ const Mutation = {
     logger.silly(
       `mutation_runProject: \n` +
         `${xyzs}` +
-        `${layers.map(layer => JSON.stringify(layer) + '\n')}` +
+        `${layers.map((layer) => JSON.stringify(layer) + '\n')}` +
         `${JSON.stringify(context.user.profile)}`
     );
     if (!userId) {
       return new Promise();
     }
     return new Promise(
-      Meteor.bindEnvironment(resolve => {
+      Meteor.bindEnvironment((resolve) => {
         socket.emit(
           'createProject',
           {

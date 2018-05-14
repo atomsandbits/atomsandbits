@@ -1,7 +1,4 @@
 import styled from 'styled-components';
-import FaCloud from 'react-icons/lib/fa/cloud';
-import ArrowRight from 'react-icons/lib/md/arrow-forward';
-import { Link } from 'react-router-dom';
 
 export const VisualizeIcons = styled.div`
   display: flex;
@@ -81,7 +78,7 @@ export const Exploration = styled.div`
   width: 100%;
 `;
 export const ExplorationTitle = styled.div`
-  color: #36F1CD;
+  color: #36f1cd;
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 30px;

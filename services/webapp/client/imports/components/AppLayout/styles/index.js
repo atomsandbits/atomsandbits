@@ -9,7 +9,7 @@ export const AppBar = styled(_AppBar)`
     background-color: ${colors.background.default};
     transition: box-shadow 200ms;
     @media (min-width: ${breakpoints.lg}) {
-      display: ${props => (props.mobileonlytoolbar ? 'none' : 'default')};
+      display: ${(props) => (props.mobileonlytoolbar ? 'none' : 'default')};
       width: calc(100% - ${sizes.drawer});
     }
   }
@@ -34,8 +34,8 @@ export const App = styled.div`
   box-sizing: border-box;
   padding-top: 56px;
   @media (min-width: ${breakpoints.lg}) {
-    height: ${props =>
+    height: ${(props) =>
       props.mobileOnlyToolbar ? '100%' : 'calc(100% - 64px)'};
-    padding-top: ${props => (props.mobileOnlyToolbar ? '0px' : '64px')};
+    padding-top: ${(props) => (props.mobileOnlyToolbar ? '0px' : '64px')};
   }
 `;

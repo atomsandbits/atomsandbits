@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { BrowserRouter, StaticRouter } from 'react-router-dom';
 
 import Routes from '/both/imports/routes';
@@ -17,8 +18,11 @@ class App extends Component {
       <Router location={this.props.location} context={{}}>
         <Routes />
       </Router>
-    )
+    );
   }
 }
+App.propTypes = {
+  location: PropTypes.object,
+};
 
 export { App };

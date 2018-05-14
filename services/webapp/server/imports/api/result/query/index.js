@@ -25,7 +25,7 @@ const Query = {
         skip,
         limit,
       },
-      edges: userResults.get().map(userResult => ({
+      edges: userResults.get().map((userResult) => ({
         node: userResult,
         cursor: userResult.id,
       })),

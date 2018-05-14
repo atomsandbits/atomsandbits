@@ -15,12 +15,12 @@ const runCalculation = Meteor.bindEnvironment(
       {
         _id: { $in: calculation.geometryIds },
       },
-      { fields: { atomicCoords: 1 } },
+      { fields: { atomicCoords: 1 } }
     ).fetch();
     const calculationForService = {
       _id: calculation._id,
       charge: calculation.parameters.charge,
-      geometries: geometries.map(geometry => geometry.atomicCoords),
+      geometries: geometries.map((geometry) => geometry.atomicCoords),
       method: calculation.parameters.method,
       multiplicity: calculation.parameters.multiplicity,
       type: calculation.parameters.type,
@@ -32,11 +32,13 @@ const runCalculation = Meteor.bindEnvironment(
       finalDistance: calculation.parameters.finalDistance,
       steps: calculation.parameters.numberOfSteps,
     };
-    logger.info(`Emitting: Calculation #${calculation._id} to ${serverId}-${program}...`);
+    logger.info(
+      `Emitting: Calculation #${calculation._id} to ${serverId}-${program}...`
+    );
     io
       .to(`${serverId}-${program}`)
       .emit('runCalculation', { calculation: calculationForService });
-  },
+  }
 );
 
 export { runCalculation };

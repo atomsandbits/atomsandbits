@@ -1,4 +1,4 @@
-from TensorMol import (BOHRPERA, GeomOptimizer, Mol, MolDigester, MSet, PARAMS,
+from TensorMol import (BOHRPERA, Mol, MolDigester, MSet, PARAMS,
                        TensorMolData_BP_Direct_EE_WithEle_Release, TFMolManage)
 import numpy as np
 
@@ -14,7 +14,8 @@ def main():
     O 1. 1. 0.""")
     a.mols.append(m)
     TreatedAtoms = np.array([1, 6, 7, 8], dtype=np.uint8)
-    # PARAMS["networks_directory"] = "/home/animal/Packages/TensorMol/networks/"
+    # PARAMS["networks_directory"] =
+    #      "/home/animal/Packages/TensorMol/networks/"
     PARAMS["tf_prec"] = "tf.float64"
     PARAMS["NeuronType"] = "sigmoid_with_param"
     PARAMS["sigmoid_alpha"] = 100.0

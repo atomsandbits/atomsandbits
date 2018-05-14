@@ -5,7 +5,7 @@ const allLayerTypes = [
   {
     value: 'calculation',
     prettyName: 'Calculation',
-    hasValidInputType: memoize(inputTypes => {
+    hasValidInputType: memoize((inputTypes) => {
       return intersection(inputTypes, ['geometry', '[geometry]']).length !== 0;
     }),
   },

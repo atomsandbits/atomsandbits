@@ -23,8 +23,8 @@ const enhance = compose(
   })),
   withHandlers({
     getValidLayerTypes: () =>
-      memoize(inputTypes => {
-        const validLayerTypes = filter(allLayerTypes, layerType =>
+      memoize((inputTypes) => {
+        const validLayerTypes = filter(allLayerTypes, (layerType) =>
           layerType.hasValidInputType(inputTypes)
         );
         return validLayerTypes;
@@ -60,7 +60,9 @@ const LayersPure = ({
         index={index}
         inputTypes={
           layers[index - 1]
-            ? layers[index - 1].outputTypes ? layers[index - 1].outputTypes : []
+            ? layers[index - 1].outputTypes
+              ? layers[index - 1].outputTypes
+              : []
             : ['geometry']
         }
         deleteLayer={deleteLayer}

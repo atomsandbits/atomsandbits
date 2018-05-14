@@ -1,7 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 import logger from '/both/imports/logger';
-import { Calculations, Clusters, Requests, Layers } from '/both/imports/collections';
+import {
+  Calculations,
+  Clusters,
+  Requests,
+  Layers,
+} from '/both/imports/collections';
 
 const addUserToLayer = ({
   layerId = isRequired('layerId'),

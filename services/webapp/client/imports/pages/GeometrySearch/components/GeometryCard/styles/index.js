@@ -76,7 +76,7 @@ export const DotContainer = styled.div`
   padding: 5px;
 `;
 export const Dot = styled.span`
-  background-color: ${props => colors[props.color]};
+  background-color: ${(props) => colors[props.color]};
   border-radius: 100%;
   display: block;
   height: 10px;

@@ -5,7 +5,7 @@ import { saveIntermediateCalculationResult } from '/server/imports/db/calculatio
 
 io.on(
   'connection',
-  Meteor.bindEnvironment(socket => {
+  Meteor.bindEnvironment((socket) => {
     socket.on(
       'saveIntermediateCalculationResult',
       Meteor.bindEnvironment(
@@ -16,7 +16,7 @@ io.on(
             output,
             error,
           },
-          callback = () => {},
+          callback = () => {}
         ) => {
           logger.info('API saveCalculationResult...', properties);
           try {
@@ -31,11 +31,11 @@ io.on(
               result: calculationUpdated,
             });
           } catch (error) {
-            callback({ name: error.name, message: error.message });
+            callback(new Error(error.message));
             logger.error(`${error.name}: ${error.message}`);
           }
-        },
-      ),
+        }
+      )
     );
-  }),
+  })
 );

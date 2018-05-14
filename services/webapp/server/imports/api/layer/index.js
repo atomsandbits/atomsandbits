@@ -21,7 +21,7 @@ export const resolvers = {
     output({ output }) {
       if (!output) return;
       const test = {};
-      Object.keys(output).forEach(key => {
+      Object.keys(output).forEach((key) => {
         test[key.replace(/\[/g, '').replace(/\]/g, '_')] = output[key];
       });
       return test;
@@ -39,7 +39,7 @@ export const resolvers = {
     geometry__({ geometryId__ }) {
       if (!geometryId__) return;
       const geometries = [];
-      geometryId__.forEach(geometryId_ => {
+      geometryId__.forEach((geometryId_) => {
         geometries.push(getGeometries({ geometryIds: geometryId_ }));
       });
       return geometries;

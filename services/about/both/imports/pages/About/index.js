@@ -1,21 +1,9 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 import { compose, lifecycle } from 'recompose';
-import CalculatorIcon from 'react-icons/lib/go/file-binary';
-import CubeIcon from 'react-icons/lib/fa/cubes';
-import SaveIcon from 'react-icons/lib/md/save';
-import ListIcon from 'react-icons/lib/go/list-ordered';
-import EyeIcon from 'react-icons/lib/go/eye';
-import ChartIcon from 'react-icons/lib/fa/bar-chart';
 
 import { NavigationBar } from '/both/imports/components/NavigationBar';
 import { Footer } from '/both/imports/components/Footer';
-import {
-  RootStyle,
-  ContainerStyle,
-  SmallSectionStyle,
-  SpotlightCircle,
-} from '/both/imports/styles';
+import { RootStyle, ContainerStyle } from '/both/imports/styles';
 import {
   Description,
   FifthSection,
@@ -29,7 +17,6 @@ import {
   SplashTextContainer,
   ThirdSection,
   Title,
-  VisualizeIcons,
   PricingContainer,
   PricingSection,
   PricingSectionTitle,
@@ -55,7 +42,10 @@ const AboutPure = () => (
         <NavigationBar />
         <SplashTextContainer>
           <Title>atoms+bits</Title>
-          <Description>molecular discovery with cloud-based quantum simulations and deep learning</Description>
+          <Description>
+            molecular discovery with cloud-based quantum simulations and deep
+            learning
+          </Description>
           <StartLink href="https://www.atomsandbits.ai/">get started</StartLink>
         </SplashTextContainer>
       </FirstSection>

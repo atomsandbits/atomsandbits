@@ -6,10 +6,8 @@ import time
 
 
 def file_filter(name):
-    return ((not name.startswith(".")) and
-        (not name.endswith(".swp")) and
-        (not name.endswith(".log")) and
-        (not name.endswith(".xyz")))
+    return ((not name.startswith(".")) and (not name.endswith(".swp"))
+            and (not name.endswith(".log")) and (not name.endswith(".xyz")))
 
 
 def file_times(path):
@@ -39,7 +37,6 @@ process = subprocess.Popen(command, shell=True)
 
 # The current maximum file modified time under the watched directory
 last_mtime = max(file_times(path))
-
 
 while True:
     max_mtime = max(file_times(path))

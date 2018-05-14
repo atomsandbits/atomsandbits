@@ -5,7 +5,7 @@ import memoize from 'lodash/memoize';
 let countedAt = {};
 let counts = {};
 
-const getCount = query => {
+const getCount = (query) => {
   let currentTime = moment().valueOf();
   let lastUpdate = countedAt[query];
   let lastCount = counts[query];
@@ -60,7 +60,7 @@ class GeometriesMapper {
     /* Filters */
     const mongoQuery = {};
     if (filters && filters[0]) {
-      filters.forEach(filter => {
+      filters.forEach((filter) => {
         if (filter.type === 'MASS') {
           mongoQuery.mass = {
             $gte: filter.minimum,
@@ -116,7 +116,7 @@ class GeometriesMapper {
   _fetch() {
     /* Fetch */
     const geometries = this._cursor.fetch();
-    this._geometries = geometries.map(geometry =>
+    this._geometries = geometries.map((geometry) =>
       this._convertToGraph(geometry)
     );
   }
@@ -129,7 +129,7 @@ class GeometriesMapper {
     users,
     createdAt,
   }) {
-    const user = users.find(user => this.options.userId === user._id);
+    const user = users.find((user) => this.options.userId === user._id);
     return {
       id: _id,
       atomicCoords: atomicCoords,

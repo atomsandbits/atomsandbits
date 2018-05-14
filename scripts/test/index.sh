@@ -1,3 +1,5 @@
+#!/bin/bash
+
 gitlab-runner exec docker test_service_about && \
 gitlab-runner exec docker test_service_database && \
 gitlab-runner exec docker test_service_image_generator && \

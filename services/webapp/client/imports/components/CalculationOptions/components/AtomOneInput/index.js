@@ -20,7 +20,7 @@ const enhance = compose(
       method,
       parameter: 'atomOne',
     }),
-    onInput: event => {
+    onInput: (event) => {
       let atomOne = parseInt(event.target.value);
       if (!atomOne) {
         atomOne = 1;

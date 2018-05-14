@@ -102,7 +102,7 @@ const HeaderPure = ({
           <SearchIcon />
           <SearchInput
             value={search}
-            onChange={event => setSearch(event.target.value)}
+            onChange={(event) => setSearch(event.target.value)}
           />
           <CancelIcon />
         </SearchContainer>

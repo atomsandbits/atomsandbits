@@ -8,8 +8,9 @@ import { App } from '/both/imports/App';
 let sheet = null;
 let html = '';
 
-onPageLoad(sink => {
-  if (!html || !sheet) { // only render once and cache afterwards
+onPageLoad((sink) => {
+  if (!html || !sheet) {
+    // only render once and cache afterwards
     sheet = new ServerStyleSheet();
     html = renderToString(
       sheet.collectStyles(<App location={sink.request.url} />)

@@ -1,6 +1,7 @@
-from TensorMol import PARAMS
-from TensorMol import GeomOptimizer, MSet, Mol, PARAMS
-from TensorMol.Simulations import ScannedOptimization, TopologyMetaOpt, ConfSearch
+from TensorMol import PARAMS, Mol
+from TensorMol.Simulations import ConfSearch
+# ScannedOptimization, TopologyMetaOpt
+
 
 def main(manager, molecule, on_conformer_found, n_conf=20):
     """main."""
@@ -25,12 +26,12 @@ def main(manager, molecule, on_conformer_found, n_conf=20):
     Opt = ConfSearch(EnAndForce, molecule, StopAfter_=n_conf)
     return Opt.Search(molecule, callback=on_conformer_found)
 
+
 if __name__ == "__main__":
     import os
     import sys
     sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
     from networks import tensormol01
-    from TensorMol import Mol
     molecule = Mol()
     molecule.FromXYZString("""4
 

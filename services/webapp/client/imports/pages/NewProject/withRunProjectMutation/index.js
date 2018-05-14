@@ -19,7 +19,7 @@ const withRunProjectMutation = graphql(runProject, {
           const projectId = data.runProject.project.id;
           ownProps.history.push(`/project/${projectId}`);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('there was an error sending the query', error);
         }),
   }),

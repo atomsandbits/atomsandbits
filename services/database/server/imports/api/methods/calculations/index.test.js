@@ -15,7 +15,7 @@ describe('api', () => {
     resetDatabase();
   });
   describe('methods', () => {
-    it('expect createCalculation to save the calculation', done => {
+    it('expect createCalculation to save the calculation', (done) => {
       const { calculationId, serverId, userId } = createTestData();
       const { parameters } = Calculations.findOne(calculationId);
       const socket = socketIOClient(`${ROOT_URL}:${PORT}`, {
@@ -33,6 +33,7 @@ describe('api', () => {
           parameters,
         },
         (error, data) => {
+          if (error) console.throw(error);
           socket.disconnect();
           try {
             expect(data.calculationId).to.be.a('string');
@@ -40,10 +41,10 @@ describe('api', () => {
           } catch (err) {
             done(err);
           }
-        },
+        }
       );
     });
-    it('expect createCalculation to return existing calculation', done => {
+    it('expect createCalculation to return existing calculation', (done) => {
       const { calculationId, serverId, userId } = createTestData();
       const { parameters } = Calculations.findOne(calculationId);
       const socket = socketIOClient(`${ROOT_URL}:${PORT}`, {
@@ -61,6 +62,7 @@ describe('api', () => {
           parameters,
         },
         (error, data) => {
+          if (error) console.throw(error);
           socket.emit(
             'createCalculation',
             {
@@ -76,12 +78,12 @@ describe('api', () => {
               } catch (err) {
                 done(err);
               }
-            },
+            }
           );
-        },
+        }
       );
     });
-    it('expect setCalculationRunning to set calculation running', done => {
+    it('expect setCalculationRunning to set calculation running', (done) => {
       const { calculationId, serverId, userId, clusterId } = createTestData();
       const { parameters } = Calculations.findOne(calculationId);
       const socket = socketIOClient(`${ROOT_URL}:${PORT}`, {
@@ -101,6 +103,7 @@ describe('api', () => {
           userId,
         },
         (error, data) => {
+          if (error) console.throw(error);
           const newCalculationId = data.calculationId;
           socket.emit(
             'setCalculationRunning',
@@ -115,12 +118,12 @@ describe('api', () => {
               } catch (err) {
                 done(err);
               }
-            },
+            }
           );
-        },
+        }
       );
     });
-    it('expect setCalculationRunning to return false if already running', done => {
+    it('expect setCalculationRunning to return false if already running', (done) => {
       const { calculationId, serverId, userId, clusterId } = createTestData();
       const { parameters } = Calculations.findOne(calculationId);
       const socket = socketIOClient(`${ROOT_URL}:${PORT}`, {
@@ -140,6 +143,7 @@ describe('api', () => {
           userId,
         },
         (error, data) => {
+          if (error) console.throw(error);
           const newCalculationId = data.calculationId;
           socket.emit(
             'setCalculationRunning',
@@ -160,11 +164,11 @@ describe('api', () => {
                   } catch (err) {
                     done(err);
                   }
-                },
+                }
               );
-            },
+            }
           );
-        },
+        }
       );
     });
     // TODO: add the rest of the tests and split into files

@@ -31,7 +31,7 @@ const Query = {
         skip,
         limit,
       },
-      edges: geometry.get().map(geometry => ({
+      edges: geometry.get().map((geometry) => ({
         node: geometry,
         cursor: geometry.id,
       })),

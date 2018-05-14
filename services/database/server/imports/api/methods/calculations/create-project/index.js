@@ -6,7 +6,7 @@ import { runProject } from '/server/imports/db/projects/update';
 
 io.on(
   'connection',
-  Meteor.bindEnvironment(socket => {
+  Meteor.bindEnvironment((socket) => {
     socket.on(
       'createProject',
       Meteor.bindEnvironment(
@@ -48,7 +48,7 @@ io.on(
               result: projectId,
             });
           } catch (error) {
-            callback({ name: error.name, message: error.message });
+            callback(new Error(error.message));
             logger.error(`${error.name}: ${error.message}`);
           }
         }

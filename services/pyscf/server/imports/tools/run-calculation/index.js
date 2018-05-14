@@ -2,6 +2,7 @@ import moment from 'moment';
 import { spawn } from 'child_process';
 import { socket } from '/server/imports/socket';
 import { pinger } from '/server/imports/tools/pinger';
+import { debounce } from 'lodash';
 
 // let test = true;
 const runCalculation = ({
@@ -27,9 +28,9 @@ const runCalculation = ({
   // geometries = ['H 0 0 0\nH 1 0 0'];
   const calculationId = _id;
   pinger.start({ calculationId });
-  let pythonFolder = type.replace(/([A-Z])/g, g => `-${g[0].toLowerCase()}`);
+  let pythonFolder = type.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
   let pythonFileName =
-    method.replace(/([A-Z])/g, g => `-${g[0].toLowerCase()}`) + '.py';
+    method.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`) + '.py';
   // let periodicFolder = periodicType
   //   ? '/' + periodicType.replace(/([A-Z])/g, g => `-${g[0].toLowerCase()}`)
   //   : '';
@@ -72,9 +73,9 @@ const runCalculation = ({
 
   /* Create output save throttle */
   let output = '';
-  let calculationError = {};
   let properties = {};
-  let saveOutputThrottle = _.debounce(
+  let calculationError = {};
+  let saveOutputThrottle = debounce(
     () => {
       socket.emit(
         'saveIntermediateCalculationResult',
@@ -93,14 +94,14 @@ const runCalculation = ({
       maxWait: 3000,
     }
   );
-  let saveOutput = unsavedOutput => {
+  let saveOutput = (unsavedOutput) => {
     // console.log(unsavedOutput);
     output += unsavedOutput;
     saveOutputThrottle();
   };
 
   /* Create onError callback */
-  let onCalculationError = error => {
+  let onCalculationError = (error) => {
     if (!calculationError.message) {
       calculationError = {
         message: error,
@@ -110,18 +111,18 @@ const runCalculation = ({
   };
 
   /* Process Callbacks */
-  job.stdout.on('data', data => {
+  job.stdout.on('data', (data) => {
     let line = data.toString() + '\n';
     saveOutput(line);
   });
-  job.stderr.on('data', data => {
+  job.stderr.on('data', (data) => {
     let line = data.toString() + '\n';
     saveOutput(line);
     onCalculationError('stderr');
   });
 
   /* Calculation Errored Out */
-  job.on('error', error => {
+  job.on('error', (error) => {
     onCalculationError(error.toString());
     socket.emit(
       'saveCalculationResult',

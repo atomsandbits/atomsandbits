@@ -8,7 +8,7 @@ import { Tag, TagsContainer, TagInput, TagsScrollContainer } from './styles';
 const TagsPure = ({ tags }) => (
   <TagsContainer>
     <TagsScrollContainer>
-      {tags.map(tag => (
+      {tags.map((tag) => (
         <Tag key={tag} label={tag} onDelete={() => {}} onClick={() => {}} />
       ))}
     </TagsScrollContainer>

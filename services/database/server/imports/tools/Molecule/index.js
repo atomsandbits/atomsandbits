@@ -1,7 +1,7 @@
 import { sprintf } from 'sprintf-js';
 import atomicMasses from './atomic-masses.json';
 
-const countDecimals = number => {
+const countDecimals = (number) => {
   if (Math.floor(number.valueOf()) === number.valueOf()) return 0;
   if (number.toString().indexOf('e-') !== -1) {
     return parseInt(number.toString().split('e-')[1], 10);
@@ -9,7 +9,7 @@ const countDecimals = number => {
   return number.toString().split('.')[1].length || 0;
 };
 
-const capitalize = string => {
+const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
 
@@ -59,7 +59,7 @@ class Molecule {
     let formula = '';
     Object.keys(atomCounts)
       .sort()
-      .forEach(key => {
+      .forEach((key) => {
         formula += key;
         formula += atomCounts[key] > 1 ? atomCounts[key] : '';
       });
@@ -69,7 +69,7 @@ class Molecule {
     if (this.mass) return this.mass;
     const atomCounts = this.createAtomCounts();
     let mass = 0;
-    Object.keys(atomCounts).forEach(key => {
+    Object.keys(atomCounts).forEach((key) => {
       mass += atomicMasses[key].mass * atomCounts[key];
     });
     return mass;
@@ -97,7 +97,7 @@ class Molecule {
       }
       xyzRows[i] = xyzRows[i].join(' ');
     }
-    return dataRows.map(dataRow => {
+    return dataRows.map((dataRow) => {
       return {
         element: capitalize(String(dataRow[0])),
         x: Number(Number(dataRow[1]).toFixed(6)),
@@ -122,7 +122,7 @@ class Molecule {
   get totalAtoms() {
     const atomCounts = this.createAtomCounts();
     let totalAtoms = 0;
-    Object.keys(atomCounts).forEach(key => {
+    Object.keys(atomCounts).forEach((key) => {
       totalAtoms += atomCounts[key];
     });
     return totalAtoms;
@@ -150,7 +150,7 @@ class Molecule {
   createAtomCounts() {
     const atomCollection = this.createAtomCollection();
     let atomCounts = {};
-    atomCollection.forEach(atomDocument => {
+    atomCollection.forEach((atomDocument) => {
       if (atomCounts[atomDocument.element]) {
         atomCounts[atomDocument.element] += 1;
       } else {
@@ -166,7 +166,7 @@ class Molecule {
     let xDecimalsMax = 0;
     let yDecimalsMax = 0;
     let zDecimalsMax = 0;
-    atomCollection.forEach(atomDocument => {
+    atomCollection.forEach((atomDocument) => {
       if (xDecimalsMax < countDecimals(atomDocument.x)) {
         xDecimalsMax = countDecimals(atomDocument.x);
       }
@@ -178,7 +178,7 @@ class Molecule {
       }
     });
     const prettyStringArray = [atomCollection.length, comment];
-    atomCollection.forEach(atomDocument => {
+    atomCollection.forEach((atomDocument) => {
       let spacingAfterAtom;
       if (atomDocument.element.length === 1) {
         spacingAfterAtom = 6;
@@ -193,8 +193,8 @@ class Molecule {
           atomDocument.element,
           atomDocument.x,
           atomDocument.y,
-          atomDocument.z,
-        ),
+          atomDocument.z
+        )
       );
     });
     const xyz = prettyStringArray.join('\n');

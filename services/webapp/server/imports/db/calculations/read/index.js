@@ -50,7 +50,7 @@ const getCalculations = ({ geometryId, calculationIds, userId }) => {
   } else if (geometryId) {
     calculations = Calculations.find({ geometryIds: geometryId }).fetch();
   }
-  return calculations.map(calculation => {
+  return calculations.map((calculation) => {
     return convertCalculationToGraph({ calculation, userId });
   });
 };

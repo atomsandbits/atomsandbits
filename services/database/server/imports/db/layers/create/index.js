@@ -1,6 +1,6 @@
 import moment from 'moment';
-import logger from '/both/imports/logger';
-import _ from 'lodash';
+// import logger from '/both/imports/logger';
+// import _ from 'lodash';
 import { Layers } from '/both/imports/collections';
 import { addUserToLayer } from '../update';
 

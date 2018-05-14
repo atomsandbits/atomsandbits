@@ -21,7 +21,7 @@ const getResults = ({ userId, limit, skip, search, sortBy, sortOrder }) => {
   ).fetch();
   let results = [];
   results.push(
-    calculations.map(calculation => {
+    calculations.map((calculation) => {
       return {
         type: 'calculation',
         calculationId: calculation._id,
@@ -30,7 +30,7 @@ const getResults = ({ userId, limit, skip, search, sortBy, sortOrder }) => {
     })
   );
   results.push(
-    projects.map(project => {
+    projects.map((project) => {
       return {
         type: 'project',
         projectId: project._id,
@@ -39,7 +39,7 @@ const getResults = ({ userId, limit, skip, search, sortBy, sortOrder }) => {
     })
   );
   results = _.reverse(_.sortBy(_.flatten(results), 'createdAt'));
-  return results.map(result => convertResultToGraph({ result }));
+  return results.map((result) => convertResultToGraph({ result }));
 };
 
 export { getResults, convertResultToGraph };

@@ -1,7 +1,7 @@
 import moment from 'moment';
-import logger from '/both/imports/logger';
+// import logger from '/both/imports/logger';
 import _ from 'lodash';
-import { Calculations, Geometries, Projects } from '/both/imports/collections';
+import { Geometries, Projects } from '/both/imports/collections';
 import { createGeometry } from '/server/imports/db/geometries/create';
 import { createLayer } from '/server/imports/db/layers/create';
 import { addUserToGeometry } from '/server/imports/db/geometries/update';
@@ -20,21 +20,21 @@ const createProject = ({
   let geometries = [];
   if (geometryIds) {
     geometries = Geometries.find({ _id: { $in: geometryIds } }).fetch();
-    if (!_.isEqual(geometries.map(geometry => geometry._id), geometryIds)) {
+    if (!_.isEqual(geometries.map((geometry) => geometry._id), geometryIds)) {
       throw new Error('createProject: geometry not found for geometryIds');
     }
-    geometries.forEach(geometry => {
+    geometries.forEach((geometry) => {
       addUserToGeometry({ userId, geometryId: geometry._id });
     });
   } else {
-    xyzs.forEach(xyz => {
+    xyzs.forEach((xyz) => {
       geometries.push(Geometries.findOne(createGeometry({ xyz, userId })));
     });
   }
   if (geometries.length === 0) {
     throw new Error('createProject: geometries not defined');
   }
-  const _geometryIds = geometries.map(geometry => geometry._id);
+  const _geometryIds = geometries.map((geometry) => geometry._id);
   // TODO: Add Param Validation
 
   /* 2. Create or Update Layers */

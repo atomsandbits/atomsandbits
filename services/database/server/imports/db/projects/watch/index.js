@@ -1,17 +1,11 @@
-import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
-import {
-  Projects,
-  Clusters,
-  Requests,
-  UserResults,
-} from '/both/imports/collections';
+import { Projects, Requests, UserResults } from '/both/imports/collections';
 import {
   pingProjectRunning,
   markProjectCompleted,
 } from '/server/imports/db/projects/update';
 
-const timeBeforeRetry = 5 * 60 * 1000;
+// const timeBeforeRetry = 5 * 60 * 1000;
 
 // TODO: User Calculation Limits and Checks
 const projectWatcher = {
@@ -24,7 +18,7 @@ const projectWatcher = {
         { type: 'project', completed: { $ne: true } },
         { limit: 100, sort: { createdAt: -1 } }
       ).observe({
-        added: request => {
+        added: (request) => {
           // console.log('Request added, checking...');
           const project = Projects.findOne(request.projectId);
           const updates = {};
@@ -46,7 +40,7 @@ const projectWatcher = {
             layerId: { $in: project.layerIds },
             type: 'layer',
           }).observe({
-            added: request => {
+            added: (request) => {
               // If all layers completed, mark project as completed
               if (
                 request.completed &&
@@ -106,7 +100,7 @@ const projectWatcher = {
     );
   },
   stop: () => {
-    projectWatcher.observers.forEach(observer => observer.stop());
+    projectWatcher.observers.forEach((observer) => observer.stop());
     clearInterval(projectWatcher.watchInterval);
   },
 };

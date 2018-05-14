@@ -2,9 +2,7 @@ import styled from 'styled-components';
 
 import { colors, fonts } from '/client/imports/theme';
 
-export const GroupRendererContainer = styled.div`
-
-`;
+export const GroupRendererContainer = styled.div``;
 
 export const TextAreasContainer = styled.div`
   overflow-x: auto;
@@ -21,9 +19,6 @@ export const TextAreaContainer = styled.div`
   }
 `;
 
-export const TextArea = styled.textarea`
-`;
+export const TextArea = styled.textarea``;
 
-export const RendererContainer = styled.div`
-
-`;
+export const RendererContainer = styled.div``;

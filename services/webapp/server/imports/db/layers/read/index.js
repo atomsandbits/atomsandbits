@@ -60,7 +60,7 @@ const getLayers = ({ geometryId, layerIds, userId }) => {
   } else if (geometryId) {
     layers = Layers.find({ geometryIds: geometryId }).fetch();
   }
-  return layers.map(layer => {
+  return layers.map((layer) => {
     return convertLayerToGraph({ layer, userId });
   });
 };

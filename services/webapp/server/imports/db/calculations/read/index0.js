@@ -84,14 +84,16 @@ const convertCalculationToGraph = ({
       lastName: creator.profile.name.split(' ')[1],
       calculations: Calculations.find({ 'users.userId': creator._id }),
     },
-    geometries: [{
-      id: geometry._id,
-      name: _.find(geometry.users, _.matchesProperty('userId', userId)).name,
-      atomicCoords: geometry.atomicCoords,
-      empiricalFormula: geometry.empiricalFormula,
-      atomCount: geometry.atomCount,
-      calculations: Calculations.find({ geometryId: geometry._id }),
-    }],
+    geometries: [
+      {
+        id: geometry._id,
+        name: _.find(geometry.users, _.matchesProperty('userId', userId)).name,
+        atomicCoords: geometry.atomicCoords,
+        empiricalFormula: geometry.empiricalFormula,
+        atomCount: geometry.atomCount,
+        calculations: Calculations.find({ geometryId: geometry._id }),
+      },
+    ],
   };
 };
 
@@ -148,7 +150,7 @@ const getUserCalculations = ({ userId, limit, skip, sortBy, sortOrder }) => {
     },
   ];
   let calculations = Calculations.aggregate(pipeline);
-  return _.map(calculations, calculation => {
+  return _.map(calculations, (calculation) => {
     return convertCalculationToGraph({
       calculationId: calculation._id,
       geometryId: calculation.geometry._id,
@@ -200,7 +202,7 @@ async function searchUserCalculations({ userId, limit, skip, search }) {
       },
     });
     let hits = body.hits.hits;
-    _.forEach(hits, hit => {
+    _.forEach(hits, (hit) => {
       if (hit._score < 0.01) {
         return;
       }
@@ -231,7 +233,7 @@ async function searchUserCalculations({ userId, limit, skip, search }) {
     }).fetch();
     // console.log(calculations)
     console.log(`Search User Calculations: ${search}...`);
-    calculations = _.sortBy(calculations, calculation => {
+    calculations = _.sortBy(calculations, (calculation) => {
       let geometryMatch = _.find(geometryMatches, {
         _id: calculation.geometryId,
       });
@@ -245,7 +247,7 @@ async function searchUserCalculations({ userId, limit, skip, search }) {
       );
       return 1 / (geometryScore + calculationScore);
     });
-    return _.map(calculations, calculation => {
+    return _.map(calculations, (calculation) => {
       return convertCalculationToGraph({
         calculationId: calculation._id,
         geometryId: calculation.geometryId,
@@ -293,7 +295,7 @@ const getCalculations = ({ userId, limit, skip, sortBy, sortOrder }) => {
     },
   ];
   let calculations = Calculations.aggregate(pipeline);
-  return _.map(calculations, calculation => {
+  return _.map(calculations, (calculation) => {
     return convertCalculationToGraph({
       calculationId: calculation._id,
       geometryId: calculation.geometry._id,
@@ -339,7 +341,7 @@ async function searchCalculations({ userId, limit, skip, search }) {
       },
     });
     let hits = body.hits.hits;
-    _.forEach(hits, hit => {
+    _.forEach(hits, (hit) => {
       if (hit._score < 0.01) {
         return;
       }
@@ -369,7 +371,7 @@ async function searchCalculations({ userId, limit, skip, search }) {
       ],
     }).fetch();
     console.log(`Search Calculations: ${search}...`);
-    calculations = _.sortBy(calculations, calculation => {
+    calculations = _.sortBy(calculations, (calculation) => {
       let geometryMatch = _.find(geometryMatches, {
         _id: calculation.geometryId,
       });
@@ -383,7 +385,7 @@ async function searchCalculations({ userId, limit, skip, search }) {
       );
       return 1 / (geometryScore + calculationScore);
     });
-    return _.map(calculations, calculation => {
+    return _.map(calculations, (calculation) => {
       return convertCalculationToGraph({
         calculationId: calculation._id,
         geometryId: calculation.geometryId,

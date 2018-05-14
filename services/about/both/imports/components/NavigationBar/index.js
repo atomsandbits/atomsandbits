@@ -1,17 +1,12 @@
-import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import FaMenu from 'react-icons/lib/md/menu';
-import FaCloud from 'react-icons/lib/fa/cloud';
-import FaPlus from 'react-icons/lib/fa/plus';
 
 import {
   MenuButton,
   MenuStyle,
   MenuLink,
-  IconLink,
   TextLink,
-  GetStartedLink,
   Logo,
   NavigationBarStyle,
 } from './styles';
@@ -38,11 +33,13 @@ class _NavigationBar extends Component {
     });
   }
   render() {
-    const { pathname } = this.props.location;
+    // const { pathname } = this.props.location;
     return (
       <NavigationBarStyle height="64px">
-        <a href="https://www.atomsandbits.ai/"><Logo src="/favicon-128.png" /></a>
-        <div style={{flexGrow: 1}} />
+        <a href="https://www.atomsandbits.ai/">
+          <Logo src="/favicon-128.png" />
+        </a>
+        <div style={{ flexGrow: 1 }} />
         <MenuButton onClick={this.handleMenuClick.bind(this)}>
           <FaMenu
             style={{

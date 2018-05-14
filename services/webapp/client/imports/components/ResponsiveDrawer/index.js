@@ -99,7 +99,9 @@ const ResponsiveDrawerPure = ({
               />
             </Drawer>
           </Hidden>
-          <ContactLink href="mailto:support@atomsandbits.ai">alpha | feedback</ContactLink>
+          <ContactLink href="mailto:support@atomsandbits.ai">
+            alpha | feedback
+          </ContactLink>
         </Fragment>
       ) : null}
       {needsRedirect ? <Redirect to="/" /> : <Content>{content}</Content>}

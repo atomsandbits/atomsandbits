@@ -27,7 +27,7 @@ import ProjectCard from './components/ProjectCard';
 import { withResults } from './withResults';
 import { ResultsFeedContainer, ResultsFeedContent } from './styles';
 
-const Loading = props => (
+const Loading = (props) => (
   <AppLayout
     mobileOnlyToolbar
     title="Results Feed"

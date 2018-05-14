@@ -21,7 +21,7 @@ const calculationWatcher = {
         { type: 'calculation' },
         { limit: 100, sort: { createdAt: -1 } }
       ).observe({
-        added: request => {
+        added: (request) => {
           console.log('Request added, checking...');
           const calculation = Calculations.findOne(request.calculationId);
           calculationWatcher.checkCalculation({ calculation, request });
@@ -57,7 +57,7 @@ const calculationWatcher = {
         ],
       });
       // Run Pending Calculations
-      pendingCalculationsCursor.forEach(request => {
+      pendingCalculationsCursor.forEach((request) => {
         const calculation = Calculations.findOne(request.calculationId);
         calculationWatcher.checkCalculation({ calculation, request });
         calculationWatcher.addToUserResults({ calculation, request });
@@ -65,7 +65,7 @@ const calculationWatcher = {
     }, 30000);
   },
   stop: () => {
-    calculationWatcher.observers.forEach(observer => observer.stop());
+    calculationWatcher.observers.forEach((observer) => observer.stop());
     clearInterval(calculationWatcher.watchInterval);
   },
   checkCalculation: ({ calculation, request }) => {
@@ -90,7 +90,7 @@ const calculationWatcher = {
     }
   },
   addToUserResults: ({ calculation, request }) => {
-    calculation.users.forEach(user => {
+    calculation.users.forEach((user) => {
       const userResult = UserResults.findOne({
         userId: user._id,
         calculationId: calculation._id,

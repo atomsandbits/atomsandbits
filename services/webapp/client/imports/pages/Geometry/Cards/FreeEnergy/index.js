@@ -49,7 +49,7 @@ const FreeEnergyCardPure = ({ freeEnergies }) => (
     ]}
     details={freeEnergies
       .slice(1)
-      .map(FreeEnergyDocument => (
+      .map((FreeEnergyDocument) => (
         <FreeEnergyRow
           key={`${FreeEnergyDocument.label}-row`}
           {...FreeEnergyDocument}

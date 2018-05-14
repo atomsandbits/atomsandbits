@@ -19,7 +19,7 @@ import Layer from './components/Layer';
 import { withProject } from './withProject';
 import { ProjectContainer, ProjectContent } from './styles';
 
-const Loading = props => (
+const Loading = (props) => (
   <AppLayout
     mobileOnlyToolbar
     title="Project"
@@ -32,7 +32,7 @@ const Loading = props => (
 );
 
 const displayLoadingState = branch(
-  props => props.data.loading || !props.data.project,
+  (props) => props.data.loading || !props.data.project,
   renderComponent(Loading)
 );
 
@@ -61,7 +61,7 @@ const ProjectPure = ({ project: { id, geometries, layers } }) => (
               }
             />
           ) : null}
-          {layers.map(layer => <Layer key={layer.id} {...layer} />)}
+          {layers.map((layer) => <Layer key={layer.id} {...layer} />)}
         </ProjectContent>
       </ProjectContainer>
     }

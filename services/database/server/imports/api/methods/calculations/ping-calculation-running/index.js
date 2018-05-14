@@ -5,13 +5,13 @@ import { pingCalculationRunning } from '/server/imports/db/calculations/update';
 
 io.on(
   'connection',
-  Meteor.bindEnvironment(socket => {
+  Meteor.bindEnvironment((socket) => {
     socket.on(
       'pingCalculationRunning',
       Meteor.bindEnvironment(
         (
           { calculationId = isRequired('calculationId') },
-          callback = () => {},
+          callback = () => {}
         ) => {
           logger.info('API pingCalculationRunning...', { calculationId });
           try {
@@ -23,11 +23,11 @@ io.on(
               result: calculationUpdated,
             });
           } catch (error) {
-            callback({ name: error.name, message: error.message });
+            callback(new Error(error.message));
             logger.error(`${error.name}: ${error.message}`);
           }
-        },
-      ),
+        }
+      )
     );
-  }),
+  })
 );
