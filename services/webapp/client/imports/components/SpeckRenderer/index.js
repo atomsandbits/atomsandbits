@@ -71,7 +71,6 @@ class SpeckRenderer extends React.Component {
     }
   }, 2000).bind(this);
   render() {
-    const { classes, theme, xyz } = this.props;
     return (
       <SpeckRendererContainer>
         <Hidden implementation="css" only="xs">

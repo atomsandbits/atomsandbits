@@ -22,7 +22,7 @@ const prettyPropertyLabel = ({
       label += `${network}`;
       break;
     default:
-      label += `${method} ${basisSet} ${functional ? functional : ''}`;
+      label += `${method} ${basisSet} ${functional || ''}`;
   }
   switch (type) {
     case 'relaxedScan':

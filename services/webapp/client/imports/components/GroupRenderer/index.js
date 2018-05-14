@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import xyzTools from '/both/imports/tools/xyz';
 import SpeckRenderer from '/client/imports/components/SpeckRenderer';
@@ -64,5 +65,9 @@ const GroupRenderer = ({ xyzs, setXyzs }) => (
     </RendererContainer>
   </GroupRendererContainer>
 );
+GroupRenderer.propTypes = {
+  xyzs: PropTypes.arrayOf(PropTypes.string),
+  setXyzs: PropTypes.func,
+};
 
 export default GroupRenderer;

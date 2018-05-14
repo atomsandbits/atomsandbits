@@ -5,7 +5,7 @@ import _DownIcon from 'material-ui-icons/ArrowDownward';
 import _SearchIcon from 'material-ui-icons/Search';
 import DropdownMenu from '/client/imports/components/DropdownMenu';
 
-import { colors, breakpoints, fonts } from '/client/imports/theme';
+// import { colors, breakpoints, fonts } from '/client/imports/theme';
 
 export const ResultsFeedContainer = styled.div``;
 

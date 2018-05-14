@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { compose, withState, withHandlers, lifecycle } from 'recompose';
 

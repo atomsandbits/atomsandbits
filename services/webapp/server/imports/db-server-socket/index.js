@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import socketIOClient from 'socket.io-client';
 
 const DATABASE_URL = process.env.DATABASE_URL || 'http://localhost:8080';

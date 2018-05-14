@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CircularProgress } from 'material-ui/Progress';
 import _EmpiricalFormula from '/client/imports/components/EmpiricalFormula';
 
-import { colors, breakpoints, fonts } from '/client/imports/theme';
+import { colors } from '/client/imports/theme';
 
 export const CardLink = styled(Link)`
   color: inherit;

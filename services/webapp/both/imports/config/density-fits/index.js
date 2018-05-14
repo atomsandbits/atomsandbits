@@ -16,7 +16,6 @@ const periodicDensityFits = [
     value: 'fftdf',
     prettyName: 'Fast Fourier Transform',
   },
-  ,
   {
     value: 'aftdf',
     prettyName: 'Analytical Fourier Transform',

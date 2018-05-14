@@ -1,6 +1,6 @@
 import { createMuiTheme } from 'material-ui/styles';
-import lightBlue from 'material-ui/colors/lightBlue';
-import pink from 'material-ui/colors/pink';
+// import lightBlue from 'material-ui/colors/lightBlue';
+// import pink from 'material-ui/colors/pink';
 
 export const colors = {
   primary: '#0070e0', // #0070e0

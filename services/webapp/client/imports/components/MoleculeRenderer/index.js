@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Speck from 'speck-renderer';
-import { Session } from 'meteor/session';
-import MobileDetect from 'mobile-detect';
+// import Speck from 'speck-renderer';
+// import { Session } from 'meteor/session';
+// import MobileDetect from 'mobile-detect';
 
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import Hidden from 'material-ui/Hidden';
+// import Hidden from 'material-ui/Hidden';
 
 import xyzTools from '/both/imports/tools/xyz';
 import SpeckRenderer from '/client/imports/components/SpeckRenderer';
@@ -24,14 +24,14 @@ class MoleculeRenderer extends React.PureComponent {
     this.props.setXyz(xyz);
     xyz = xyzTools.normalize({ xyzString: xyz });
     if (xyz) {
-      if (xyz != lastGeometryInput) {
+      if (xyz !== lastGeometryInput) {
         this.setState({ geometryInput: xyz });
         lastGeometryInput = xyz;
       }
     }
   };
   render() {
-    const { classes, theme, disabled } = this.props;
+    const { classes, disabled } = this.props;
     return (
       <Grid container={true} spacing={0}>
         <Grid item={true} xs={12} sm={6}>

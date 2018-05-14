@@ -61,12 +61,12 @@ const networks = [
     supportedElements: ['C', 'N', 'O', 'H'],
   },
 ];
-const conformerSearchTypes = [
-  {
-    value: 'exhaustive',
-    prettyName: 'Exhaustive',
-  },
-];
+// const conformerSearchTypes = [
+//   {
+//     value: 'exhaustive',
+//     prettyName: 'Exhaustive',
+//   },
+// ];
 const types = [
   {
     value: 'groundState',

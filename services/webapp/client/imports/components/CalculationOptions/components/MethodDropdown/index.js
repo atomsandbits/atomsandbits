@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  compose,
-  branch,
-  onlyUpdateForPropTypes,
-  renderNothing,
-  withProps,
-} from 'recompose';
+import { compose, onlyUpdateForPropTypes, withProps } from 'recompose';
 
 import DropdownMenu from '/client/imports/components/DropdownMenu';
 import calculationOptions from '../../options';

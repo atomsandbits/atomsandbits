@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { CircularProgress } from 'material-ui/Progress';
-import { colors, breakpoints, fonts } from '/client/imports/theme';
+import { colors } from '/client/imports/theme';
 
 export const LayerContainer = styled.div`
   && {

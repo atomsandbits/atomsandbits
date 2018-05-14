@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link as _Link } from 'react-router-dom';
-import Chip from 'material-ui/Chip';
+// import Chip from 'material-ui/Chip';
 import _ErrorIcon from 'react-icons/lib/fa/exclamation-circle';
 import { CircularProgress } from 'material-ui/Progress';
 import _SpeckRenderer from '/client/imports/components/SpeckRenderer';

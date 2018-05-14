@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, onlyUpdateForPropTypes } from 'recompose';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import isEqual from 'lodash/isEqual';
+// import isEqual from 'lodash/isEqual';
 
 import {
   DropdownContainer,

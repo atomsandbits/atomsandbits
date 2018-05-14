@@ -31,7 +31,7 @@ import {
   SpeckRenderer,
 } from './styles';
 
-const LIMIT = 30;
+// const LIMIT = 30;
 
 const Loading = (props) => (
   <AppLayout
@@ -122,7 +122,17 @@ const GeometryPure = ({
     }
   />
 );
-
+GeometryPure.propTypes = {
+  geometry: PropTypes.arrayOf(PropTypes.object),
+  energies: PropTypes.arrayOf(PropTypes.object),
+  forces: PropTypes.arrayOf(PropTypes.object),
+  freeEnergies: PropTypes.arrayOf(PropTypes.object),
+  geometryOptimizations: PropTypes.arrayOf(PropTypes.object),
+  conformerSearches: PropTypes.arrayOf(PropTypes.object),
+  harmonicSpectra: PropTypes.arrayOf(PropTypes.object),
+  relaxedScans: PropTypes.arrayOf(PropTypes.object),
+  refetch: PropTypes.func,
+};
 const Geometry = enhance(GeometryPure);
 
 export { Geometry };

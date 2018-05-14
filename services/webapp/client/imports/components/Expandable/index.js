@@ -1,5 +1,6 @@
 import React from 'react';
-import { compose, withProps, withState, setPropTypes } from 'recompose';
+import PropTypes from 'prop-types';
+import { compose, withState } from 'recompose';
 import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
@@ -12,15 +13,12 @@ import {
   ExpansionPanel,
 } from './styles';
 
-const propTypes = {};
-
 const enhance = compose(
   withState(
     'expanded',
     'setExpanded',
     ({ defaultExpanded }) => defaultExpanded || false
-  ),
-  setPropTypes(propTypes)
+  )
 );
 
 const Expandable = ({
@@ -45,7 +43,15 @@ const Expandable = ({
     </ExpansionPanelDetails>
   </ExpansionPanel>
 );
-Expandable.propTypes = propTypes;
+Expandable.propTypes = {
+  className: PropTypes.string,
+  summary: PropTypes.element,
+  details: PropTypes.element,
+  expandable: PropTypes.bool,
+  expanded: PropTypes.bool,
+  expandIcon: PropTypes.element,
+  setExpanded: PropTypes.func,
+};
 Expandable.defaultProps = {
   summary: '',
   details: '',

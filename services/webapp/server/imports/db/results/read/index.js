@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import elasticsearch from 'elasticsearch';
+// import elasticsearch from 'elasticsearch';
 import { Calculations, Projects } from '/server/imports/db';
-import { convertCalculationToGraph } from '/server/imports/db/calculations/read';
-import { convertProjectToGraph } from '/server/imports/db/projects/read';
+// import { convertCalculationToGraph } from '/server/imports/db/calculations/read';
+// import { convertProjectToGraph } from '/server/imports/db/projects/read';
 
 const convertResultToGraph = ({ result }) => {
   return result;

@@ -1,9 +1,9 @@
 import logger from '/both/imports/logger';
-ServiceConfiguration.configurations.remove({
+global.ServiceConfiguration.configurations.remove({
   service: 'google',
 });
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
-  ServiceConfiguration.configurations.insert({
+  global.ServiceConfiguration.configurations.insert({
     service: 'google',
     clientId: process.env.GOOGLE_CLIENT_ID,
     secret: process.env.GOOGLE_CLIENT_SECRET,

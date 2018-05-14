@@ -12,7 +12,7 @@ import {
   onlyUpdateForPropTypes,
 } from 'recompose';
 import { LinearProgress, CircularProgress } from 'material-ui/Progress';
-import queryParser from 'query-string';
+// import queryParser from 'query-string';
 import clone from 'lodash/clone';
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
@@ -20,7 +20,7 @@ import throttle from 'lodash/throttle';
 import AppLayout from '/client/imports/components/AppLayout';
 import ResultNavigator from '/client/imports/components/ResultNavigator';
 import SearchDrawer from '/client/imports/components/SearchDrawer';
-import SelectedGeometries from '/client/imports/components/SelectedGeometries';
+// import SelectedGeometries from '/client/imports/components/SelectedGeometries';
 
 import withGeometries from './withGeometries';
 import GeometryCard from './components/GeometryCard';
@@ -210,6 +210,7 @@ GeometrySearchPure.propTypes = {
   geometries: PropTypes.arrayOf(PropTypes.object).isRequired,
   loadingGeometries: PropTypes.bool.isRequired,
   position: PropTypes.number.isRequired,
+  hasNextPage: PropTypes.bool,
 };
 
 const GeometrySearch = enhance(GeometrySearchPure);

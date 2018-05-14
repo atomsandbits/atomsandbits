@@ -4,7 +4,7 @@ import DeleteIcon from 'react-icons/lib/fa/times-circle';
 
 import DropdownMenu from '/client/imports/components/DropdownMenu';
 
-import { colors, breakpoints, fonts } from '/client/imports/theme';
+import { colors } from '/client/imports/theme';
 
 export const LayerContainer = styled(Card)`
   && {

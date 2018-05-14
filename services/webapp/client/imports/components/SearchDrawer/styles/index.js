@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import _Drawer from 'material-ui/Drawer';
-import { colors, fonts, sizes } from '/client/imports/theme';
+import { sizes } from '/client/imports/theme';
 
 export const AppFrame = styled.div`
   display: flex;

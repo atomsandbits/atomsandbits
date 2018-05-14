@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { compose, lifecycle, pure, withProps } from 'recompose';
+import PropTypes from 'prop-types';
+import { compose, lifecycle, withProps } from 'recompose';
 
 import { ContextConsumer } from '../../context';
 import CalculationOptions from '/client/imports/components/CalculationOptions';
@@ -23,9 +24,7 @@ const CalculationLayerPure = ({
   index,
   setOutputTypes,
   setParameters,
-  context: {
-    state: { layers },
-  },
+  context: { state: { layers } },
 }) => (
   <Fragment>
     <CalculationOptions
@@ -38,7 +37,12 @@ const CalculationLayerPure = ({
     />
   </Fragment>
 );
-
+CalculationLayerPure.propTypes = {
+  index: PropTypes.number,
+  setOutputTypes: PropTypes.func,
+  setParameters: PropTypes.func,
+  context: PropTypes.shape({ state: PropTypes.object }),
+};
 const EnhancedCalculationLayer = enhance(CalculationLayerPure);
 
 const CalculationLayer = (props) => (

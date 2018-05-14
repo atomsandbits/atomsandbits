@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Button from 'material-ui/Button';
-import { colors, breakpoints, fonts } from '/client/imports/theme';
+import { breakpoints } from '/client/imports/theme';
 
 export const NewCalculationContainer = styled.div`
   max-width: 1000px;

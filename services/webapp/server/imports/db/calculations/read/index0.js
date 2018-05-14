@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Meteor } from 'meteor/meteor';
 import _ from 'lodash';
 import moment from 'moment';

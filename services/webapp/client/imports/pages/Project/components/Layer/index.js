@@ -14,7 +14,7 @@ import {
   LayerContent,
   GeometryLink,
   LoadingIndicator,
-  ResultContainer,
+  // ResultContainer,
   Parameters,
   LeftSide,
   RightSide,
@@ -33,8 +33,8 @@ const prettyPropertyLabel = ({ parameters }) => {
       }`;
   }
 };
-String.prototype.capitalize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
+const capitalize = function(value) {
+  return value.charAt(0).toUpperCase() + this.slice(1);
 };
 
 const enhance = compose(
@@ -69,7 +69,7 @@ const LayerPure = ({
   <LayerContainer>
     <TopLeft>
       <div>Layer</div>
-      <div>{type.toLowerCase().capitalize()}</div>
+      <div>{capitalize(type.toLowerCase())}</div>
     </TopLeft>
     {!completed ? (
       <TopRight>

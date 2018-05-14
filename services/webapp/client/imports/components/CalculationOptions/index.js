@@ -3,13 +3,8 @@ import PropTypes from 'prop-types';
 import {
   compose,
   branch,
-  lifecycle,
   onlyUpdateForPropTypes,
-  setPropTypes,
-  withHandlers,
   defaultProps,
-  pure,
-  withProps,
   setStatic,
   renderComponent,
 } from 'recompose';

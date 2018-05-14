@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import SearchIcon from 'material-ui-icons/Search';
 
-import { colors, breakpoints, fonts } from '/client/imports/theme';
+import { breakpoints } from '/client/imports/theme';
 
 export const GeometrySearchContainer = styled.div`
   display: flex;

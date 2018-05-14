@@ -1,4 +1,3 @@
-import React from 'react';
 import { colors, fonts } from '/client/imports/theme';
 
 const styles = (theme) => ({

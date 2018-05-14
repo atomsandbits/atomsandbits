@@ -11,12 +11,12 @@ import {
   withHandlers,
   withState,
 } from 'recompose';
-import queryParser from 'query-string';
+// import queryParser from 'query-string';
 import debounce from 'lodash/debounce';
-import Fade from 'material-ui/transitions/Fade';
+// import Fade from 'material-ui/transitions/Fade';
 import { LinearProgress } from 'material-ui/Progress';
 
-import { logger } from '/both/imports/logger';
+// import { logger } from '/both/imports/logger';
 // import Header from '/client/imports/components/Header';
 import AppLayout from '/client/imports/components/AppLayout';
 import ResultNavigator from '/client/imports/components/ResultNavigator';
@@ -144,6 +144,7 @@ ResultsFeedPure.propTypes = {
   position: PropTypes.number.isRequired,
   totalCount: PropTypes.number.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  queryParams: PropTypes.object,
 };
 
 const ResultsFeed = enhance(ResultsFeedPure);

@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const auxBasisSets = [
   {
     value: false,

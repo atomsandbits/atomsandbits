@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import SplashPage from '/client/imports/pages/Splash';
@@ -11,8 +11,6 @@ import ProjectPage from '/client/imports/pages/Project';
 // import AboutPage from '/client/imports/pages/About';
 // import CalculationPage from '/client/imports/pages/Calculation';
 // import CalculationOutputPage from '/client/imports/pages/CalculationOutput';
-
-import { lifecycle } from 'recompose';
 
 const Routes = () => (
   <Switch>

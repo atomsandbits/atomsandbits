@@ -5,10 +5,10 @@ import {
   branch,
   renderComponent,
   mapProps,
-  withProps,
+  // withProps,
   onlyUpdateForPropTypes,
 } from 'recompose';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 import { LinearProgress } from 'material-ui/Progress';
 
 import Molecule from '/both/imports/tools/Molecule';

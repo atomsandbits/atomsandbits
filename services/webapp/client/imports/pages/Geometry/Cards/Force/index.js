@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { sprintf } from 'sprintf-js';
 import { compose, branch, renderComponent, renderNothing } from 'recompose';

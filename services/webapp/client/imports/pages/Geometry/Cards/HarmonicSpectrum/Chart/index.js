@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { compose, withProps } from 'recompose';
 import { defaults, Line as LineChart } from 'react-chartjs-2';

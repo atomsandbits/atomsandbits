@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, sizes } from '/client/imports/theme';
+import { colors } from '/client/imports/theme';
 
 export const SelectedGeometriesContainer = styled.div`
   position: fixed;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { colors, breakpoints, fonts } from '/client/imports/theme';
+// import { Link } from 'react-router-dom';
+import { breakpoints } from '/client/imports/theme';
 
 export const ProjectContainer = styled.div``;
 

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { Geometries } from '/server/imports/db';
-import memoize from 'lodash/memoize';
+// import memoize from 'lodash/memoize';
 
 let countedAt = {};
 let counts = {};
@@ -31,14 +31,14 @@ class GeometriesMapper {
   }
   _setupQuery() {
     const {
-      first,
-      last,
+      // first,
+      // last,
       limit,
       skip,
-      after,
+      // after,
       orderBy,
       filters,
-      userId,
+      // userId,
     } = this.options;
 
     /* Sorting */

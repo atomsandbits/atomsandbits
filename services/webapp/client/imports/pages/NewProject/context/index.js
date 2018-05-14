@@ -4,7 +4,7 @@ import update from 'immutability-helper';
 import { Session } from 'meteor/session';
 import memoize from 'lodash/memoize';
 import isEqual from 'lodash/isEqual';
-import clone from 'lodash/clone';
+// import clone from 'lodash/clone';
 
 import xyzSample from './molecule';
 

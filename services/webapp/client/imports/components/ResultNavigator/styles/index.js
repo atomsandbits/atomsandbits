@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, breakpoints, sizes } from '/client/imports/theme';
+import { colors, breakpoints } from '/client/imports/theme';
 
 export const ResultNavigatorContainer = styled.div`
   align-items: center;

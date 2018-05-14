@@ -60,9 +60,7 @@ const LayersPure = ({
         index={index}
         inputTypes={
           layers[index - 1]
-            ? layers[index - 1].outputTypes
-              ? layers[index - 1].outputTypes
-              : []
+            ? layers[index - 1].outputTypes ? layers[index - 1].outputTypes : []
             : ['geometry']
         }
         deleteLayer={deleteLayer}

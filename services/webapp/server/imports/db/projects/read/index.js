@@ -1,9 +1,9 @@
-import { Meteor } from 'meteor/meteor';
-import _ from 'lodash';
-import moment from 'moment';
-import elasticsearch from 'elasticsearch';
-import { Projects, Geometries, Requests } from '/server/imports/db';
-import xyzTools from '/both/imports/tools/xyz';
+// import { Meteor } from 'meteor/meteor';
+// import _ from 'lodash';
+// import moment from 'moment';
+// import elasticsearch from 'elasticsearch';
+// import xyzTools from '/both/imports/tools/xyz';
+import { Projects, Requests } from '/server/imports/db';
 
 const convertProjectToGraph = ({ projectId, project, userId }) => {
   if (!project) {

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { Link as _Link } from 'react-router-dom';
-import Chip from 'material-ui/Chip';
-import _SpeckRenderer from '/client/imports/components/SpeckRenderer';
-import { colors, fonts, breakpoints } from '/client/imports/theme';
+// import { Link as _Link } from 'react-router-dom';
+// import Chip from 'material-ui/Chip';
+// import _SpeckRenderer from '/client/imports/components/SpeckRenderer';
+import { fonts, breakpoints } from '/client/imports/theme';
 
 export const RendererContainer = styled.div`
   display: flex;

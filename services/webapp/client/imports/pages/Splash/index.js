@@ -44,7 +44,7 @@ class SplashPage extends React.Component {
     });
   };
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     const { userId } = this.state;
     if (userId) {
       return <ResultsFeed />;

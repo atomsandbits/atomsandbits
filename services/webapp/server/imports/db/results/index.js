@@ -1,4 +1,4 @@
-import { Calculations, Projects, UserResults } from '/server/imports/db';
+import { UserResults } from '/server/imports/db';
 
 class Results {
   constructor(options) {
@@ -6,7 +6,7 @@ class Results {
     // this.options.limit = options.first || (options.last || 30);
   }
   _fetch() {
-    const { first, last, limit, skip, orderBy, userId } = this.options;
+    const { limit, skip, orderBy, userId } = this.options;
 
     /* Sorting */
     const { sort, direction } = orderBy || {
@@ -16,9 +16,7 @@ class Results {
     const mongoSortBy =
       sort === 'CREATED'
         ? 'createdAt'
-        : sort === 'MASS'
-          ? 'geometry.mass'
-          : 'createdAt';
+        : sort === 'MASS' ? 'geometry.mass' : 'createdAt';
     const mongoSortDirection = direction === 'DESC' ? -1 : 1;
     const mongoSort = {
       [mongoSortBy]: mongoSortDirection,

@@ -1,11 +1,11 @@
-import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
+// import { Meteor } from 'meteor/meteor';
+// import { Tracker } from 'meteor/tracker';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { compose } from 'recompose';
+// import { compose } from 'recompose';
 import queryString from 'query-string';
 
-import apolloClient from '/client/imports/apollo-client';
+// import apolloClient from '/client/imports/apollo-client';
 
 const dataQuery = gql`
   query($pageInput: PaginationInput!) {

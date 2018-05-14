@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Range as _Range } from 'rc-slider';
 import _Button from 'material-ui/Button';
 import _SearchIcon from 'material-ui-icons/Search';
 
-import { colors, fonts, sizes } from '/client/imports/theme';
+import { colors, sizes } from '/client/imports/theme';
 
 export const DrawerContentContainer = styled.div`
   background-color: ${colors.background.default};

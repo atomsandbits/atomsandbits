@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { compose } from 'recompose';
 
 import apolloClient from '/client/imports/apollo-client';
 

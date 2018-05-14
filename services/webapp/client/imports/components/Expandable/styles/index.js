@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import _ExpansionPanel from 'material-ui/ExpansionPanel';
-import { colors, fonts, breakpoints } from '/client/imports/theme';
+// import { colors, fonts, breakpoints } from '/client/imports/theme';
 
 export const ExpansionPanel = styled(_ExpansionPanel)`
   && {

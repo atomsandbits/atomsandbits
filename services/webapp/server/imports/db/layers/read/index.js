@@ -1,9 +1,9 @@
-import { Meteor } from 'meteor/meteor';
-import _ from 'lodash';
-import moment from 'moment';
-import elasticsearch from 'elasticsearch';
-import { Layers, Geometries, Requests } from '/server/imports/db';
-import xyzTools from '/both/imports/tools/xyz';
+// import { Meteor } from 'meteor/meteor';
+// import _ from 'lodash';
+// import moment from 'moment';
+// import elasticsearch from 'elasticsearch';
+// import xyzTools from '/both/imports/tools/xyz';
+import { Layers, Requests } from '/server/imports/db';
 
 const convertLayerToGraph = ({ layerId, layer, userId }) => {
   if (!layer) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 
 import BaseHeader from '/client/imports/components/Header';
@@ -110,6 +111,16 @@ const HeaderPure = ({
     }
   />
 );
+HeaderPure.propTypes = {
+  search: PropTypes.string,
+  setSearch: PropTypes.func,
+  setSortBy: PropTypes.func,
+  setSortDirection: PropTypes.func,
+  setTag: PropTypes.func,
+  sortBy: PropTypes.string,
+  sortDirection: PropTypes.string,
+  tag: PropTypes.string,
+};
 
 const Header = compose()(HeaderPure);
 

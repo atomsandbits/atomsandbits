@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import {
   compose,
@@ -5,7 +6,7 @@ import {
   renderComponent,
   renderNothing,
   pure,
-  mapProps,
+  // mapProps,
 } from 'recompose';
 
 import Chart from './Chart';
@@ -16,7 +17,7 @@ import {
   CardPropertyRow,
   CardTitle,
   ErrorIcon,
-  Column,
+  // Column,
   Expandable,
   LoadIndicator,
 } from '../../styles';
