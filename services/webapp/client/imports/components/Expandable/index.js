@@ -45,8 +45,8 @@ const Expandable = ({
 );
 Expandable.propTypes = {
   className: PropTypes.string,
-  summary: PropTypes.element,
-  details: PropTypes.element,
+  summary: PropTypes.any,
+  details: PropTypes.any,
   expandable: PropTypes.bool,
   expanded: PropTypes.bool,
   expandIcon: PropTypes.element,

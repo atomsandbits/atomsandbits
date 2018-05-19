@@ -7,6 +7,7 @@ import {
   onlyUpdateForPropTypes,
   withHandlers,
 } from 'recompose';
+import { Meteor } from 'meteor/meteor';
 import throttle from 'lodash/throttle';
 import uniq from 'lodash/uniq';
 
@@ -38,63 +39,77 @@ const enhance = compose(
   withHandlers({
     submitProject: ({ layers, xyz, runProjectMutation }) =>
       throttle(() => {
-        const submitLayers = layers.map(({ type, parameters }) => {
-          const submitLayer = {
-            type: type.toUpperCase(),
-            parameters,
-          };
-          if (type === 'calculation')
-            submitLayer.parameters = { calculation: submitLayer.parameters };
-          return submitLayer;
-        });
-        /* Some sanity check */
-        if (!xyz) {
-          window.alert('No elements in xyz.');
-          return;
-        }
-        const { atomCollection } = new Molecule({
-          xyz,
-        });
-        if (atomCollection.length === 0) {
-          window.alert('No elements in xyz.');
-          return;
-        }
-        if (atomCollection.length > 1000) {
-          window.alert('Maximum of 1000 atoms for now.');
-          return;
-        }
-        let invalidInput;
-        layers.forEach((layer) => {
-          if (
-            layer.parameters.atomOne &&
-            layer.parameters.atomOne === layer.parameters.atomTwo
-          ) {
-            window.alert('Atom1 cannot equal Atom2.');
-            invalidInput = true;
+        const submit = () => {
+          const submitLayers = layers.map(({ type, parameters }) => {
+            const submitLayer = {
+              type: type.toUpperCase(),
+              parameters,
+            };
+            if (type === 'calculation')
+              submitLayer.parameters = { calculation: submitLayer.parameters };
+            return submitLayer;
+          });
+          /* Some sanity check */
+          if (!xyz) {
+            window.alert('No elements in xyz.');
+            return;
           }
-          if (layer.parameters.method === 'machineLearning') {
-            let elements = uniq(
-              atomCollection.map((atomDocument) => atomDocument.element)
-            );
-            let supportElements = ['C', 'N', 'O', 'H'];
-            elements.forEach((element) => {
-              if (supportElements.indexOf(element) === -1) {
-                window.alert(
-                  `Only ${supportElements} elements are supported for this network.`
-                );
-                invalidInput = true;
-              }
-            });
+          const { atomCollection } = new Molecule({
+            xyz,
+          });
+          if (atomCollection.length === 0) {
+            window.alert('No elements in xyz.');
+            return;
           }
-        });
-        if (invalidInput) return;
-        // console.log('Submit', submitLayers);
-        runProjectMutation({
-          input: {
-            layers: submitLayers,
-            xyzs: [xyz],
-          },
-        });
+          if (atomCollection.length > 1000) {
+            window.alert('Maximum of 1000 atoms for now.');
+            return;
+          }
+          let invalidInput;
+          layers.forEach((layer) => {
+            if (
+              layer.parameters.atomOne &&
+              layer.parameters.atomOne === layer.parameters.atomTwo
+            ) {
+              window.alert('Atom1 cannot equal Atom2.');
+              invalidInput = true;
+            }
+            if (layer.parameters.method === 'machineLearning') {
+              let elements = uniq(
+                atomCollection.map((atomDocument) => atomDocument.element)
+              );
+              let supportElements = ['C', 'N', 'O', 'H'];
+              elements.forEach((element) => {
+                if (supportElements.indexOf(element) === -1) {
+                  window.alert(
+                    `Only ${supportElements} elements are supported for this network.`
+                  );
+                  invalidInput = true;
+                }
+              });
+            }
+          });
+          if (invalidInput) return;
+          // console.log('Submit', submitLayers);
+          runProjectMutation({
+            input: {
+              layers: submitLayers,
+              xyzs: [xyz],
+            },
+          });
+        };
+        if (!Meteor.userId()) {
+          Meteor.loginWithGoogle({}, (err) => {
+            if (err) {
+              // Login Error
+            } else {
+              // Successful Login
+              submit();
+            }
+          });
+        } else {
+          submit();
+        }
       }, 5000),
   }),
   lifecycle({

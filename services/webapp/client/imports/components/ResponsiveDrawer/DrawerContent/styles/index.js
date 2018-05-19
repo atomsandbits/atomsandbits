@@ -30,7 +30,8 @@ export const LinksContainer = styled.div`
 `;
 export const LinkContainer = styled(Link)`
   && {
-    align-items: flex-end;
+    align-items: center;
+    display: flex;
     color: ${colors.primary};
     padding: 15px 25px;
     justify-content: flex-start;
@@ -50,6 +51,9 @@ export const LinkIcon = styled.span`
   display: flex;
   align-items: center;
   padding-right: 15px;
+  font-size: 24px;
+  height: 1em;
+  width: 1em;
 `;
 export const LinkText = styled.span`
   color: ${colors.text.default};
@@ -61,10 +65,10 @@ export const LinkText = styled.span`
 `;
 export const aContainer = styled.a`
   && {
-    align-items: normal;
-    color: ${colors.text.default};
+    align-items: center;
+    display: flex;
+    color: ${colors.primary};
     padding: 15px 25px;
-    transition: background-color 400ms;
     justify-content: flex-start;
     text-transform: none;
     width: 100%;

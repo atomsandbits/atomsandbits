@@ -1,4 +1,5 @@
 #!/bin/bash
+cd $(dirname $0) && cd ../..
 
 rm -rf ./images/$1/src
 cp -r ../services/$1 ./images/$1/src
@@ -6,9 +7,9 @@ cp -r ../services/$1 ./images/$1/src
 
 # Load Environment Variables
 set -a
-source variables.env
-if [ -f user-variables.env ]; then
-    source user-variables.env
+source variables.default.env
+if [ -f variables.env ]; then
+    source variables.env
 fi
 
 # Run Docker Compose

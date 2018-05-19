@@ -1,4 +1,5 @@
 #!/bin/bash
+cd $(dirname $0) && cd ..
 
 # Download TensorMol networks from Google Drive
 if [ ! -f ./images/tensormol/networks.zip ]; then
@@ -9,24 +10,24 @@ if [ ! -f ./images/tensormol/networks.zip ]; then
     filename="$(curl -sc /tmp/gcokie "${ggURL}&id=${ggID}" | grep -o '="uc-name.*</span>' | sed 's/.*">//;s/<.a> .*//')"
     getcode="$(awk '/_warning_/ {print $NF}' /tmp/gcokie)"
     curl -Lb /tmp/gcokie "${ggURL}&confirm=${getcode}&id=${ggID}" -o "${filename}"
-    cd ../../
+    cd $(dirname $0) && cd ..
 fi
 
 # Load Environment Variables
 set -a
-source variables.env
-if [ -f ./user-variables.env ]; then
-    source user-variables.env
+source variables.default.env
+if [ -f variables.env ]; then
+    source variables.env
 fi
 
 # Build Images
-./scripts/build-image.sh about
-./scripts/build-image.sh webapp
-./scripts/build-image.sh database
-./scripts/build-image.sh tensormol
-./scripts/build-image.sh psi4
-./scripts/build-image.sh pyscf
-./scripts/build-image.sh image-generator
+./scripts/docker/build-image.sh about
+./scripts/docker/build-image.sh webapp
+./scripts/docker/build-image.sh database
+./scripts/docker/build-image.sh tensormol
+./scripts/docker/build-image.sh psi4
+./scripts/docker/build-image.sh pyscf
+./scripts/docker/build-image.sh image-generator
 docker-compose build mongo
 docker-compose build elasticsearch
 docker-compose build mongo-connector

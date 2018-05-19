@@ -7,17 +7,17 @@ import { getCalculation } from '/server/imports/db/calculations/read';
 
 const Mutation = {
   runCalculation(root, args, context) {
-    logger.silly('mutation_runCalculation: ', args.input, context.user.profile);
     const { userId } = context;
+    if (!userId) {
+      return new Error('Not logged in.');
+    }
     const { xyzs, parameters } = args.input;
     const { program } = _.filter(calculationMethods, {
       value: parameters.method,
       type: parameters.type,
     })[0];
     parameters.program = program;
-    if (!userId) {
-      return new Promise();
-    }
+    logger.silly('mutation_runCalculation: ', args.input, context.user.profile);
     return new Promise(
       Meteor.bindEnvironment((resolve) => {
         socket.emit(

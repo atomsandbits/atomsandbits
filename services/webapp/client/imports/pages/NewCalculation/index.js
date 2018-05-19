@@ -7,6 +7,7 @@ import {
   onlyUpdateForPropTypes,
   lifecycle,
 } from 'recompose';
+import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import map from 'lodash/map';
 import throttle from 'lodash/throttle';
@@ -66,45 +67,59 @@ const enhance = compose(
       throttle(() => {
         // Create client-side checks system here
         // ----------
-        const { atomCollection } = new Molecule({
-          xyz: xyz,
-        });
-        if (atomCollection.length === 0) {
-          window.alert('No elements in xyz.');
-          return;
-        }
-        if (atomCollection.length > 1000) {
-          window.alert('Maximum of 1000 atoms for now.');
-          return;
-        }
-        if (parameters.atomOne && parameters.atomOne === parameters.atomTwo) {
-          window.alert('Atom1 cannot equal Atom2.');
-          return;
-        }
-        if (parameters.method === 'machineLearning') {
-          let elements = uniq(
-            map(atomCollection, (atomDocument) => atomDocument.element)
-          );
-          let supportElements = ['C', 'N', 'O', 'H'];
-          let unsupportedElementFound = false;
-          elements.forEach((element) => {
-            if (supportElements.indexOf(element) === -1) {
-              window.alert(
-                `Only ${supportElements} elements are supported for this network.`
-              );
-              unsupportedElementFound = true;
+        const submit = () => {
+          const { atomCollection } = new Molecule({
+            xyz: xyz,
+          });
+          if (atomCollection.length === 0) {
+            window.alert('No elements in xyz.');
+            return;
+          }
+          if (atomCollection.length > 1000) {
+            window.alert('Maximum of 1000 atoms for now.');
+            return;
+          }
+          if (parameters.atomOne && parameters.atomOne === parameters.atomTwo) {
+            window.alert('Atom1 cannot equal Atom2.');
+            return;
+          }
+          if (parameters.method === 'machineLearning') {
+            let elements = uniq(
+              map(atomCollection, (atomDocument) => atomDocument.element)
+            );
+            let supportElements = ['C', 'N', 'O', 'H'];
+            let unsupportedElementFound = false;
+            elements.forEach((element) => {
+              if (supportElements.indexOf(element) === -1) {
+                window.alert(
+                  `Only ${supportElements} elements are supported for this network.`
+                );
+                unsupportedElementFound = true;
+              }
+            });
+            if (unsupportedElementFound) return;
+          }
+          const input = {
+            xyzs: [xyz],
+            parameters: parameters,
+          };
+          logger.info('Submitting Calculation', input);
+          runCalculationMutation({
+            input,
+          });
+        };
+        if (!Meteor.userId()) {
+          Meteor.loginWithGoogle({}, (err) => {
+            if (err) {
+              // Login Error
+            } else {
+              // Successful Login
+              submit();
             }
           });
-          if (unsupportedElementFound) return;
+        } else {
+          submit();
         }
-        const input = {
-          xyzs: [xyz],
-          parameters: parameters,
-        };
-        logger.info('Submitting Calculation', input);
-        runCalculationMutation({
-          input,
-        });
       }, 5000),
   }),
   lifecycle({

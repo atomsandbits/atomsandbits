@@ -123,7 +123,7 @@ const GeometryPure = ({
   />
 );
 GeometryPure.propTypes = {
-  geometry: PropTypes.arrayOf(PropTypes.object),
+  geometry: PropTypes.object,
   energies: PropTypes.arrayOf(PropTypes.object),
   forces: PropTypes.arrayOf(PropTypes.object),
   freeEnergies: PropTypes.arrayOf(PropTypes.object),

@@ -18,6 +18,8 @@ socket.on('runCalculation', async ({ calculation }) => {
   console.log(`Started: Calculation #${calculation._id}...`);
   try {
     runCalculation(calculation);
+    // TODO: this is reset too fast,
+    // needs to be awaited or callback
     calculationRunning = false;
   } catch (error) {
     calculationRunning = false;

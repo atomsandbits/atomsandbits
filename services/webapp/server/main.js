@@ -1,8 +1,11 @@
+import { Meteor } from 'meteor/meteor';
+
 import '/server/imports/config';
 import '/server/imports/api';
 import '/server/imports/routes';
 // import { Calculations, Geometries } from '/server/imports/db';
 
+Meteor.users.deny({ update: () => true });
 // Meteor.methods({
 //   'resetDatabase': () => {
 //     console.log("Resetting Database...")

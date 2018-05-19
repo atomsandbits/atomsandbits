@@ -12,6 +12,10 @@ const basisSets = [
     prettyName: '6-31+G*',
   },
   {
+    value: '6-311pgss',
+    prettyName: '6-311+G**',
+  },
+  {
     value: 'def2-svp',
     prettyName: 'def2-SVP',
   },

@@ -1,5 +1,4 @@
-user-variables.env
-!variables.env
+variables.env
 nvidia-docker-compose.yml
 certs
 docker-compose.override.yml

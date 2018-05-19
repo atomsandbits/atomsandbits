@@ -34,7 +34,7 @@ const prettyPropertyLabel = ({ parameters }) => {
   }
 };
 const capitalize = function(value) {
-  return value.charAt(0).toUpperCase() + this.slice(1);
+  return value.charAt(0).toUpperCase() + value.slice(1);
 };
 
 const enhance = compose(

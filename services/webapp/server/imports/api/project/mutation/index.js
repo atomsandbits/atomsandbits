@@ -8,6 +8,9 @@ import { getProject } from '/server/imports/db/projects/read';
 const Mutation = {
   runProject(root, args, context) {
     const { userId } = context;
+    if (!userId) {
+      return new Error('Not logged in.');
+    }
     let { xyzs, layers } = args.input;
     // Restructure parameters for calculation type
     layers = layers.map((layer) => ({
@@ -35,9 +38,6 @@ const Mutation = {
         `${layers.map((layer) => JSON.stringify(layer) + '\n')}` +
         `${JSON.stringify(context.user.profile)}`
     );
-    if (!userId) {
-      return new Promise();
-    }
     return new Promise(
       Meteor.bindEnvironment((resolve) => {
         socket.emit(

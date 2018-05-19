@@ -8,13 +8,13 @@ import {
   lifecycle,
   onlyUpdateForPropTypes,
 } from 'recompose';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
 import Hidden from 'material-ui/Hidden';
 import DrawerContent from './DrawerContent';
-import { Content, AppFrame, Drawer, ContactLink } from './styles';
+import { Content, AppFrame, Drawer } from './styles';
 
 const enhance = compose(
   withRouter,
@@ -70,41 +70,34 @@ const ResponsiveDrawerPure = ({
   openDrawer,
   userId,
 }) => {
-  const needsRedirect = userId === null && locationPathname !== '/';
+  // const needsRedirect = userId === null && locationPathname !== '/';
   return (
     <AppFrame>
-      {userId ? (
-        <Fragment>
-          <Hidden lgUp>
-            <Drawer
-              variant="temporary"
-              anchor="left"
-              open={drawerOpen}
-              onClose={closeDrawer}
-              ModalProps={{
-                keepMounted: true /* Better open performance on mobile. */,
-              }}
-            >
-              <DrawerContent
-                openDrawer={openDrawer}
-                closeDrawer={closeDrawer}
-              />
-            </Drawer>
-          </Hidden>
-          <Hidden mdDown implementation="css">
-            <Drawer variant="permanent">
-              <DrawerContent
-                openDrawer={openDrawer}
-                closeDrawer={closeDrawer}
-              />
-            </Drawer>
-          </Hidden>
-          <ContactLink href="mailto:support@atomsandbits.ai">
+      <Fragment>
+        <Hidden lgUp>
+          <Drawer
+            variant="temporary"
+            anchor="left"
+            open={drawerOpen}
+            onClose={closeDrawer}
+            ModalProps={{
+              keepMounted: true /* Better open performance on mobile. */,
+            }}
+          >
+            <DrawerContent openDrawer={openDrawer} closeDrawer={closeDrawer} />
+          </Drawer>
+        </Hidden>
+        <Hidden mdDown implementation="css">
+          <Drawer variant="permanent">
+            <DrawerContent openDrawer={openDrawer} closeDrawer={closeDrawer} />
+          </Drawer>
+        </Hidden>
+        {/* <ContactLink href="mailto:support@atomsandbits.ai">
             alpha | feedback
-          </ContactLink>
-        </Fragment>
-      ) : null}
-      {needsRedirect ? <Redirect to="/" /> : <Content>{content}</Content>}
+          </ContactLink> */}
+      </Fragment>
+      <Content>{content}</Content>
+      {/* {needsRedirect ? <Redirect to="/" /> : <Content>{content}</Content>} */}
     </AppFrame>
   );
 };
