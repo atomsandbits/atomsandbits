@@ -325,6 +325,28 @@ const types = [
       },
     ],
   },
+  {
+    value: 'nudgedElasticBand',
+    prettyName: 'Nudged Elastic Band',
+    supportedInputTypes: {
+      geometry: {
+        outputTypes: ['[energy]', '[geometry]'],
+      },
+      '[geometry]': {
+        outputTypes: ['[[energy]]', '[[geometry]]'],
+      },
+    },
+    methods: [
+      {
+        value: 'machineLearning',
+        prettyName: 'Machine Learning',
+        program: 'tensormol',
+        networks,
+        numberOfSteps: true,
+        secondaryGeometry: true,
+      },
+    ],
+  },
 ];
 
 const options = types;

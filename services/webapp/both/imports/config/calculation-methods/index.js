@@ -10,6 +10,12 @@ const geometryOptimizationMethods = [
   {
     value: 'machineLearning',
     prettyName: 'Machine Learning',
+    type: 'nudgedElasticBand',
+    program: 'tensormol',
+  },
+  {
+    value: 'machineLearning',
+    prettyName: 'Machine Learning',
     type: 'geometryOptimization',
     program: 'tensormol',
   },

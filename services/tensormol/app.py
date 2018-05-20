@@ -93,6 +93,11 @@ def main():
                     molecule.FromXYZString(
                         str(len(geometries[0].split('\n'))) + '\n\n' +
                         geometries[0])
+                    secondary_molecule = Mol()
+                    if geometries[1]:
+                        secondary_molecule.FromXYZString(
+                            str(len(geometries[1].split('\n'))) + '\n\n' +
+                            geometries[1])
                     # add switch based on network name
                     network = tensormol01_network
                     # TODO: Attempt to run saveCalculationResult a few times on

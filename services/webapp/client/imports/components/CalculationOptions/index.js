@@ -24,6 +24,7 @@ import FinalDistanceInput from './components/FinalDistanceInput';
 import NumberOfStepsInput from './components/NumberOfStepsInput';
 import ChargeInput from './components/ChargeInput';
 import MultiplicityDropdown from './components/MultiplicityDropdown';
+import SecondaryGeometryRenderer from './components/SecondaryGeometryRenderer';
 import { OptionsContainer } from './styles';
 
 const enhance = compose(
@@ -134,6 +135,13 @@ const CalculationOptionsPure = ({
       setNumberOfSteps={setParameter('numberOfSteps')}
       unsetNumberOfSteps={unsetParameter('numberOfSteps')}
     />
+    <SecondaryGeometryRenderer
+      type={parameters.type}
+      method={parameters.method}
+      secondaryGeometry={parameters.secondaryGeometry}
+      setSecondaryGeometry={setParameter('secondaryGeometry')}
+      unsetSecondaryGeometry={unsetParameter('secondaryGeometry')}
+    />
   </OptionsContainer>
 );
 CalculationOptionsPure.propTypes = {
@@ -144,6 +152,8 @@ CalculationOptionsPure.propTypes = {
   unsetParameter: PropTypes.func.isRequired,
 };
 
+/* This is done as a class instead of HOCs because the parameters need to be
+   cloned before being passed to the context */
 class _CalculationOptions extends React.Component {
   clonedParameters = {};
   updateOutputTypes = () => {

@@ -14,6 +14,14 @@ export const OptionContainer = styled.div`
   }
 `;
 
+export const OptionContainerFullWidth = styled.div`
+  padding: 15px 0;
+  width: 100%;
+  label {
+    white-space: nowrap;
+  }
+`;
+
 export const TextField = styled(_TextField)`
   && {
     max-width: 100px;

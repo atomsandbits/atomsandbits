@@ -68,7 +68,7 @@ const enhance = compose(
         // Create client-side checks system here
         // ----------
         const submit = () => {
-          const { atomCollection } = new Molecule({
+          const { atomCollection, atomicCoords, molecularFormula } = new Molecule({
             xyz: xyz,
           });
           if (atomCollection.length === 0) {
@@ -82,6 +82,26 @@ const enhance = compose(
           if (parameters.atomOne && parameters.atomOne === parameters.atomTwo) {
             window.alert('Atom1 cannot equal Atom2.');
             return;
+          }
+          if (parameters.type === 'nudgedElasticBand') {
+            const { secondaryGeometry } = parameters;
+            const secondaryMolecule = new Molecule({
+              xyz: secondaryGeometry,
+            });
+            const secondaryMolecularFormula = secondaryMolecule.molecularFormula;
+            const secondaryAtomicCoords = secondaryMolecule.atomicCoords;
+            if (molecularFormula !== secondaryMolecularFormula) {
+              window.alert('Molecular Formulas must be the same for NEB.');
+              return;
+            }
+            if (molecularFormula !== secondaryMolecularFormula) {
+              window.alert('Molecular Formulas must be the same for NEB.');
+              return;
+            }
+            if (atomicCoords === secondaryAtomicCoords) {
+              window.alert('Coordinates cannot be the same.');
+              return;
+            }
           }
           if (parameters.method === 'machineLearning') {
             let elements = uniq(
@@ -103,6 +123,11 @@ const enhance = compose(
             xyzs: [xyz],
             parameters: parameters,
           };
+          if (parameters.secondaryGeometry) {
+            input.xyzs.push(parameters.secondaryGeometry);
+            delete input.parameters.secondaryGeometry;
+            console.log(input);
+          }
           logger.info('Submitting Calculation', input);
           runCalculationMutation({
             input,
@@ -125,6 +150,11 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       document.title = 'new calculation | atoms+bits';
+    },
+    componentDidUpdate() {
+      const { xyz, parameters } = this.props;
+      Session.set('xyz', xyz);
+      Session.set('parameters', parameters);
     },
     componentWillUnmount() {
       const { xyz, parameters } = this.props;
