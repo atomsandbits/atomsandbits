@@ -94,6 +94,7 @@ const ResponsiveDrawerPure = ({
             onOpen={openDrawer}
             onClose={closeDrawer}
             variant="permanent"
+            anchor="left"
           >
             <DrawerContent openDrawer={openDrawer} closeDrawer={closeDrawer} />
           </Drawer>

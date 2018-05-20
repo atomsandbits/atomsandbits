@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import _Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { sizes } from '/client/imports/theme';
 
 export const AppFrame = styled.div`
@@ -9,7 +9,7 @@ export const AppFrame = styled.div`
 export const Content = styled.main`
   width: 100%;
 `;
-export const Drawer = styled(_Drawer)`
+export const Drawer = styled(SwipeableDrawer)`
   overflow: auto;
   min-width: ${sizes.drawer};
   & > div {

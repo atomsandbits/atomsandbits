@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import _Drawer from '@material-ui/core/Drawer';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { colors, fonts, sizes } from '/client/imports/theme';
 

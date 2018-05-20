@@ -38,13 +38,14 @@ const enhance = compose(
   onlyUpdateForPropTypes
 );
 
-const SearchDrawerPure = ({ drawerOpen, closeDrawer }) => (
+const SearchDrawerPure = ({ drawerOpen, openDrawer, closeDrawer }) => (
   <Fragment>
     <Hidden mdUp>
       <Drawer
         variant="temporary"
         anchor="right"
         open={drawerOpen}
+        onOpen={openDrawer}
         onClose={closeDrawer}
         ModalProps={{
           keepMounted: true /* Better open performance on mobile. */,
@@ -54,7 +55,13 @@ const SearchDrawerPure = ({ drawerOpen, closeDrawer }) => (
       </Drawer>
     </Hidden>
     <Hidden smDown implementation="css">
-      <Drawer variant="permanent" anchor="right">
+      <Drawer
+        open={true}
+        onOpen={openDrawer}
+        onClose={closeDrawer}
+        variant="permanent"
+        anchor="right"
+      >
         <DrawerContent closeDrawer={closeDrawer} />
       </Drawer>
     </Hidden>
