@@ -5,7 +5,7 @@ import MobileDetect from 'mobile-detect';
 import _ from 'lodash';
 import { Random } from 'meteor/random';
 
-import Hidden from 'material-ui/Hidden';
+import Hidden from '@material-ui/core/Hidden';
 
 import {
   SpeckRendererContainer,

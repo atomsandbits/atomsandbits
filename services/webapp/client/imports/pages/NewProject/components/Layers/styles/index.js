@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Card from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
 import DeleteIcon from 'react-icons/lib/fa/times-circle';
 
 import DropdownMenu from '/client/imports/components/DropdownMenu';

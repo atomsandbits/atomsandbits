@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { compose, branch, renderComponent, mapProps } from 'recompose';
 import { withData } from './withData';
 
-import { LinearProgress } from 'material-ui/Progress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import { logger } from '/both/imports/logger';
 

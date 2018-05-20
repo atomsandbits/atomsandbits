@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 // import { Link as _Link } from 'react-router-dom';
-import TextField from 'material-ui/TextField';
-import Chip from 'material-ui/Chip';
+import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
 import { colors } from '/client/imports/theme';
 
 export const TagsContainer = styled.div`

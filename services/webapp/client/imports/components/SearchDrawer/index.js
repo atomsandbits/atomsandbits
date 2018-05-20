@@ -7,7 +7,7 @@ import {
   lifecycle,
   onlyUpdateForPropTypes,
 } from 'recompose';
-import Hidden from 'material-ui/Hidden';
+import Hidden from '@material-ui/core/Hidden';
 
 import DrawerContent from './DrawerContent';
 import { Drawer } from './styles';

@@ -2,10 +2,10 @@
 import React from 'react';
 import { compose, withState, withHandlers, lifecycle } from 'recompose';
 
-import Button from 'material-ui/Button';
-import MobileStepper from 'material-ui/MobileStepper';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import Button from '@material-ui/core/Button';
+import MobileStepper from '@material-ui/core/MobileStepper';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import SpeckRenderer from '/client/imports/components/SpeckRenderer';
 import { Molecule } from '/both/imports/tools/Molecule';

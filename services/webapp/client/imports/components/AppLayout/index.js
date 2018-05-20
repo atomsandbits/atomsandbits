@@ -8,8 +8,8 @@ import {
   withHandlers,
 } from 'recompose';
 import throttle from 'lodash/throttle';
-import Toolbar from 'material-ui/Toolbar';
-import MenuIcon from 'material-ui-icons/Menu';
+import Toolbar from '@material-ui/core/Toolbar';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import {
   App,

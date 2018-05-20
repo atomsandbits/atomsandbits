@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SearchIcon from 'material-ui-icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 
 import { breakpoints } from '/client/imports/theme';
 

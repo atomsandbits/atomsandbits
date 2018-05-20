@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 // import { Link } from 'react-router-dom';
 import { Range as _Range } from 'rc-slider';
-import _Button from 'material-ui/Button';
-import _SearchIcon from 'material-ui-icons/Search';
+import _Button from '@material-ui/core/Button';
+import _SearchIcon from '@material-ui/icons/Search';
 
 import { colors, sizes } from '/client/imports/theme';
 

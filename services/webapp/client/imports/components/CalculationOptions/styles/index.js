@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import _TextField from 'material-ui/TextField';
+import _TextField from '@material-ui/core/TextField';
 
 export const OptionsContainer = styled.div`
   display: flex;

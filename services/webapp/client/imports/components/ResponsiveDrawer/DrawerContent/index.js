@@ -10,16 +10,16 @@ import {
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
-import AddIcon from 'material-ui-icons/Add';
-import AddOutlineIcon from 'material-ui-icons/AddCircleOutline';
-import CancelIcon from 'material-ui-icons/Cancel';
+import AddIcon from '@material-ui/icons/Add';
+import AddOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import CancelIcon from '@material-ui/icons/Cancel';
 import EnvelopeIcon from 'react-icons/lib/fa/envelope-o';
 import GitlabIcon from 'react-icons/lib/fa/gitlab';
 import GoogleIcon from 'react-icons/lib/fa/google';
-import InfoOutlineIcon from 'material-ui-icons/InfoOutline';
-import ListIcon from 'material-ui-icons/List';
-import SearchIcon from 'material-ui-icons/Search';
-// import ViewListIcon from 'material-ui-icons/ViewList';
+import InfoOutlineIcon from '@material-ui/icons/InfoOutline';
+import ListIcon from '@material-ui/icons/List';
+import SearchIcon from '@material-ui/icons/Search';
+// import ViewListIcon from '@material-ui/icons/ViewList';
 
 import {
   aContainer,
@@ -49,8 +49,7 @@ const enhance = compose(
   }),
   lifecycle({
     componentWillMount() {
-      const { toggleDrawer, setUserId } = this.props;
-      window.toggleDrawer = toggleDrawer;
+      const { setUserId } = this.props;
       this.userTracker = Tracker.autorun(() => {
         setUserId(Meteor.userId());
         if (Meteor.userId()) {

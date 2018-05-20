@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import _Button from 'material-ui/Button';
+import _Button from '@material-ui/core/Button';
 import { colors, fonts, sizes } from '/client/imports/theme';
 
 export const DrawerContentContainer = styled.div`

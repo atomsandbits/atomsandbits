@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import _CancelIcon from 'material-ui-icons/Cancel';
-import _UpIcon from 'material-ui-icons/ArrowUpward';
-import _DownIcon from 'material-ui-icons/ArrowDownward';
-import _SearchIcon from 'material-ui-icons/Search';
+import _CancelIcon from '@material-ui/icons/Cancel';
+import _UpIcon from '@material-ui/icons/ArrowUpward';
+import _DownIcon from '@material-ui/icons/ArrowDownward';
+import _SearchIcon from '@material-ui/icons/Search';
 import DropdownMenu from '/client/imports/components/DropdownMenu';
 
 // import { colors, breakpoints, fonts } from '/client/imports/theme';

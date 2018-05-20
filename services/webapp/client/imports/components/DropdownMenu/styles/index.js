@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import { colors } from '/client/imports/theme';
 
 export const DropdownContainer = styled.div``;

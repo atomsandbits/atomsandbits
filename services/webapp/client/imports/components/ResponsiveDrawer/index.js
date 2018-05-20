@@ -12,7 +12,7 @@ import { withRouter } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
-import Hidden from 'material-ui/Hidden';
+import Hidden from '@material-ui/core/Hidden';
 import DrawerContent from './DrawerContent';
 import { Content, AppFrame, Drawer } from './styles';
 
@@ -79,6 +79,7 @@ const ResponsiveDrawerPure = ({
             variant="temporary"
             anchor="left"
             open={drawerOpen}
+            onOpen={openDrawer}
             onClose={closeDrawer}
             ModalProps={{
               keepMounted: true /* Better open performance on mobile. */,
@@ -88,7 +89,12 @@ const ResponsiveDrawerPure = ({
           </Drawer>
         </Hidden>
         <Hidden mdDown implementation="css">
-          <Drawer variant="permanent">
+          <Drawer
+            open={true}
+            onOpen={openDrawer}
+            onClose={closeDrawer}
+            variant="permanent"
+          >
             <DrawerContent openDrawer={openDrawer} closeDrawer={closeDrawer} />
           </Drawer>
         </Hidden>

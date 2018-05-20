@@ -12,8 +12,8 @@ import {
 import { withRouter } from 'react-router-dom';
 import debounce from 'lodash/debounce';
 import queryParser from 'query-string';
-import DownArrowIcon from 'material-ui-icons/ArrowDownward';
-import UpArrowIcon from 'material-ui-icons/ArrowUpward';
+import DownArrowIcon from '@material-ui/icons/ArrowDownward';
+import UpArrowIcon from '@material-ui/icons/ArrowUpward';
 import 'rc-slider/assets/index.css';
 
 import Dropdown from '/client/imports/components/DropdownMenu';

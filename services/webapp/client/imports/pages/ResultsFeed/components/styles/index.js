@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import _EmpiricalFormula from '/client/imports/components/EmpiricalFormula';
 
 import { colors } from '/client/imports/theme';

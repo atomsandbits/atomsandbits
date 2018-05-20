@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import _AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
+import _AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
 import { colors, sizes, breakpoints, fonts } from '/client/imports/theme';
 
 export const AppLayoutContainer = styled.div``;

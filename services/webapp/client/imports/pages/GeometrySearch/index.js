@@ -11,7 +11,8 @@ import {
   withState,
   onlyUpdateForPropTypes,
 } from 'recompose';
-import { LinearProgress, CircularProgress } from 'material-ui/Progress';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import queryParser from 'query-string';
 import clone from 'lodash/clone';
 import debounce from 'lodash/debounce';
@@ -44,7 +45,7 @@ const Loading = (props) => (
 
 const displayLoadingState = branch(({ data }) => {
   // console.log('test', JSON.stringify(data.variables));
-  return data.loading && !data.allGeometries;
+  return data.loading || !data.allGeometries;
 }, renderComponent(Loading));
 
 const throttled = throttle((myFxn) => {

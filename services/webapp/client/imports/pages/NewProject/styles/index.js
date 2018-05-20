@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 // import { Link } from 'react-router-dom';
-import Button from 'material-ui/Button';
-import _ImageIcon from 'material-ui-icons/Image';
-import _BurstModeIcon from 'material-ui-icons/BurstMode';
+import Button from '@material-ui/core/Button';
+import _ImageIcon from '@material-ui/icons/Image';
+import _BurstModeIcon from '@material-ui/icons/BurstMode';
 import { breakpoints, fonts } from '/client/imports/theme';
 
 export const ProjectContainer = styled.div``;

@@ -4,9 +4,9 @@ import { Tracker } from 'meteor/tracker';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { withTracker } from 'meteor/react-meteor-data';
-// import Button from 'material-ui/Button';
+// import Button from '@material-ui/core/Button';
 //
 // import GoogleIcon from 'react-icons/lib/fa/google';
 // import CalculateIcon from 'react-icons/lib/go/file-binary';

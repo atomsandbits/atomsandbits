@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import { breakpoints } from '/client/imports/theme';
 
 export const NewCalculationContainer = styled.div`

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 // import { Link as _Link } from 'react-router-dom';
-// import Chip from 'material-ui/Chip';
+// import Chip from '@material-ui/core/Chip';
 // import _SpeckRenderer from '/client/imports/components/SpeckRenderer';
 import { fonts, breakpoints } from '/client/imports/theme';
 

@@ -13,8 +13,8 @@ import {
 } from 'recompose';
 // import queryParser from 'query-string';
 import debounce from 'lodash/debounce';
-// import Fade from 'material-ui/transitions/Fade';
-import { LinearProgress } from 'material-ui/Progress';
+// import Fade from '@material-ui/core/transitions/Fade';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 // import { logger } from '/both/imports/logger';
 // import Header from '/client/imports/components/Header';

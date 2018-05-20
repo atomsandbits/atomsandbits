@@ -9,7 +9,7 @@ import {
   onlyUpdateForPropTypes,
 } from 'recompose';
 // import { withRouter } from 'react-router-dom';
-import { LinearProgress } from 'material-ui/Progress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Molecule from '/both/imports/tools/Molecule';
 import AppLayout from '/client/imports/components/AppLayout';

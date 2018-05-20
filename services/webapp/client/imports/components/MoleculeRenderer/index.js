@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 // import { Session } from 'meteor/session';
 // import MobileDetect from 'mobile-detect';
 
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-// import Hidden from 'material-ui/Hidden';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+// import Hidden from '@material-ui/core/Hidden';
 
 import xyzTools from '/both/imports/tools/xyz';
 import SpeckRenderer from '/client/imports/components/SpeckRenderer';
