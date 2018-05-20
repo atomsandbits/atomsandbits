@@ -45,7 +45,7 @@ const Loading = (props) => (
 
 const displayLoadingState = branch(({ data }) => {
   // console.log('test', JSON.stringify(data.variables));
-  return data.loading || !data.allGeometries;
+  return data.loading && !data.allGeometries;
 }, renderComponent(Loading));
 
 const throttled = throttle((myFxn) => {
