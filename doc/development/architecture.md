@@ -1,1 +1,3 @@
-> TODO: information on architecture
+# atoms+bits Architecture
+
+> TODO: information on code structure

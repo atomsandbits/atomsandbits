@@ -12,14 +12,9 @@ While atoms+bits is in alpha 0.0.x expect consistent changes breaking backwards 
 
  ---
 
-## Getting started
+## Documentation
 
-```sh
-npm install
-npm start
-```
-
-More developer information is available [here](doc/development#readme).
+Documentation is available [here](doc#readme).
 
 ## Software stack
 
@@ -36,10 +31,6 @@ atoms+bits is a Node.js application that runs on the following software:
 * PySCF 1.4.7
 
 Architecture information is available [here](doc/development/architecture.md).
-
-## Documentation
-
-Documentation guide can be found [here](doc#readme).
 
 ## Getting help
 
