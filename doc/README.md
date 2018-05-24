@@ -3,5 +3,5 @@
 | General documentation |
 | :----- |
 | [User documentation](user#readme) |
-| [Developer documentation](development/index.md) |
-| [Administrator documentation](deploy/index.md) |
+| [Developer documentation](development#readme) |
+| [Administrator documentation](deploy#readme) |
