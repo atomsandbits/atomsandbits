@@ -75,9 +75,7 @@ const prettyPrint = (matrix) => {
 const ForceRowLoading = ({ label }) => (
   <CardPropertyRow key={`${label}`}>
     <CardPropertyLabel>{label}</CardPropertyLabel>
-    <CardProperty>
-      <LoadIndicator size={20} thickness={5} />
-    </CardProperty>
+    <LoadIndicator size={20} thickness={5} />
   </CardPropertyRow>
 );
 
