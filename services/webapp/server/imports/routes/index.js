@@ -30,7 +30,7 @@ Picker.route('/', (params, request, response, next) => {
   const cookies = request.headers.cookie
     ? cookie.parse(request.headers.cookie)
     : {};
-  if (!cookies['meteor-login-token']) {
+  if (!cookies['loginToken']) {
     response.writeHead(301, {
       Location: process.env.ROOT_URL + 'new-calculation',
     });
