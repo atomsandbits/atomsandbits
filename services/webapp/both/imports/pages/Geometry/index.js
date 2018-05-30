@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, branch, renderComponent, mapProps } from 'recompose';
+import {
+  compose,
+  branch,
+  renderComponent,
+  mapProps,
+  lifecycle,
+} from 'recompose';
 import { withData } from './withData';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -63,7 +69,16 @@ const mapDataProps = mapProps(({ match, data, ...otherProps }) => {
   };
 });
 
-const enhance = compose(withData, displayLoadingState, mapDataProps);
+const enhance = compose(
+  withData,
+  displayLoadingState,
+  mapDataProps,
+  lifecycle({
+    componentDidMount() {
+      document.title = 'geometry | atoms+bits';
+    },
+  })
+);
 
 const GeometryPure = ({
   geometry,
