@@ -10,6 +10,7 @@
   "plugins": ["react", "prettier", "standard"],
   "parserOptions": {
     "sourceType": "module",
+    "allowImportExportEverywhere": true,
     "ecmaFeatures": {
       "jsx": true
     }
@@ -19,9 +20,9 @@
     "node": true
   },
   "rules": {
-    "prettier/prettier": "error",
     "comma-dangle": ["error", "always-multiline"],
-    "object-curly-spacing": ["error", "always"]
+    "object-curly-spacing": ["error", "always"],
+    "prettier/prettier": "error"
   },
   "globals": {
     "window": true,

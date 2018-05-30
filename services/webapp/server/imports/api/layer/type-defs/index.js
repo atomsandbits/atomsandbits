@@ -20,6 +20,7 @@ const typeDefs = gql`
 
   input LayerParametersInput {
     calculation: CalculationParametersInput
+    secondaryXyz: String
     limit: Int
     sort: LayerSortOptions
   }

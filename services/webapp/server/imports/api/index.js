@@ -52,3 +52,5 @@ const schema = makeExecutableSchema({
 createApolloServer({
   schema,
 });
+
+export { schema };

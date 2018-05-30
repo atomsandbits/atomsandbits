@@ -87,7 +87,10 @@ Meteor.setTimeout(() => {
           Geometries.update(geometry._id, {
             $set: {
               images: {
-                512: dataURL,
+                512: Buffer.from(
+                  dataURL.split('data:image/png;base64,')[1],
+                  'base64'
+                ),
               },
             },
           });
@@ -98,3 +101,23 @@ Meteor.setTimeout(() => {
     },
   });
 }, 5000);
+
+/* Convert Base64 to buffer */
+Meteor.startup(() => {
+  Geometries.find(
+    { 'images.512': { $type: 'string' } },
+    { _id: 1, 'images.512': 1 }
+  ).forEach(function(geometry) {
+    const bufferedImage = Buffer.from(
+      geometry.images['512'].split('data:image/png;base64,')[1],
+      'base64'
+    );
+    Geometries.update(geometry._id, {
+      $set: {
+        images: {
+          512: bufferedImage,
+        },
+      },
+    });
+  });
+});
