@@ -9,6 +9,7 @@ const withData = compose(
         geometry(input: $geometryInput) {
           id
           atomicCoords
+          molecularFormula
           tags
           energies {
             energy

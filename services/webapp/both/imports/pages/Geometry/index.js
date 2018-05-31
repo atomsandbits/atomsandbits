@@ -94,7 +94,12 @@ const GeometryPure = ({
     appContent={
       <GeometryPageContainer>
         <Helmet>
-          <title>geometry | atoms+bits</title>
+          <title>
+            {geometry.tags.length > 0
+              ? geometry.tags.slice(0, 3).join(' • ') + ' | '
+              : ''}{' '}
+            {geometry.molecularFormula} | atoms+bits
+          </title>
           <meta
             name="description"
             content="calculated properties of a geometry"
