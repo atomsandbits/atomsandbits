@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.atomsandbits.ai/sitemaps/geometries-sitemap.txt
+Sitemap: https://www.atomsandbits.ai/sitemap.txt
