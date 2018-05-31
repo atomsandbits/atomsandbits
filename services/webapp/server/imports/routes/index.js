@@ -31,9 +31,17 @@ Picker.route('/', (params, request, response, next) => {
     ? cookie.parse(request.headers.cookie)
     : {};
   if (!cookies['loginToken']) {
-    response.writeHead(301, {
+    response.writeHead(302, {
       Location: process.env.ROOT_URL + 'new-calculation',
     });
+    response.write(`
+      <html>
+        <head>
+          <title>atoms+bits</title>
+          <meta name="description" content="molecular discovery with cloud-based quantum simulations and deep learning">
+        </head>
+      </html>
+    `);
     response.end();
   } else {
     next();

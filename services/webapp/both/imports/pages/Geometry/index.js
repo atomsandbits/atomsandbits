@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  compose,
-  branch,
-  renderComponent,
-  mapProps,
-  lifecycle,
-} from 'recompose';
-import { withData } from './withData';
-
+import { compose, branch, renderComponent, mapProps } from 'recompose';
+import { Helmet } from 'react-helmet';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 // import { logger } from '/both/imports/logger';
@@ -25,6 +18,7 @@ import { Tags } from './Tags';
 
 import { Molecule } from '/both/imports/tools/Molecule';
 import xyzTools from '/both/imports/tools/xyz';
+import { withData } from './withData';
 import {
   AtomicCoords,
   AtomicCoordsContainer,
@@ -44,7 +38,18 @@ const Loading = (props) => (
     mobileOnlyToolbar
     alwaysRaised
     title="Geometry"
-    appContent={<LinearProgress />}
+    appContent={
+      <GeometryPageContainer>
+        <Helmet>
+          <title>geometry | atoms+bits</title>
+          <meta
+            name="description"
+            content="calculated properties of a geometry"
+          />
+        </Helmet>
+        <LinearProgress />
+      </GeometryPageContainer>
+    }
   />
 );
 
@@ -69,16 +74,7 @@ const mapDataProps = mapProps(({ match, data, ...otherProps }) => {
   };
 });
 
-const enhance = compose(
-  withData,
-  displayLoadingState,
-  mapDataProps,
-  lifecycle({
-    componentDidMount() {
-      document.title = 'geometry | atoms+bits';
-    },
-  })
-);
+const enhance = compose(withData, displayLoadingState, mapDataProps);
 
 const GeometryPure = ({
   geometry,
@@ -97,6 +93,13 @@ const GeometryPure = ({
     title="Geometry"
     appContent={
       <GeometryPageContainer>
+        <Helmet>
+          <title>geometry | atoms+bits</title>
+          <meta
+            name="description"
+            content="calculated properties of a geometry"
+          />
+        </Helmet>
         <GeometryPageContent>
           <GeometryCalculationColumn>
             <ColumnContent>

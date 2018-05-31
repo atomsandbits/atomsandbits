@@ -11,6 +11,7 @@ import {
   withHandlers,
   withState,
 } from 'recompose';
+import { Helmet } from 'react-helmet';
 // import queryParser from 'query-string';
 import debounce from 'lodash/debounce';
 // import Fade from '@material-ui/core/transitions/Fade';
@@ -33,6 +34,10 @@ const Loading = (props) => (
     title="Results Feed"
     appContent={
       <ResultsFeedContainer>
+        <Helmet>
+          <title>results | atoms+bits</title>
+          <meta name="description" content="your results feed" />
+        </Helmet>
         <LinearProgress />
       </ResultsFeedContainer>
     }
@@ -96,7 +101,6 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       const { scroll } = this.props;
-      document.title = 'results | atoms+bits';
       document.addEventListener('scroll', scroll);
     },
     componentWillUnmount() {
@@ -114,6 +118,10 @@ const ResultsFeedPure = ({ results, position, totalCount, queryParams }) => (
     title="Results Feed"
     appContent={
       <ResultsFeedContainer>
+        <Helmet>
+          <title>results | atoms+bits</title>
+          <meta name="description" content="your results feed" />
+        </Helmet>
         <ResultsFeedContent>
           {/* {logger.info('Results', results)} */}
           {results.map(

@@ -7,6 +7,7 @@ import {
   onlyUpdateForPropTypes,
   withHandlers,
 } from 'recompose';
+import { Helmet } from 'react-helmet';
 import { Meteor } from 'meteor/meteor';
 import throttle from 'lodash/throttle';
 import uniq from 'lodash/uniq';
@@ -130,6 +131,10 @@ const NewProjectPure = ({ xyz, setXyz, addLayer, submitProject }) => (
     title="New Project"
     appContent={
       <ProjectContainer>
+        <Helmet>
+          <title>new project | atoms+bits</title>
+          <meta name="description" content="create a project on atoms+bits" />
+        </Helmet>
         <ProjectContent>
           <MoleculeRenderer xyz={xyz} setXyz={setXyz} />
           <Layers />

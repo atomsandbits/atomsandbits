@@ -7,6 +7,7 @@ import {
   onlyUpdateForPropTypes,
   lifecycle,
 } from 'recompose';
+import { Helmet } from 'react-helmet';
 import { Meteor } from 'meteor/meteor';
 import map from 'lodash/map';
 import throttle from 'lodash/throttle';
@@ -160,9 +161,6 @@ const enhance = compose(
       }, 5000),
   }),
   lifecycle({
-    componentDidMount() {
-      document.title = 'new calculation | atoms+bits';
-    },
     componentDidUpdate() {
       const { xyz, parameters } = this.props;
       Session.set('xyz', xyz);
@@ -189,6 +187,13 @@ const NewCalculationPure = ({
     title="New Calculation"
     appContent={
       <NewCalculationContainer>
+        <Helmet>
+          <title>new calculation | atoms+bits</title>
+          <meta
+            name="description"
+            content="run a molecular simulation on atoms+bits"
+          />
+        </Helmet>
         <MoleculeRenderer setXyz={setXyz} xyz={xyz} />
         <div style={{ height: 30 }} />
         <CalculationOptions

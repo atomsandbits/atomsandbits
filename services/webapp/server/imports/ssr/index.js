@@ -6,6 +6,7 @@ import { ServerStyleSheet } from 'styled-components';
 
 import { App } from '/both/imports/App';
 import { StaticRouter } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import ApolloClient from 'apollo-client';
@@ -84,6 +85,10 @@ onPageLoad(async (sink) => {
 
   // DOM
   sink.renderIntoElementById('react-root', html);
+  // Tags
+  const helmet = Helmet.renderStatic();
+  sink.appendToHead(helmet.title.toString());
+  sink.appendToHead(helmet.meta.toString());
   // Styles
   sink.appendToHead(sheet.getStyleTags());
   sink.appendToBody(

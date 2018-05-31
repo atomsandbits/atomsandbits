@@ -11,6 +11,7 @@ import {
   withState,
   onlyUpdateForPropTypes,
 } from 'recompose';
+import { Helmet } from 'react-helmet';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import CircularProgress from '@material-ui/core/CircularProgress';
 // import queryParser from 'query-string';
@@ -37,6 +38,13 @@ const Loading = (props) => (
     title="Geometries"
     appContent={
       <GeometrySearchContainer>
+        <Helmet>
+          <title>geometry search | atoms+bits</title>
+          <meta
+            name="description"
+            content="search for molecular geometries on atoms+bits"
+          />
+        </Helmet>
         <LinearProgress />
       </GeometrySearchContainer>
     }
@@ -150,7 +158,6 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       const { scroll } = this.props;
-      document.title = 'geometry search | atoms+bits';
       document.addEventListener('scroll', scroll);
     },
     componentWillUnmount() {
@@ -176,6 +183,13 @@ const GeometrySearchPure = ({
     toolbarContent={<SearchDrawerToggle onClick={openSearchDrawer} />}
     appContent={
       <GeometrySearchContainer>
+        <Helmet>
+          <title>geometry search | atoms+bits</title>
+          <meta
+            name="description"
+            content="search for molecular geometries on atoms+bits"
+          />
+        </Helmet>
         <GeometrySearchContent>
           {geometries.length === 0 ? (
             <h2 style={{ fontFamily: 'Space Mono, monospace' }}>
