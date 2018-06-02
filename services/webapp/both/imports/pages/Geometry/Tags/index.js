@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, withProps, withState, lifecycle } from 'recompose';
+import { compose, withState, lifecycle } from 'recompose';
 import { Meteor } from 'meteor/meteor';
 
 // import { withCreateTag } from './withCreateTag';
