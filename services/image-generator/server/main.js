@@ -157,21 +157,24 @@ Meteor.setTimeout(() => {
 // });
 
 /* minify */
+const minifyQueue = new PQueue({ concurrency: 20 });
 Meteor.startup(() => {
   Geometries.find(
     { 'images.512': { $exists: true }, 'images.minified': { $ne: true } },
     { _id: 1, 'images.512': 1, sort: { createdAt: -1 } }
-  ).forEach(async (geometry) => {
-    const imageBinary = geometry.images['512'];
-    const bufferedImage = Buffer.from(imageBinary, 'binary');
-    const minifiedImage = await imagemin.buffer(bufferedImage, {
-      plugins: [imageminPngquant({ quality: '65-100' })],
-    });
-    Geometries.update(geometry._id, {
-      $set: {
-        'images.512': minifiedImage,
-        'images.minified': true,
-      },
+  ).forEach((geometry) => {
+    minifyQueue.add(async () => {
+      const imageBinary = geometry.images['512'];
+      const bufferedImage = Buffer.from(imageBinary, 'binary');
+      const minifiedImage = await imagemin.buffer(bufferedImage, {
+        plugins: [imageminPngquant({ quality: '65-100' })],
+      });
+      Geometries.update(geometry._id, {
+        $set: {
+          'images.512': minifiedImage,
+          'images.minified': true,
+        },
+      });
     });
   });
 });
