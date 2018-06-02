@@ -129,7 +129,7 @@ Meteor.setTimeout(() => {
             },
           });
           // console.log(dataURL);
-          console.log('image saved!');
+          console.log(`Geometry #${geometry._id}: images saved...`);
         }
       });
     },
@@ -175,6 +175,7 @@ Meteor.startup(() => {
           'images.minified': true,
         },
       });
+      console.log(`Geometry #${geometry._id}: minified...`);
     });
   });
 });
@@ -215,6 +216,7 @@ Meteor.startup(() => {
           'images.placeholder': SVGString, // squipped.svg_base64encoded,
         },
       });
+      console.log(`Geometry #${geometry._id}: placeholder created...`);
     });
   });
 });
