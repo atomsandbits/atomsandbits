@@ -94,7 +94,7 @@ def main():
                         str(len(geometries[0].split('\n'))) + '\n\n' +
                         geometries[0])
                     secondary_molecule = Mol()
-                    if geometries[1]:
+                    if len(geometries) > 1:
                         secondary_molecule.FromXYZString(
                             str(len(geometries[1].split('\n'))) + '\n\n' +
                             geometries[1])
