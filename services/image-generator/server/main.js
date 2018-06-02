@@ -78,7 +78,7 @@ Meteor.setTimeout(() => {
     added: (geometry) => {
       queue.add(async () => {
         if (!geometry.images || !geometry.images['512']) {
-          console.log('Generating image for: ', geometry._id);
+          console.log(`Geometry #${geometry._id}: generating images...`);
           const xyz = `${geometry.totalAtoms}\n\n${geometry.atomicCoords}`;
           let dataURL;
           try {

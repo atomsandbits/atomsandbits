@@ -87,8 +87,18 @@ onPageLoad(async (sink) => {
   sink.renderIntoElementById('react-root', html);
   // Tags
   const helmet = Helmet.renderStatic();
-  sink.appendToHead(helmet.title.toString());
-  sink.appendToHead(helmet.meta.toString());
+  sink.appendToHead(
+    helmet.title
+      .toString()
+      .split(' data-react-helmet="true"')
+      .join('')
+  );
+  sink.appendToHead(
+    helmet.meta
+      .toString()
+      .split(' data-react-helmet="true"')
+      .join('')
+  );
   // Styles
   sink.appendToHead(sheet.getStyleTags());
   sink.appendToBody(

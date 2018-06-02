@@ -72,7 +72,7 @@ class Molecule {
     Object.keys(atomCounts).forEach((key) => {
       mass += atomicMasses[key].mass * atomCounts[key];
     });
-    return mass;
+    return Math.round(mass * 1000000) / 1000000;
   }
   createAtomCollection() {
     if (this.atomCollection) return this.atomCollection;
