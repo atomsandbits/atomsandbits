@@ -8,6 +8,7 @@ import { Random } from 'meteor/random';
 import Hidden from '@material-ui/core/Hidden';
 
 import {
+  MoleculeImage,
   SpeckRendererContainer,
   SpeckCanvasContainer,
   SpeckCanvas,
@@ -20,6 +21,9 @@ if (Meteor.isClient) {
   import MobileDetect from 'mobile-detect';
   let md = new MobileDetect(window.navigator.userAgent);
   class SpeckRendererComponent extends React.Component {
+    state = {
+      mobileDevice: false,
+    };
     componentDidMount() {
       setTimeout(() => {
         if (!md.phone()) {
@@ -42,6 +46,8 @@ if (Meteor.isClient) {
           this.speck.gui.__folders.Detail.__controllers[2].setValue(resolution);
           this.speck.loadStructure(this.props.xyz);
           window.addEventListener('resize', this.handleResize);
+        } else {
+          this.setState({ mobileDevice: true });
         }
       }, 0);
     }
@@ -75,18 +81,24 @@ if (Meteor.isClient) {
       }
     }, 2000).bind(this);
     render() {
+      const { placeholder } = this.props;
+      const { mobileDevice } = this.state;
       return (
         <SpeckRendererContainer>
-          <Hidden implementation="css" only="xs">
+          {!mobileDevice ? (
             <SpeckCanvasContainer id={`speck-root-${this.id}`}>
               <SpeckCanvas id={`speck-canvas-${this.id}`} />
             </SpeckCanvasContainer>
-          </Hidden>
+          ) : null}
+          {mobileDevice && placeholder ? (
+            <MoleculeImage src={placeholder} />
+          ) : null}
         </SpeckRendererContainer>
       );
     }
   }
   SpeckRendererComponent.propTypes = {
+    placeholder: PropTypes.string,
     xyz: PropTypes.string.isRequired,
     zoom: PropTypes.number,
   };
@@ -96,11 +108,14 @@ if (Meteor.isClient) {
 
   SpeckRenderer = SpeckRendererComponent;
 } else {
-  const SpeckRendererComponent = () => (
+  const SpeckRendererComponent = ({ placeholder }) => (
     <SpeckRendererContainer>
-      <Hidden implementation="css" only="xs" />
+      {placeholder ? <MoleculeImage src={placeholder} /> : null}
     </SpeckRendererContainer>
   );
+  SpeckRendererComponent.propTypes = {
+    placeholder: PropTypes.string,
+  };
 
   SpeckRenderer = SpeckRendererComponent;
 }

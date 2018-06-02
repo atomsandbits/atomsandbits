@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const MoleculeImage = styled.img`
+  display: block;
+  margin: 0 auto;
+  max-width: 256px;
+  width: 70%;
+`;
+
 export const SpeckRendererContainer = styled.div`
   height: 100%;
   div {

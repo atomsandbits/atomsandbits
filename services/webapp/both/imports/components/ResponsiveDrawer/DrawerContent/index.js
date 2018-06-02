@@ -38,7 +38,7 @@ const enhance = compose(
   withHandlers({
     logout: () => () =>
       Meteor.logout(() => {
-        window.location.href = 'new-calculation';
+        window.location.href = '/new-calculation';
       }),
     login: () => () => {
       Meteor.loginWithGoogle({}, (err) => {

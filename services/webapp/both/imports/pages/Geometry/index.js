@@ -1,8 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, branch, renderComponent, mapProps } from 'recompose';
+import {
+  compose,
+  branch,
+  renderComponent,
+  mapProps,
+  withHandlers,
+  withState,
+} from 'recompose';
 import { Helmet } from 'react-helmet';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Checkbox from '@material-ui/core/Checkbox';
 
 // import { logger } from '/both/imports/logger';
 
@@ -23,11 +31,13 @@ import {
   AtomicCoords,
   AtomicCoordsContainer,
   CardTitle,
+  CardTitleWithOptions,
   ColumnContent,
   GeometryCalculationColumn,
   GeometryInformationColumn,
   GeometryPageContainer,
   GeometryPageContent,
+  GeometryOptions,
   SpeckRenderer,
 } from './styles';
 
@@ -74,7 +84,17 @@ const mapDataProps = mapProps(({ match, data, ...otherProps }) => {
   };
 });
 
-const enhance = compose(withData, displayLoadingState, mapDataProps);
+const enhance = compose(
+  withData,
+  displayLoadingState,
+  withState('showIndexes', 'setShowIndexes', true),
+  withHandlers({
+    setShowIndexes: ({ setShowIndexes }) => (event) => {
+      setShowIndexes(event.target.checked);
+    },
+  }),
+  mapDataProps
+);
 
 const GeometryPure = ({
   geometry,
@@ -86,6 +106,8 @@ const GeometryPure = ({
   harmonicSpectra,
   relaxedScans,
   refetch,
+  showIndexes,
+  setShowIndexes,
 }) => (
   <AppLayout
     mobileOnlyToolbar
@@ -129,13 +151,28 @@ const GeometryPure = ({
                 xyz={xyzTools.prettyFormat({
                   xyzString: geometry.atomicCoords,
                 })}
+                placeholder={`/geometry/${geometry.id}/image/medium`}
               />
               <Tags tags={geometry.tags} refetch={refetch} />
               <AtomicCoordsContainer>
-                <CardTitle>Atomic Coordinates</CardTitle>
+                <CardTitleWithOptions>
+                  <div style={{ flexShrink: 0, flexGrow: 0 }}>
+                    Atomic Coordinates
+                  </div>
+                  <GeometryOptions>
+                    <div>
+                      indexes
+                      <Checkbox
+                        checked={showIndexes}
+                        onChange={setShowIndexes}
+                        color="secondary"
+                      />
+                    </div>
+                  </GeometryOptions>
+                </CardTitleWithOptions>
                 <AtomicCoords>
                   {new Molecule({ xyz: geometry.atomicCoords })
-                    .prettify({ positions: true })
+                    .prettify({ positions: showIndexes })
                     .xyz.split('\n')
                     .slice(2)
                     .join('\n')}
@@ -158,6 +195,8 @@ GeometryPure.propTypes = {
   harmonicSpectra: PropTypes.arrayOf(PropTypes.object),
   relaxedScans: PropTypes.arrayOf(PropTypes.object),
   refetch: PropTypes.func,
+  showIndexes: PropTypes.bool.isRequired,
+  setShowIndexes: PropTypes.func.isRequired,
 };
 const Geometry = enhance(GeometryPure);
 

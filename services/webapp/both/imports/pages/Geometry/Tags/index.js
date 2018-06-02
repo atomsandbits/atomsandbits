@@ -24,7 +24,7 @@ const TagsPure = ({ tags, userId }) => (
         />
       ))}
     </TagsScrollContainer>
-    {userId ? <TagInput label="new tag" /> : null}
+    <TagInput hide={userId} label="new tag" />
   </TagsContainer>
 );
 TagsPure.propTypes = {

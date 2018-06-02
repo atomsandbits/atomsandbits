@@ -52,6 +52,7 @@ export const FlatCard = styled.div`
   max-height: 400px;
   overflow: auto;
   padding: 20px;
+  position: relative;
   text-align: left;
 `;
 export const RaisedCard = FlatCard.extend`
@@ -68,6 +69,10 @@ export const CardTitle = styled.div`
   margin-bottom: 10px;
   text-align: left;
   width: 100%;
+`;
+export const CardTitleWithOptions = CardTitle.extend`
+  display: flex;
+  flex-wrap: wrap;
 `;
 export const Expandable = styled(_Expandable)`
   && {
@@ -121,6 +126,15 @@ export const GeometryCalculationColumn = ColumnContainer.extend`
 /* ~~~~~~~ Information Column ~~~~~~~ */
 export const GeometryInformationColumn = ColumnContainer.extend``;
 export const SpeckRenderer = styled(_SpeckRenderer)``;
+export const GeometryOptions = styled.div`
+  font-family: ${fonts.monospace};
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+  flex-shrink: 0;
+`;
 
 export const Links = RaisedCard.extend`
   margin-bottom: 20px;
@@ -134,12 +148,12 @@ export const AtomicCoordsContainer = RaisedCard.extend``;
 export const AtomicCoords = styled.div`
   font-family: ${fonts.monospace};
   font-size: 0.8rem;
-  margin: 0 auto;
-  max-height: 350px;
+  margin: 10px auto 0;
+  max-height: 326px;
   overflow: auto;
   padding: 0 20px;
   user-select: all;
   white-space: pre;
-  width: 90%;
   width: fit-content;
+  max-width: 90%;
 `;
