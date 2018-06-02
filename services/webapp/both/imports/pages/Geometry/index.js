@@ -103,7 +103,9 @@ const GeometryPure = ({
           <meta
             name="description"
             content={`quantum simulations of ${
-              geometry.tags.length > 0 ? geometry.tags[0] : 'a geometry'
+              geometry.tags.length > 0
+                ? geometry.tags[0]
+                : `a ${geometry.molecularFormula} geometry`
             }`}
           />
         </Helmet>
