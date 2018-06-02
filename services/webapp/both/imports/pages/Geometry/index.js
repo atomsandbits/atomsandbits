@@ -44,7 +44,7 @@ const Loading = (props) => (
           <title>geometry | atoms+bits</title>
           <meta
             name="description"
-            content="quantum chemical simulations of a molecule"
+            content="quantum simulations of a molecule"
           />
         </Helmet>
         <LinearProgress />
@@ -102,7 +102,7 @@ const GeometryPure = ({
           </title>
           <meta
             name="description"
-            content={`quantum chemical simulations of ${
+            content={`quantum simulations of ${
               geometry.tags.length > 0 ? geometry.tags[0] : 'a geometry'
             }`}
           />
