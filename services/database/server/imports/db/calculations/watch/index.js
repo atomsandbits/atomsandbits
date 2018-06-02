@@ -38,7 +38,7 @@ const calculationWatcher = {
     calculationWatcher.watchInterval = Meteor.setInterval(() => {
       const pendingCalculationsCursor = Requests.find({
         type: 'calculation',
-        completedAt: { $exists: false },
+        completed: { $exists: false },
         $or: [
           {
             running: { $exists: false },

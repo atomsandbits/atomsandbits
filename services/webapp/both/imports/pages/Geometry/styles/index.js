@@ -149,7 +149,7 @@ export const AtomicCoords = styled.div`
   font-family: ${fonts.monospace};
   font-size: 0.8rem;
   margin: 10px auto 0;
-  max-height: 326px;
+  max-height: 315px;
   overflow: auto;
   padding: 0 20px;
   user-select: all;

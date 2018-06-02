@@ -29,14 +29,16 @@ const onScroll = throttle(({ elevated, setElevated }) => {
 
 const enhance = compose(
   withState('elevated', 'setElevated', false),
+  withState('toggleDrawer', 'setToggleDrawer', () => () => {}),
   withHandlers({
     scroll: ({ elevated, setElevated }) => () =>
       onScroll({ elevated, setElevated }),
   }),
   lifecycle({
     componentDidMount() {
-      const { scroll } = this.props;
+      const { scroll, setToggleDrawer } = this.props;
       document.addEventListener('scroll', scroll);
+      setTimeout(() => setToggleDrawer(() => window.toggleDrawer), 300);
     },
     // shouldComponentUpdate(nextProps) {
     //   const { scroll } = this.props;
@@ -59,6 +61,7 @@ const AppLayoutPure = ({
   elevated,
   alwaysRaised,
   mobileOnlyToolbar,
+  toggleDrawer,
 }) => (
   <AppLayoutContainer>
     <AppBar
@@ -70,9 +73,7 @@ const AppLayoutPure = ({
         <MenuButtonContainer
           color="inherit"
           aria-label="open drawer"
-          onClick={
-            typeof window !== 'undefined' ? window.toggleDrawer : () => {}
-          }
+          onClick={toggleDrawer}
         >
           <MenuIcon />
         </MenuButtonContainer>
@@ -92,6 +93,7 @@ AppLayoutPure.propTypes = {
   elevated: PropTypes.bool.isRequired,
   alwaysRaised: PropTypes.bool,
   mobileOnlyToolbar: PropTypes.bool,
+  toggleDrawer: PropTypes.func.isRequired,
 };
 
 const AppLayout = enhance(AppLayoutPure);

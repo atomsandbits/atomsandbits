@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, withProps } from 'recompose';
+import { compose, withProps, withState, lifecycle } from 'recompose';
 import { Meteor } from 'meteor/meteor';
 
 // import { withCreateTag } from './withCreateTag';
@@ -9,8 +9,15 @@ import { Tag, TagsContainer, TagInput, TagsScrollContainer } from './styles';
 
 // TODO: Make userId reactive
 const enhance = compose(
-  withProps(() => ({ userId: Meteor.isClient ? Meteor.userId() : '' })),
-  withDeleteTag
+  withState('userId', 'setUserId', Meteor.isClient ? Meteor.userId() : ''),
+  withDeleteTag,
+  lifecycle({
+    componentDidMount() {
+      const { setUserId } = this.props;
+      if (Meteor.isClient) setUserId(Meteor.userId());
+      console.log('mounted!', Meteor.userId());
+    },
+  })
 );
 const TagsPure = ({ tags, userId }) => (
   <TagsContainer>
@@ -24,7 +31,7 @@ const TagsPure = ({ tags, userId }) => (
         />
       ))}
     </TagsScrollContainer>
-    <TagInput hide={userId} label="new tag" />
+    <TagInput hidden={userId ? 0 : 1} label="new tag" />
   </TagsContainer>
 );
 TagsPure.propTypes = {

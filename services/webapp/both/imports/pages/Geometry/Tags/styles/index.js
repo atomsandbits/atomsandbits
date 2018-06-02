@@ -27,6 +27,6 @@ export const TagInput = styled(TextField)`
   && {
     align-self: flex-end;
     width: 30%;
-    display: ${({ hide }) => (hide ? 'none' : 'default')};
+    display: ${({ hidden }) => (hidden ? 'none' : 'default')};
   }
 `;
