@@ -30,7 +30,7 @@ import { withData } from './withData';
 import {
   AtomicCoords,
   AtomicCoordsContainer,
-  CardTitle,
+  // CardTitle,
   CardTitleWithOptions,
   ColumnContent,
   GeometryCalculationColumn,

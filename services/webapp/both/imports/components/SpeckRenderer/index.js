@@ -5,8 +5,6 @@ import { Meteor } from 'meteor/meteor';
 import _ from 'lodash';
 import { Random } from 'meteor/random';
 
-import Hidden from '@material-ui/core/Hidden';
-
 import {
   MoleculeImage,
   SpeckRendererContainer,
