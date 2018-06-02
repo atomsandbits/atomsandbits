@@ -54,9 +54,29 @@ export const LoadIndicator = styled(CircularProgress)`
     color: ${colors.secondary};
   }
 `;
-export const SystemImage = styled.img`
+
+export const ImageContainer = styled.div`
   height: 55%;
+  width: 55%;
+  position: relative;
 `;
+export const PlaceholderImage = styled.div`
+  height: 100%;
+  position: absolute;
+  opacity: ${({ loading }) => (loading ? 1 : 0)};
+  transition: opacity 300ms linear;
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+`;
+export const SystemImage = styled.img`
+  height: 100%;
+  position: absolute;
+  opacity: ${({ loading }) => (loading ? 0 : 1)};
+  transition: opacity 300ms linear;
+`;
+
 export const TimeInformation = styled.div`
   position: absolute;
   left: 10px;

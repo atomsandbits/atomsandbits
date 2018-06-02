@@ -2,6 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import puppeteer from 'puppeteer';
 import PQueue from 'p-queue';
+import imagemin from 'imagemin';
+import imageminPngquant from 'imagemin-pngquant';
+import util from 'util';
+import fs from 'fs';
+import { generateSVG } from 'node-primitive';
+import { Triangle } from 'node-primitive/src/shape';
 
 process.setMaxListeners(100);
 console.log(process.env.ROOT_URL);
@@ -68,10 +74,7 @@ const getDataURL = async ({ xyz }) => {
 // );
 
 Meteor.setTimeout(() => {
-  Geometries.find(
-    { 'images.512': { $exists: false } },
-    { limit: 100, sort: { createdAt: -1 } }
-  ).observe({
+  Geometries.find({}, { limit: 100, sort: { createdAt: -1 } }).observe({
     added: (geometry) => {
       queue.add(async () => {
         if (!geometry.images || !geometry.images['512']) {
@@ -84,14 +87,45 @@ Meteor.setTimeout(() => {
             console.log(error);
             return;
           }
+          const bufferedImage = Buffer.from(
+            dataURL.split('data:image/png;base64,')[1],
+            'base64'
+          );
+          const minifiedImage = await imagemin.buffer(bufferedImage, {
+            plugins: [imageminPngquant({ quality: '65-100' })],
+          });
           Geometries.update(geometry._id, {
             $set: {
-              images: {
-                512: Buffer.from(
-                  dataURL.split('data:image/png;base64,')[1],
-                  'base64'
-                ),
-              },
+              'images.512': minifiedImage,
+              'images.minified': true,
+            },
+          });
+          /* create low poly img */
+          const geometryFile = `${geometry._id}.png`;
+          await util.promisify(fs.writeFile)(
+            geometryFile,
+            bufferedImage,
+            'binary'
+          );
+          const SVGString = await generateSVG(geometryFile, {
+            alpha: 0.5,
+            computeSize: 256,
+            fill: 'rgb(255, 255, 255)',
+            height: 256,
+            mutateAlpha: true,
+            mutations: 30,
+            scale: 2,
+            shapeTypes: [Triangle],
+            shapes: 20,
+            steps: 20,
+            viewSize: 512,
+            width: 256,
+            blur: 35,
+          });
+          await util.promisify(fs.unlink)(geometryFile);
+          Geometries.update(geometry._id, {
+            $set: {
+              'images.placeholder': SVGString,
             },
           });
           // console.log(dataURL);
@@ -103,21 +137,81 @@ Meteor.setTimeout(() => {
 }, 5000);
 
 /* Convert Base64 to buffer */
+// Meteor.startup(() => {
+//   Geometries.find(
+//     { 'images.512': { $type: 'string' } },
+//     { _id: 1, 'images.512': 1 }
+//   ).forEach(function(geometry) {
+//     const bufferedImage = Buffer.from(
+//       geometry.images['512'].split('data:image/png;base64,')[1],
+//       'base64'
+//     );
+//     Geometries.update(geometry._id, {
+//       $set: {
+//         images: {
+//           512: bufferedImage,
+//         },
+//       },
+//     });
+//   });
+// });
+
+/* minify */
 Meteor.startup(() => {
   Geometries.find(
-    { 'images.512': { $type: 'string' } },
-    { _id: 1, 'images.512': 1 }
-  ).forEach(function(geometry) {
-    const bufferedImage = Buffer.from(
-      geometry.images['512'].split('data:image/png;base64,')[1],
-      'base64'
-    );
+    { 'images.512': { $exists: true }, 'images.minified': { $ne: true } },
+    { _id: 1, 'images.512': 1, sort: { createdAt: -1 } }
+  ).forEach(async (geometry) => {
+    const imageBinary = geometry.images['512'];
+    const bufferedImage = Buffer.from(imageBinary, 'binary');
+    const minifiedImage = await imagemin.buffer(bufferedImage, {
+      plugins: [imageminPngquant({ quality: '65-100' })],
+    });
     Geometries.update(geometry._id, {
       $set: {
-        images: {
-          512: bufferedImage,
-        },
+        'images.512': minifiedImage,
+        'images.minified': true,
       },
+    });
+  });
+});
+
+/* create placeholders */
+const placeholderQueue = new PQueue({ concurrency: 10 });
+Meteor.startup(() => {
+  Geometries.find(
+    {
+      'images.placeholder': { $exists: false },
+      'images.512': { $exists: true },
+    },
+    { _id: 1, 'images.512': 1, sort: { createdAt: -1 } }
+  ).forEach((geometry) => {
+    placeholderQueue.add(async () => {
+      const imageBinary = geometry.images['512'];
+      const bufferedImage = Buffer.from(imageBinary, 'binary');
+      const geometryFile = `${geometry._id}.png`;
+      await util.promisify(fs.writeFile)(geometryFile, bufferedImage, 'binary');
+      const SVGString = await generateSVG(geometryFile, {
+        alpha: 0.5,
+        computeSize: 256,
+        fill: 'rgb(255, 255, 255)',
+        height: 256,
+        mutateAlpha: true,
+        mutations: 30,
+        scale: 2,
+        shapeTypes: [Triangle],
+        shapes: 20,
+        steps: 20,
+        viewSize: 512,
+        width: 256,
+        blur: 35,
+      });
+      await util.promisify(fs.unlink)(geometryFile);
+      Geometries.update(geometry._id, {
+        $set: {
+          'images.placeholder': SVGString, // squipped.svg_base64encoded,
+        },
+      });
     });
   });
 });

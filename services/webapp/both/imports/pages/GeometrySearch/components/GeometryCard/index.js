@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, onlyUpdateForPropTypes } from 'recompose';
+import ProgressiveImage from 'react-progressive-image';
 import moment from 'moment';
 
 import {
@@ -14,6 +15,8 @@ import {
   // InformationalDots,
   InformationalTags,
   // LoadIndicator,
+  ImageContainer,
+  PlaceholderImage,
   SystemImage,
   TimeInformation,
 } from './styles';
@@ -22,7 +25,7 @@ const enhance = compose(onlyUpdateForPropTypes);
 
 const GeometryCardPure = ({
   className,
-  geometry: { id, molecularFormula, mass, createdAt },
+  geometry: { id, molecularFormula, imagePlaceholder, mass, createdAt },
 }) => (
   <CardLink className={className} to={`/geometry/${id}`}>
     <Card>
@@ -31,7 +34,23 @@ const GeometryCardPure = ({
         <InformationalTags />
       </CardTopLeft>
       <CardTopRight>{mass}</CardTopRight>
-      <SystemImage src={`/geometry/${id}/image/medium`} />
+      <ProgressiveImage
+        src={`/geometry/${id}/image/medium`}
+        placeholder={`data:image/svg+xml;base64,${imagePlaceholder}`}
+      >
+        {(src, loading) => (
+          <ImageContainer>
+            <PlaceholderImage
+              loading={loading}
+              dangerouslySetInnerHTML={{ __html: imagePlaceholder }}
+            />
+            <SystemImage
+              src={`/geometry/${id}/image/medium`}
+              loading={loading}
+            />
+          </ImageContainer>
+        )}
+      </ProgressiveImage>
       <TimeInformation>
         {moment.unix(createdAt / 1000).fromNow()}
       </TimeInformation>

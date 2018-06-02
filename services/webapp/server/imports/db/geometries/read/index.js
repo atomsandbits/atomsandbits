@@ -14,7 +14,11 @@ const convertGeometryToGraph = ({ geometryId, userId }) => {
     molecularFormula: molecularFormula,
     atomCount: atomicCoords.split('\n').length,
     mass: mass,
-    mediumImage: images ? images['512'] : null,
+    imagePlaceholder: images && images.placeholder ? images.placeholder : null,
+    mediumImage:
+      images && images['512']
+        ? Buffer.from(images['512'], 'binary').toString('base64')
+        : null,
     tags: users[0] ? users[0].tags : [],
   };
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, onlyUpdateForPropTypes } from 'recompose';
+import ProgressiveImage from 'react-progressive-image';
 import moment from 'moment';
 
 import {
@@ -14,6 +15,8 @@ import {
   // InformationalDots,
   InformationalTags,
   LoadIndicator,
+  ImageContainer,
+  PlaceholderImage,
   SystemImage,
   TimeInformation,
 } from '../styles';
@@ -67,9 +70,25 @@ const CalculationCardPure = ({ className, calculation, index }) => (
           <LoadIndicator size={20} thickness={5} />
         ) : null}
       </CardTopRight>
-      <SystemImage
+      <ProgressiveImage
         src={`/geometry/${calculation.geometries[0].id}/image/medium`}
-      />
+        placeholder={`${calculation.geometries[0].imagePlaceholder}`}
+      >
+        {(src, loading) => (
+          <ImageContainer>
+            <PlaceholderImage
+              loading={loading}
+              dangerouslySetInnerHTML={{
+                __html: calculation.geometries[0].imagePlaceholder,
+              }}
+            />
+            <SystemImage
+              src={`/geometry/${calculation.geometries[0].id}/image/medium`}
+              loading={loading}
+            />
+          </ImageContainer>
+        )}
+      </ProgressiveImage>
       <TimeInformation>
         {moment.unix(calculation.createdAt / 1000).fromNow()}
       </TimeInformation>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, onlyUpdateForPropTypes } from 'recompose';
+import ProgressiveImage from 'react-progressive-image';
 import moment from 'moment';
 
 import {
@@ -14,6 +15,8 @@ import {
   // InformationalDots,
   InformationalTags,
   LoadIndicator,
+  ImageContainer,
+  PlaceholderImage,
   SystemImage,
   TimeInformation,
 } from '../styles';
@@ -69,7 +72,25 @@ const ProjectCardPure = ({ className, project, index }) => (
       <CardTopRight>
         {!project.completed ? <LoadIndicator size={20} thickness={5} /> : null}
       </CardTopRight>
-      <SystemImage src={`/geometry/${project.geometries[0].id}/image/medium`} />
+      <ProgressiveImage
+        src={`/geometry/${project.geometries[0].id}/image/medium`}
+        placeholder={`${project.geometries[0].imagePlaceholder}`}
+      >
+        {(src, loading) => (
+          <ImageContainer>
+            <PlaceholderImage
+              loading={loading}
+              dangerouslySetInnerHTML={{
+                __html: project.geometries[0].imagePlaceholder,
+              }}
+            />
+            <SystemImage
+              src={`/geometry/${project.geometries[0].id}/image/medium`}
+              loading={loading}
+            />
+          </ImageContainer>
+        )}
+      </ProgressiveImage>
       <TimeInformation>
         {moment.unix(project.createdAt / 1000).fromNow()}
       </TimeInformation>

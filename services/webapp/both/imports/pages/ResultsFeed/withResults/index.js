@@ -24,6 +24,7 @@ const dataQuery = gql`
           geometries {
             id
             molecularFormula
+            imagePlaceholder
           }
         }
         project {
@@ -33,6 +34,7 @@ const dataQuery = gql`
           geometries {
             id
             molecularFormula
+            imagePlaceholder
           }
           layers {
             type

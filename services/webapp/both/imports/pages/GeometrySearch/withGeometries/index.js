@@ -17,6 +17,7 @@ const dataQuery = gql`
       }
       geometries {
         id
+        imagePlaceholder
         molecularFormula
         mass
         createdAt

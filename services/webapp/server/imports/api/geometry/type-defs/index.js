@@ -104,6 +104,7 @@ const typeDefs = gql`
     atomCount: Int!
     createdAt: Float!
     tags: [String]!
+    imagePlaceholder: String
     calculations: [Calculation]
     energies: [EnergyProperty]!
     forces: [ForceProperty]!

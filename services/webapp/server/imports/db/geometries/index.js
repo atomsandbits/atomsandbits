@@ -108,6 +108,7 @@ class GeometriesMapper {
         molecularFormula: 1,
         mass: 1,
         users: 1,
+        'images.placeholder': 1,
         createdAt: 1,
       },
     });
@@ -137,6 +138,8 @@ class GeometriesMapper {
       atomCount: atomicCoords.split('\n').length,
       mass: mass,
       tags: user ? user.tags : users[0] ? users[0].tags : [],
+      imagePlaceholder:
+        images && images.placeholder ? images.placeholder : null,
       createdAt: createdAt,
     };
   }
