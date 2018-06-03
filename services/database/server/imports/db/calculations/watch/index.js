@@ -38,7 +38,7 @@ const calculationWatcher = {
     calculationWatcher.watchInterval = Meteor.setInterval(() => {
       const pendingCalculationsCursor = Requests.find({
         type: 'calculation',
-        completed: { $exists: false },
+        completedAt: { $exists: false },
         $or: [
           {
             running: { $exists: false },
@@ -73,7 +73,7 @@ const calculationWatcher = {
     //       running, stopCalculation if new cluster node size is bigger
     //       else just mark the request as running
     if (
-      !request.completed &&
+      !request.completedAt &&
       (!request.running ||
         !request.updatedAt ||
         request.updatedAt < moment().valueOf() - timeBeforeRetry)
