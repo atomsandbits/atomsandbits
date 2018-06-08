@@ -24,8 +24,6 @@ export const DividerStyle = styled.span`
 `;
 
 export const FooterLink = styled(Link)`
-  display: flex;
-  align-items: center;
   padding: 15px 10px;
   transition: color 300ms;
   &:hover {
@@ -33,8 +31,6 @@ export const FooterLink = styled(Link)`
   }
 `;
 export const FooterLinkA = styled('a')`
-  display: flex;
-  align-items: center;
   padding: 15px 10px;
   transition: color 300ms;
   &:hover {
@@ -46,4 +42,12 @@ export const ContactInformationContainer = styled.div`
   display: flex;
   padding: 0 40px;
   align-items: center;
+`;
+
+export const LegalContainer = styled.div`
+  width: 100%;
+  flex-shrink: 0;
+  display: block;
+  padding: 10px;
+  text-align: center;
 `;

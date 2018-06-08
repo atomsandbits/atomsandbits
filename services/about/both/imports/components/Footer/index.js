@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import {
   FooterStyle,
   DividerStyle,
+  LegalContainer,
   FooterLink,
   FooterLinkA,
   ContactInformationContainer,
@@ -15,7 +16,7 @@ class _Footer extends Component {
   render() {
     // const { pathname } = this.props.location;
     return (
-      <FooterStyle height="48px">
+      <FooterStyle>
         <FooterLinkA href="https://www.atomsandbits.ai">
           Get Started
         </FooterLinkA>
@@ -32,6 +33,16 @@ class _Footer extends Component {
             GitLab
           </FooterLinkA>
         </ContactInformationContainer>
+        <LegalContainer>
+          All rights reserved.{' '}
+          <FooterLinkA
+            href="https://opencorporates.com/companies/us_de/6757578"
+            target="_blank"
+            style={{}}
+          >
+            Cloudszi, Inc.
+          </FooterLinkA>
+        </LegalContainer>
       </FooterStyle>
     );
   }
