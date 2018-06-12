@@ -29,6 +29,7 @@ class ContextProvider extends Component {
         parameters: {
           type: 'conformerSearch',
           method: 'machineLearning',
+          network: 'tensormol01',
         },
         outputTypes: ['[geometry]', '[energy]'],
       },
@@ -37,6 +38,7 @@ class ContextProvider extends Component {
         parameters: {
           type: 'harmonicSpectra',
           method: 'machineLearning',
+          network: 'tensormol01',
         },
         outputTypes: [
           '[freeEnergy]',

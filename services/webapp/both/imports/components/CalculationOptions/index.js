@@ -34,7 +34,7 @@ const enhance = compose(
       setParameters({
         type: 'geometryOptimization',
         method: 'machineLearning',
-        network: 'tensormol01',
+        network: 'tensormol02',
       });
       return null;
     })

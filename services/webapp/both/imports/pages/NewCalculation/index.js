@@ -61,7 +61,7 @@ if (!Session.get('parameters')) {
   Session.set('parameters', {
     type: 'geometryOptimization',
     method: 'machineLearning',
-    network: 'tensormol01',
+    network: 'tensormol02',
   });
 }
 
@@ -121,12 +121,18 @@ const enhance = compose(
             let elements = uniq(
               map(atomCollection, (atomDocument) => atomDocument.element)
             );
-            let supportElements = ['C', 'N', 'O', 'H'];
+            import { networks } from '/both/imports/components/CalculationOptions/options';
+            import find from 'lodash/find';
+            let supportedElements = find(networks, {
+              value: parameters.network,
+            }).supportedElements;
             let unsupportedElementFound = false;
             elements.forEach((element) => {
-              if (supportElements.indexOf(element) === -1) {
+              if (supportedElements.indexOf(element) === -1) {
                 window.alert(
-                  `Only ${supportElements} elements are supported for this network.`
+                  `Only ${supportedElements.join(
+                    ', '
+                  )} elements are supported for this network.`
                 );
                 unsupportedElementFound = true;
               }

@@ -9,10 +9,9 @@ import time
 # import numpy as np
 from socketIO_client_nexus import SocketIO
 from TensorMol import Mol
-from networks import tensormol01
+from networks import tensormol01, tensormol02
 from calculations import (conformer_search, energy_and_force, harmonic_spectra,
-                          geometry_optimization,
-                          relaxed_scan)
+                          geometry_optimization, relaxed_scan)
 
 # TODO: start tensorflow session so GPU resources get allocated
 
@@ -25,6 +24,7 @@ def main():
     while True:
         try:
             tensormol01_network = tensormol01.main()
+            tensormol02_network = tensormol02.main()
 
             # FYI: SocketIO is threaded.
             def on_run_calculation(options):
@@ -41,7 +41,7 @@ def main():
                 geometries = calculation.get('geometries')
                 # charge = calculation.get('charge')
                 # multiplicity = calculation.get('multiplicity')
-                # network_name = calculation.get('network')
+                network_name = calculation.get('network')
                 print('Calculation Received: ', calculation_id)
 
                 # print(calculation)
@@ -99,7 +99,10 @@ def main():
                             str(len(geometries[1].split('\n'))) + '\n\n' +
                             geometries[1])
                     # add switch based on network name
-                    network = tensormol01_network
+                    if network_name == 'tensormol01':
+                        network = tensormol01_network
+                    else:
+                        network = tensormol02_network
                     # TODO: Attempt to run saveCalculationResult a few times on
                     #       error in callback
                     if calculation_type == 'groundState':

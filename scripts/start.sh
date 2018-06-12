@@ -1,16 +1,7 @@
 # set environment variables
 set -a
-DB_NAME=atomsandbits
-MONGO_URL=mongodb://localhost:27017/atomsandbits
-MONGO_OPLOG_URL=mongodb://oplogger:password@localhost:27017/local?authSource=admin
-PSI4_PATH=~/Packages/psi4conda
-TENSORMOL_PATH=~/Packages/TensorMol_Dev
-PYTHONPATH=${PYTHONPATH}:~/Packages/pyscf
 
-OMP_NUM_THREADS=2
-PSI4_MAX_MEMORY=4000
-PYSCF_MAX_MEMORY=4000
-
+source ./variables.default.env
 # set custom environment variables
 if [ -f ./variables.env ]; then
     source ./variables.env

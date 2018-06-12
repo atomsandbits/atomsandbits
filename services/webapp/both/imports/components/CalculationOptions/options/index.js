@@ -1,3 +1,5 @@
+import filter from 'lodash/filter';
+
 const basisSets = [
   {
     value: 'sto-3g',
@@ -12,8 +14,8 @@ const basisSets = [
     prettyName: '6-31+G*',
   },
   {
-    value: '6-311pgss',
-    prettyName: '6-311+G**',
+    value: '6-311gss',
+    prettyName: '6-311G**',
   },
   {
     value: 'def2-svp',
@@ -62,7 +64,49 @@ const networks = [
   {
     value: 'tensormol01',
     prettyName: 'TensorMol 0.1',
-    supportedElements: ['C', 'N', 'O', 'H'],
+    supportedElements: ['H', 'C', 'N', 'O'],
+  },
+  {
+    value: 'tensormol02',
+    prettyName: 'TensorMol 0.2',
+    supportedElements: [
+      'H',
+      'He',
+      'Li',
+      'Be',
+      'B',
+      'C',
+      'N',
+      'O',
+      'F',
+      'Ne',
+      'Na',
+      'Mg',
+      'Al',
+      'Si',
+      'P',
+      'S',
+      'Cl',
+      'Ar',
+      'K',
+      'Ca',
+      'Sc',
+      'Ti',
+      'V',
+      // 'Cr',
+      'Mn',
+      'Fe',
+      'Co',
+      'Ni',
+      'Cu',
+      'Zn',
+      'Ga',
+      'Ge',
+      'As',
+      'Se',
+      'Br',
+      'Kr',
+    ],
   },
 ];
 // const conformerSearchTypes = [
@@ -274,7 +318,10 @@ const types = [
       {
         value: 'machineLearning',
         prettyName: 'Machine Learning',
-        networks,
+        networks: filter(
+          networks,
+          (network) => network.value === 'tensormol01'
+        ),
       },
     ],
   },
@@ -351,7 +398,7 @@ const types = [
 
 const options = types;
 
-export { options };
+export { options, networks };
 export default options;
 
 /* ~~~ Periodic Boundary Condition ~~~ */

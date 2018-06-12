@@ -33,7 +33,7 @@ def main():
     tset = TensorMolData_BP_Direct_EE_WithEle_Release(
         a, d, order_=1, num_indis_=1, type_="mol")
     # WithGrad=True)
-    PARAMS["DSFAlpha"] = 0.18 * BOHRPERA
+    PARAMS["DSFAlpha"] = 0.18
     manager = TFMolManage("chemspider12_solvation", tset, False,
                           'fc_sqdiff_BP_Direct_EE_ChargeEncode' +
                           '_Update_vdw_DSF_elu_Normalize_Dropout', False,

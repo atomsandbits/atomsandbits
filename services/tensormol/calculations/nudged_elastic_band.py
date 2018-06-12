@@ -2,19 +2,22 @@ from TensorMol import PARAMS, NudgedElasticBand
 
 
 def main(manager, molecule, final_molecule, steps=10):
-    def EnAndForce(x_, DoForce=True):
-        """Calculate energy and force."""
-        mtmp = Mol(molecule.atoms, x_)
-        (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
-         gradient) = manager.EvalBPDirectEEUpdateSingle(
-             mtmp, PARAMS["AN1_r_Rc"], PARAMS["AN1_a_Rc"],
-             PARAMS["EECutoffOff"], True)
-        energy = Etotal[0]
-        force = gradient[0]
-        if DoForce:
-            return energy, force
-        else:
-            return energy
+    if (hasattr(manager, 'GetEnergyForceRoutine')):
+        EnAndForce = manager.GetEnergyForceRoutine(molecule)
+    else:
+        def EnAndForce(x_, DoForce=True):
+            """Calculate energy and force."""
+            mtmp = Mol(molecule.atoms, x_)
+            (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
+             gradient) = manager.EvalBPDirectEEUpdateSingle(
+                 mtmp, PARAMS["AN1_r_Rc"], PARAMS["AN1_a_Rc"],
+                 PARAMS["EECutoffOff"], True)
+            energy = Etotal[0]
+            force = gradient[0]
+            if DoForce:
+                return energy, force
+            else:
+                return energy
 
     # Finally do the NEB. between each.
     PARAMS["OptMaxCycles"] = 500
