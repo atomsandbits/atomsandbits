@@ -1,14 +1,16 @@
 from TensorMol import PARAMS, Mol
 from TensorMol.Simulations import ConfSearch
+
 # ScannedOptimization, TopologyMetaOpt
 
 
 def main(manager, molecule, on_conformer_found=None, n_conf=20):
     """main."""
-    if (hasattr(manager, 'GetEnergyForceRoutine')):
-        EnAndForce = manager.GetEnergyForceRoutine(molecule)
+    if (hasattr(manager, 'get_energy_force_function')):
+        energy_force_function = manager.get_energy_force_function(molecule)
     else:
-        def EnAndForce(x_, DoForce=True):
+
+        def energy_force_function(x_, do_force=True):
             """Calculate energy and force."""
             mtmp = Mol(molecule.atoms, x_)
             (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
@@ -17,7 +19,7 @@ def main(manager, molecule, on_conformer_found=None, n_conf=20):
                  PARAMS["EECutoffOff"], True)
             energy = Etotal[0]
             force = gradient[0]
-            if DoForce:
+            if do_force:
                 return energy, force
             else:
                 return energy
@@ -25,7 +27,7 @@ def main(manager, molecule, on_conformer_found=None, n_conf=20):
     # Perform geometry optimization
     PARAMS["OptMaxCycles"] = 2000
     PARAMS["OptThresh"] = 0.001
-    Opt = ConfSearch(EnAndForce, molecule, StopAfter_=n_conf)
+    Opt = ConfSearch(energy_force_function, molecule, StopAfter_=n_conf)
     return Opt.Search(molecule, callback=on_conformer_found)
 
 

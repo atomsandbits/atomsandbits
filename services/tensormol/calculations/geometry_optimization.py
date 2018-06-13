@@ -3,11 +3,13 @@ from TensorMol import GeomOptimizer, Mol, PARAMS
 
 def main(manager, molecule, emit_callback=None):
     """main."""
-    if (hasattr(manager, 'GetEnergyForceRoutine')):
-        EnAndForce = manager.GetEnergyForceRoutine(molecule)
+    if (hasattr(manager, 'get_energy_force_function')):
+        energy_force_function = manager.get_energy_force_function(molecule)
     else:
-        def EnAndForce(x_, DoForce=True):
+
+        def energy_force_function(x_, do_force=True):
             """Calculate energy and force."""
+            print(x_)
             mtmp = Mol(molecule.atoms, x_)
             (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
              gradient) = manager.EvalBPDirectEEUpdateSingle(
@@ -15,16 +17,15 @@ def main(manager, molecule, emit_callback=None):
                  PARAMS["EECutoffOff"], True)
             energy = Etotal[0]
             force = gradient[0]
-            if DoForce:
+            if do_force:
                 return energy, force
             else:
                 return energy
 
     # Perform geometry optimization
-    PARAMS["OptMaxCycles"] = 50 + (len(molecule.atoms) / 100) * 300
-    print(PARAMS["OptMaxCycles"])
+    PARAMS["OptMaxCycles"] = 100 + (len(molecule.atoms) / 100) * 300
     PARAMS["OptThresh"] = 0.001
-    Opt = GeomOptimizer(EnAndForce)
+    Opt = GeomOptimizer(energy_force_function)
     molecule = Opt.Opt(molecule, callback=emit_callback)
     return molecule
 
@@ -33,7 +34,7 @@ if __name__ == "__main__":
     import os
     import sys
     sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-    from networks import tensormol01, tensormol02
+    from networks import tensormol01, tensormol02, ani1
     molecule = Mol()
     molecule.FromXYZString("""12
         benzene
@@ -50,4 +51,5 @@ if __name__ == "__main__":
         C     1.21479     0.70136      0
         H     2.15666     1.24515      0""")
     print(main(tensormol01.main(), molecule))
+    print(main(ani1.main(), molecule))
     print(main(tensormol02.main(), molecule))

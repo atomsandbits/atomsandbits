@@ -2,10 +2,11 @@ from TensorMol import PARAMS, NudgedElasticBand
 
 
 def main(manager, molecule, final_molecule, steps=10):
-    if (hasattr(manager, 'GetEnergyForceRoutine')):
-        EnAndForce = manager.GetEnergyForceRoutine(molecule)
+    if (hasattr(manager, 'get_energy_force_function')):
+        energy_force_function = manager.get_energy_force_function(molecule)
     else:
-        def EnAndForce(x_, DoForce=True):
+
+        def energy_force_function(x_, do_force=True):
             """Calculate energy and force."""
             mtmp = Mol(molecule.atoms, x_)
             (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
@@ -14,7 +15,7 @@ def main(manager, molecule, final_molecule, steps=10):
                  PARAMS["EECutoffOff"], True)
             energy = Etotal[0]
             force = gradient[0]
-            if DoForce:
+            if do_force:
                 return energy, force
             else:
                 return energy
@@ -25,7 +26,7 @@ def main(manager, molecule, final_molecule, steps=10):
     PARAMS["SDStep"] = 0.05
     PARAMS["NebNumBeads"] = 22
     PARAMS["MaxBFGS"] = 12
-    neb = NudgedElasticBand(EnAndForce, molecule, final_molecule)
+    neb = NudgedElasticBand(energy_force_function, molecule, final_molecule)
     Beads = neb.Opt("NebStep1")
     print(Beads)
 

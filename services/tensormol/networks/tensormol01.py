@@ -1,4 +1,4 @@
-from TensorMol import (BOHRPERA, Mol, MolDigester, MSet, PARAMS,
+from TensorMol import (Mol, MolDigester, MSet, PARAMS,
                        TensorMolData_BP_Direct_EE_WithEle_Release, TFMolManage)
 import numpy as np
 

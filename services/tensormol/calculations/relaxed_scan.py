@@ -10,10 +10,11 @@ def main(manager,
          atom_two=1,
          final_distance=10):
     """main."""
-    if (hasattr(manager, 'GetEnergyForceRoutine')):
-        EnAndForce = manager.GetEnergyForceRoutine(molecule)
+    if (hasattr(manager, 'get_energy_force_function')):
+        energy_force_function = manager.get_energy_force_function(molecule)
     else:
-        def EnAndForce(x_, DoForce=True):
+
+        def energy_force_function(x_, do_force=True):
             """Calculate energy and force."""
             mtmp = Mol(molecule.atoms, x_)
             (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
@@ -22,7 +23,7 @@ def main(manager,
                  PARAMS["EECutoffOff"], True)
             energy = Etotal[0]
             force = gradient[0]
-            if DoForce:
+            if do_force:
                 return energy, force
             else:
                 return energy
@@ -31,7 +32,11 @@ def main(manager,
     PARAMS["OptMaxCycles"] = 2000
     PARAMS["OptThresh"] = 0.001
     scanner = RelaxedScan(
-        EnAndForce, molecule, at1=atom_one - 1, at2=atom_two - 1, nstep_=steps)
+        energy_force_function,
+        molecule,
+        at1=atom_one - 1,
+        at2=atom_two - 1,
+        nstep_=steps)
     return scanner.Scan(molecule, maxr=final_distance, callback=on_step)
 
 

@@ -19,7 +19,7 @@ def main(manager, molecule):
 
     EFH = GetEnergyForceHess(m)
 
-    def EnAndForce(x_, DoForce=False):
+    def energy_force_function(x_, do_force=False):
         """Calculate energy and force."""
         mtmp = Mol(molecule.atoms, x_)
         (Etotal, Ebp, Ebp_atom, Ecc, Evdw, mol_dipole, atom_charge,
@@ -28,7 +28,7 @@ def main(manager, molecule):
              PARAMS["EECutoffOff"], True)
         energy = Etotal[0]
         force = gradient[0]
-        if DoForce:
+        if do_force:
             return energy, force
         else:
             return energy
@@ -52,11 +52,11 @@ def main(manager, molecule):
 
     PARAMS["OptMaxCycles"] = 50 + (len(molecule.atoms) / 100) * 300
     PARAMS["OptThresh"] = 0.0002
-    Opt = GeomOptimizer(EnAndForce)
+    Opt = GeomOptimizer(energy_force_function)
     molecule = Opt.Opt(molecule)
     # Gotta optimize before running spectra
     w, v, i, TD = HarmonicSpectra(
-        EnAndForce,
+        energy_force_function,
         molecule.coords,
         molecule.atoms,
         WriteNM_=True,

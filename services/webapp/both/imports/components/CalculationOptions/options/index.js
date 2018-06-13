@@ -67,6 +67,11 @@ const networks = [
     supportedElements: ['H', 'C', 'N', 'O'],
   },
   {
+    value: 'ani1',
+    prettyName: 'ANI-1',
+    supportedElements: ['H', 'C', 'N', 'O'],
+  },
+  {
     value: 'tensormol02',
     prettyName: 'TensorMol 0.2',
     supportedElements: [

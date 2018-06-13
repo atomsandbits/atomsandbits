@@ -9,7 +9,7 @@ import time
 # import numpy as np
 from socketIO_client_nexus import SocketIO
 from TensorMol import Mol
-from networks import tensormol01, tensormol02
+from networks import tensormol01, tensormol02, ani1
 from calculations import (conformer_search, energy_and_force, harmonic_spectra,
                           geometry_optimization, relaxed_scan)
 
@@ -24,6 +24,7 @@ def main():
     while True:
         try:
             tensormol01_network = tensormol01.main()
+            ani1_network = ani1.main()
             tensormol02_network = tensormol02.main()
 
             # FYI: SocketIO is threaded.
@@ -101,6 +102,8 @@ def main():
                     # add switch based on network name
                     if network_name == 'tensormol01':
                         network = tensormol01_network
+                    elif network_name == 'ani1':
+                        network = ani1_network
                     else:
                         network = tensormol02_network
                     # TODO: Attempt to run saveCalculationResult a few times on
