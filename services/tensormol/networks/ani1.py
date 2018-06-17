@@ -16,7 +16,10 @@ class ANINetwork():
         gpu = 0  # GPU ID -- this defaults to 0
 
         # Initilize network ensemble
-        self.aens = ensemblemolecule(cnstfile, saefile, nnfdir, Nn, gpu)
+        try:
+            self.aens = ensemblemolecule(cnstfile, saefile, nnfdir, Nn, gpu)
+        except RuntimeError:
+            print('Couldn\'t load ASI network (GPU probably not available)!')
         return
 
     def get_energy_force_function(self, molecule):
