@@ -1,11 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import winston from 'winston';
 
 const debug = true;
-
 let logger;
 
 if (Meteor.isServer) {
+  import winston from 'winston';
   let level = 'silly';
   if (Meteor.isTest) {
     level = 'debug';

@@ -6,12 +6,12 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.44",
+    "@babel/runtime": "^7.0.0-beta.51",
     "babel-runtime": "^6.26.0",
-    "lodash": "^4.17.4",
-    "meteor-node-stubs": "^0.3.2",
+    "lodash": "^4.17.10",
+    "meteor-node-stubs": "^0.4.1",
     "moment": "^2.20.1",
-    "socket.io": "^1.7.4",
+    "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.0",
     "winston": "^3.0.0-rc2"
   },
