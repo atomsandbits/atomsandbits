@@ -78,14 +78,17 @@ const runCalculation = ({
     calculationId,
     completed: true,
   });
+  const createdAt = moment().valueOf();
   return Requests.insert({
     type: 'calculation',
     calculationId,
     userId,
     clusterId: cluster._id,
-    completed: previousRequest !== undefined,
-    running: false,
-    createdAt: moment().valueOf(),
+    completed: previousRequest && previousRequest.completed ? true : undefined,
+    completedAt:
+      previousRequest && previousRequest.completedAt ? createdAt : undefined,
+    running: (previousRequest && previousRequest.running) || false,
+    createdAt,
   });
 };
 

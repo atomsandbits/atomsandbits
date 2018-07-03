@@ -1,5 +1,5 @@
 {
-  "name": "atomsandbits-webapp",
+  "name": "webapp-service",
   "private": true,
   "scripts": {
     "test": "scripty",

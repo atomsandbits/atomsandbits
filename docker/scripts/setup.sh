@@ -21,7 +21,6 @@ if [ -f variables.env ]; then
 fi
 
 # Build Images
-./scripts/docker/build-image.sh about
 ./scripts/docker/build-image.sh webapp
 ./scripts/docker/build-image.sh database
 ./scripts/docker/build-image.sh tensormol

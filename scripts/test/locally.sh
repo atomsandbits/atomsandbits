@@ -1,6 +1,5 @@
 #!/bin/bash
 
-(cd services/about && npm test) && \
 (cd services/database && npm test) && \
 (cd services/image-generator && npm test) && \
 (cd services/psi4 && npm test) && \

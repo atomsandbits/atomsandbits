@@ -46,14 +46,17 @@ const runProject = ({
   //   { $set: { startedAt: moment().valueOf(), running: true } },
   //   { multi: true }
   // );
+  const createdAt = moment().valueOf();
   const requestInserted = Requests.insert({
     type: 'project',
     projectId,
     userId,
     clusterId: cluster._id,
-    completed: previousRequest !== undefined,
-    running: false,
-    createdAt: moment().valueOf(),
+    completed: previousRequest && previousRequest.completed ? true : undefined,
+    completedAt:
+      previousRequest && previousRequest.completedAt ? createdAt : undefined,
+    running: (previousRequest && previousRequest.running) || false,
+    createdAt,
   });
   project.layerIds.forEach((layerId) =>
     runLayer({ layerId, clusterId: cluster._id, userId })

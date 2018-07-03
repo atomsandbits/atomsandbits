@@ -1,8 +1,0 @@
-version: '3'
-services:
-  webapp:
-    build: ./
-    ports:
-      - "$PORT:80"
-    environment:
-      - ROOT_URL=$ROOT_URL

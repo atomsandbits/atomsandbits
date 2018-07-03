@@ -39,15 +39,6 @@ services:
   #   environment:
   #     - MONGO_URL=$MONGO_URL
   #     - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
-  about:
-    build: ./images/about
-    ports:
-      - "$ABOUT_PORT:80"
-    environment:
-      - ROOT_URL=$ABOUT_URL
-      - VIRTUAL_HOST=about.atomsandbits.com
-      - LETSENCRYPT_HOST=about.atomsandbits.com
-      - LETSENCRYPT_EMAIL=contact@atomsandbits.com
   webapp:
     build: ./images/webapp
     ports:

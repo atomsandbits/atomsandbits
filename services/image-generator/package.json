@@ -1,5 +1,5 @@
 {
-  "name": "image-generator",
+  "name": "image-generator-service",
   "private": true,
   "scripts": {
     "test": "scripty",

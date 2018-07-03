@@ -38,7 +38,7 @@ const getDataURL = async ({ xyz }) => {
   if (counter > 10000) {
     await browser.close();
     browser = await puppeteer.launch({
-      executablePath: '/usr/bin/chromium',
+      executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium',
       headless: false,
       // args: ['--headless'],
     });

@@ -1,9 +1,6 @@
 echo "Setting up MongoDB..."
 ./scripts/setup/mongo-setup.sh
 
-echo "Installing packages for about-service..."
-(cd services/about && meteor npm install)
-
 echo "Installing packages for database-service..."
 (cd services/database && meteor npm install)
 
