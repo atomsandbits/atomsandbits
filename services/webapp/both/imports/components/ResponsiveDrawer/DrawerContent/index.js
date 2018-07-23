@@ -70,7 +70,7 @@ const enhance = compose(
 const DrawerContentPure = ({ userId, closeDrawer, login, logout }) => (
   <DrawerContentContainer>
     <Button component={HeaderLogo} onClick={closeDrawer} to="/">
-      atoms+bits
+      <img src="/brand-thin.png" />
     </Button>
     <LinksContainer>
       <Button

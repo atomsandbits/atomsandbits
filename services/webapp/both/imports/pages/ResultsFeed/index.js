@@ -35,7 +35,7 @@ const Loading = (props) => (
     appContent={
       <ResultsFeedContainer>
         <Helmet>
-          <title>results | atoms+bits</title>
+          <title>playground | atoms+bits</title>
           <meta name="description" content="your results feed" />
         </Helmet>
         <LinearProgress />
@@ -119,7 +119,7 @@ const ResultsFeedPure = ({ results, position, totalCount, queryParams }) => (
     appContent={
       <ResultsFeedContainer>
         <Helmet>
-          <title>results | atoms+bits</title>
+          <title>playground | atoms+bits</title>
           <meta name="description" content="your results feed" />
         </Helmet>
         <ResultsFeedContent>

@@ -23,6 +23,9 @@ export const HeaderLogo = styled(Link)`
     padding: 25px;
     text-transform: lowercase;
     width: 100%;
+    img {
+      width: 190px;
+    }
   }
 `;
 export const LinksContainer = styled.div`

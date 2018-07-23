@@ -164,9 +164,9 @@ class Molecule {
     const atomCollection = this.createAtomCollection();
     const comment = this.createComment();
 
-    let xDecimalsMax = 0;
-    let yDecimalsMax = 0;
-    let zDecimalsMax = 0;
+    let xDecimalsMax = 6;
+    let yDecimalsMax = 6;
+    let zDecimalsMax = 6;
     atomCollection.forEach((atomDocument) => {
       if (xDecimalsMax < countDecimals(atomDocument.x)) {
         xDecimalsMax = countDecimals(atomDocument.x);
