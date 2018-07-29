@@ -111,7 +111,7 @@ const DrawerContentPure = ({ userId, closeDrawer, login, logout }) => (
     <FooterContainer>
       <Button
         component={aContainer}
-        href="https://about.atomsandbits.ai/"
+        href="https://www.atomsandbits.ai/"
         onClick={closeDrawer}
       >
         <LinkIcon>
