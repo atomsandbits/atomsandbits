@@ -3,17 +3,6 @@ image: atomsandbits/python-meteor-test-environment:latest
 before_script:
   - npm install
 
-# ~~~ tests ~~~
-test_service_about:
-  stage: test
-  script:
-    # - npm install
-    - cd ./services/about
-    - npm install
-    - npm test
-  only:
-    - master
-
 test_service_database:
   stage: test
   script:
